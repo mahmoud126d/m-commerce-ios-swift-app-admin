@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+// MARK: - ProductResponse
+struct ProductResponse: Codable {
+    let product: Product
+}
+// MARK: - ProductsResponse
+struct ProductsResponse: Codable {
+    let products: [Product]
+}

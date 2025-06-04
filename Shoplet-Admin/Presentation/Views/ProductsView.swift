@@ -8,11 +8,49 @@
 import SwiftUI
 
 struct ProductsView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+    @StateObject private var viewModel: ProductViewModel
+    @State var selectedTab: Tab = .products
+    
+    init(viewModel: ProductViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
+    
+    var body: some View {
+        VStack{
+            HStack {
+                Text("\(selectedTab.title)")
+                    .font(.title)
+                    .bold()
+                Spacer()
+                Button("+") {
+                    print("add product button pressed")
+                }
+                .foregroundColor(.blue)
+            }
+            .padding()
+            
+            List(viewModel.productList ?? [], id: \.id)  {product in
+                ProductCustomCell(
+                    productTitle: product.title ?? "",
+                    productPrice: product.variants?.first?.price ?? "",
+                    productCategory: product.productType ?? "", productImageURL:product.image?.url ?? "",
+                    deleteAction: {
+                        //viewModel.deleteProduct(productId)
+                        viewModel.deleteProduct(productId: product.id ?? 0)
+                    },
+                    editAction: {}
+                )
+            }            
+            Spacer()
+            CustomTabBarView(selectedTab: $selectedTab)
+        }.onAppear{
+            viewModel.fetchProducts()
+        }
+    }
+
 }
 
 #Preview {
-    ProductsView()
+    ProductsView(
+        viewModel: ProductViewModel(getProductsUseCase: GetProductsUseCase(repository: ProductRepository()), deleteProductUseCase: DeleteProductsUseCase(repository: ProductRepository())))
 }

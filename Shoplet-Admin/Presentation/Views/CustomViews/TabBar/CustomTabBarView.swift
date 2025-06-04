@@ -14,12 +14,11 @@ struct CustomTabBarView: View {
     var body: some View {
         HStack (alignment: .center){
             tabBarItem(for: .products)
-            tabBarItem(for: .collections)
             tabBarItem(for: .priceRules)
-           
+            tabBarItem(for: .collections)
         }.frame(height: 82 )
             .ignoresSafeArea(edges: .bottom)
-            .tint(AppColors.primaryColor)
+            .tint(Color.blue)
     }
     
     private func tabBarItem(for tab: Tab) -> some View {
@@ -28,7 +27,7 @@ struct CustomTabBarView: View {
         } label: {
             TabBarButton(tabTitle: tab.title, tabIcon: tab.imageName, isSelected: selectedTab == tab)
         }
-        .tint(AppColors.primaryColor)
+        .tint(Color.blue)
     }
 }
 

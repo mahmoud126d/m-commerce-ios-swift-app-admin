@@ -11,7 +11,14 @@ import SwiftUI
 struct Shoplet_AdminApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            let networkManager = NetworkManager()
+            let repository = ProductRepository(networkManager: networkManager)
+            let getProductsUseCase = GetProductsUseCase(repository: repository)
+            let deleteProductsUseCase = DeleteProductsUseCase(repository: repository)
+            let viewModel = ProductViewModel(
+                getProductsUseCase: getProductsUseCase,
+                deleteProductUseCase: deleteProductsUseCase)
+            ProductsView(viewModel: viewModel)
         }
     }
 }

@@ -7,13 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		220998B52DEF996A00C26E50 /* CustomTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220998B42DEF996A00C26E50 /* CustomTabBarView.swift */; };
+		220998B92DEF99E700C26E50 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220998B82DEF99E700C26E50 /* Tab.swift */; };
+		220998BB2DEF9AA700C26E50 /* TabBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220998BA2DEF9AA700C26E50 /* TabBarButton.swift */; };
+		223EBB042DF06DCA0087CFDF /* ProductCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EBB032DF06DCA0087CFDF /* ProductCustomCell.swift */; };
+		223EBB082DF07EA20087CFDF /* DeleteProductUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EBB072DF07EA20087CFDF /* DeleteProductUseCase.swift */; };
 		227F77FF2DEF1BFC007B0BF9 /* Shoplet_AdminApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F77FE2DEF1BFC007B0BF9 /* Shoplet_AdminApp.swift */; };
-		227F78012DEF1BFC007B0BF9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F78002DEF1BFC007B0BF9 /* ContentView.swift */; };
 		227F78032DEF1BFD007B0BF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 227F78022DEF1BFD007B0BF9 /* Assets.xcassets */; };
 		227F78062DEF1BFD007B0BF9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 227F78052DEF1BFD007B0BF9 /* Preview Assets.xcassets */; };
 		227F78102DEF1BFD007B0BF9 /* Shoplet_AdminTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F780F2DEF1BFD007B0BF9 /* Shoplet_AdminTests.swift */; };
 		227F781A2DEF1BFD007B0BF9 /* Shoplet_AdminUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F78192DEF1BFD007B0BF9 /* Shoplet_AdminUITests.swift */; };
 		227F781C2DEF1BFD007B0BF9 /* Shoplet_AdminUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F781B2DEF1BFD007B0BF9 /* Shoplet_AdminUITestsLaunchTests.swift */; };
+		22D5C1432DEF692000A0831E /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C1422DEF692000A0831E /* Product.swift */; };
+		22D5C1452DEF73EC00A0831E /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C1442DEF73EC00A0831E /* Configuration.swift */; };
+		22D5C1472DEF748F00A0831E /* APIEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C1462DEF748F00A0831E /* APIEndpoints.swift */; };
+		22D5C1492DEF757000A0831E /* ProductResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C1482DEF757000A0831E /* ProductResponse.swift */; };
+		22D5C14B2DEF75B300A0831E /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C14A2DEF75B300A0831E /* NetworkManager.swift */; };
+		22D5C14E2DEF76F500A0831E /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 22D5C14D2DEF76F500A0831E /* Alamofire */; };
+		22D5C1532DEF794C00A0831E /* ProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C1522DEF794C00A0831E /* ProductViewModel.swift */; };
+		22D5C1562DEF7BC200A0831E /* GetProductsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C1552DEF7BC200A0831E /* GetProductsUseCase.swift */; };
+		22D5C1582DEF7E2400A0831E /* ProductRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C1572DEF7E2400A0831E /* ProductRepository.swift */; };
+		22D5C15A2DEF7F1D00A0831E /* ProductRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C1592DEF7F1D00A0831E /* ProductRepositoryProtocol.swift */; };
+		22D5C15C2DEF857200A0831E /* ProductsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C15B2DEF857200A0831E /* ProductsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,9 +49,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		220998B42DEF996A00C26E50 /* CustomTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarView.swift; sourceTree = "<group>"; };
+		220998B82DEF99E700C26E50 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
+		220998BA2DEF9AA700C26E50 /* TabBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarButton.swift; sourceTree = "<group>"; };
+		223EBB032DF06DCA0087CFDF /* ProductCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCustomCell.swift; sourceTree = "<group>"; };
+		223EBB072DF07EA20087CFDF /* DeleteProductUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProductUseCase.swift; sourceTree = "<group>"; };
 		227F77FB2DEF1BFC007B0BF9 /* Shoplet-Admin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Shoplet-Admin.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		227F77FE2DEF1BFC007B0BF9 /* Shoplet_AdminApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoplet_AdminApp.swift; sourceTree = "<group>"; };
-		227F78002DEF1BFC007B0BF9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		227F78022DEF1BFD007B0BF9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		227F78052DEF1BFD007B0BF9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		227F780B2DEF1BFD007B0BF9 /* Shoplet-AdminTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Shoplet-AdminTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -44,6 +63,16 @@
 		227F78152DEF1BFD007B0BF9 /* Shoplet-AdminUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Shoplet-AdminUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		227F78192DEF1BFD007B0BF9 /* Shoplet_AdminUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoplet_AdminUITests.swift; sourceTree = "<group>"; };
 		227F781B2DEF1BFD007B0BF9 /* Shoplet_AdminUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoplet_AdminUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		22D5C1422DEF692000A0831E /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		22D5C1442DEF73EC00A0831E /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		22D5C1462DEF748F00A0831E /* APIEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoints.swift; sourceTree = "<group>"; };
+		22D5C1482DEF757000A0831E /* ProductResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductResponse.swift; sourceTree = "<group>"; };
+		22D5C14A2DEF75B300A0831E /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		22D5C1522DEF794C00A0831E /* ProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewModel.swift; sourceTree = "<group>"; };
+		22D5C1552DEF7BC200A0831E /* GetProductsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProductsUseCase.swift; sourceTree = "<group>"; };
+		22D5C1572DEF7E2400A0831E /* ProductRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRepository.swift; sourceTree = "<group>"; };
+		22D5C1592DEF7F1D00A0831E /* ProductRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRepositoryProtocol.swift; sourceTree = "<group>"; };
+		22D5C15B2DEF857200A0831E /* ProductsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22D5C14E2DEF76F500A0831E /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,6 +101,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		220998B32DEF994700C26E50 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				223EBB022DF06DBD0087CFDF /* Cells */,
+				220998B62DEF99B500C26E50 /* TabBar */,
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
+		220998B62DEF99B500C26E50 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				220998B42DEF996A00C26E50 /* CustomTabBarView.swift */,
+				220998B82DEF99E700C26E50 /* Tab.swift */,
+				220998BA2DEF9AA700C26E50 /* TabBarButton.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		223EBB022DF06DBD0087CFDF /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				223EBB032DF06DCA0087CFDF /* ProductCustomCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		227F77F22DEF1BFC007B0BF9 = {
 			isa = PBXGroup;
 			children = (
@@ -94,8 +151,10 @@
 		227F77FD2DEF1BFC007B0BF9 /* Shoplet-Admin */ = {
 			isa = PBXGroup;
 			children = (
-				227F77FE2DEF1BFC007B0BF9 /* Shoplet_AdminApp.swift */,
-				227F78002DEF1BFC007B0BF9 /* ContentView.swift */,
+				22D5C1402DEF64EF00A0831E /* Application */,
+				22D5C1382DEF633A00A0831E /* Data */,
+				22D5C1372DEF630D00A0831E /* Presentation */,
+				22D5C1362DEF62FC00A0831E /* Domain */,
 				227F78022DEF1BFD007B0BF9 /* Assets.xcassets */,
 				227F78042DEF1BFD007B0BF9 /* Preview Content */,
 			);
@@ -127,6 +186,135 @@
 			path = "Shoplet-AdminUITests";
 			sourceTree = "<group>";
 		};
+		22D5C1362DEF62FC00A0831E /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				22D5C13B2DEF637E00A0831E /* Interfaces */,
+				22D5C13A2DEF636F00A0831E /* UseCases */,
+				22D5C1392DEF635E00A0831E /* Entities */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		22D5C1372DEF630D00A0831E /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				22D5C1502DEF78BE00A0831E /* ViewModels */,
+				22D5C14F2DEF78B800A0831E /* Views */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		22D5C1382DEF633A00A0831E /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				22D5C13E2DEF63E900A0831E /* Network */,
+				22D5C13D2DEF63DA00A0831E /* Repositories */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		22D5C1392DEF635E00A0831E /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				22D5C1412DEF690100A0831E /* Models */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		22D5C13A2DEF636F00A0831E /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				22D5C1542DEF7BAD00A0831E /* Product */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		22D5C13B2DEF637E00A0831E /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				22D5C13C2DEF638C00A0831E /* Repositories */,
+			);
+			path = Interfaces;
+			sourceTree = "<group>";
+		};
+		22D5C13C2DEF638C00A0831E /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				22D5C1592DEF7F1D00A0831E /* ProductRepositoryProtocol.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		22D5C13D2DEF63DA00A0831E /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				22D5C1572DEF7E2400A0831E /* ProductRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		22D5C13E2DEF63E900A0831E /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				22D5C1442DEF73EC00A0831E /* Configuration.swift */,
+				22D5C1462DEF748F00A0831E /* APIEndpoints.swift */,
+				22D5C14A2DEF75B300A0831E /* NetworkManager.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		22D5C1402DEF64EF00A0831E /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				227F77FE2DEF1BFC007B0BF9 /* Shoplet_AdminApp.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		22D5C1412DEF690100A0831E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				22D5C1422DEF692000A0831E /* Product.swift */,
+				22D5C1482DEF757000A0831E /* ProductResponse.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		22D5C14F2DEF78B800A0831E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				220998B32DEF994700C26E50 /* CustomViews */,
+				22D5C15B2DEF857200A0831E /* ProductsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		22D5C1502DEF78BE00A0831E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				22D5C1512DEF793B00A0831E /* Product */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		22D5C1512DEF793B00A0831E /* Product */ = {
+			isa = PBXGroup;
+			children = (
+				22D5C1522DEF794C00A0831E /* ProductViewModel.swift */,
+			);
+			path = Product;
+			sourceTree = "<group>";
+		};
+		22D5C1542DEF7BAD00A0831E /* Product */ = {
+			isa = PBXGroup;
+			children = (
+				22D5C1552DEF7BC200A0831E /* GetProductsUseCase.swift */,
+				223EBB072DF07EA20087CFDF /* DeleteProductUseCase.swift */,
+			);
+			path = Product;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -143,6 +331,9 @@
 			dependencies = (
 			);
 			name = "Shoplet-Admin";
+			packageProductDependencies = (
+				22D5C14D2DEF76F500A0831E /* Alamofire */,
+			);
 			productName = "Shoplet-Admin";
 			productReference = 227F77FB2DEF1BFC007B0BF9 /* Shoplet-Admin.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +406,9 @@
 				Base,
 			);
 			mainGroup = 227F77F22DEF1BFC007B0BF9;
+			packageReferences = (
+				22D5C14C2DEF76F500A0831E /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = 227F77FC2DEF1BFC007B0BF9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -257,8 +451,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				227F78012DEF1BFC007B0BF9 /* ContentView.swift in Sources */,
+				22D5C1562DEF7BC200A0831E /* GetProductsUseCase.swift in Sources */,
+				22D5C1582DEF7E2400A0831E /* ProductRepository.swift in Sources */,
+				223EBB082DF07EA20087CFDF /* DeleteProductUseCase.swift in Sources */,
+				22D5C1492DEF757000A0831E /* ProductResponse.swift in Sources */,
+				220998B52DEF996A00C26E50 /* CustomTabBarView.swift in Sources */,
+				22D5C1472DEF748F00A0831E /* APIEndpoints.swift in Sources */,
+				22D5C14B2DEF75B300A0831E /* NetworkManager.swift in Sources */,
 				227F77FF2DEF1BFC007B0BF9 /* Shoplet_AdminApp.swift in Sources */,
+				220998B92DEF99E700C26E50 /* Tab.swift in Sources */,
+				223EBB042DF06DCA0087CFDF /* ProductCustomCell.swift in Sources */,
+				22D5C15A2DEF7F1D00A0831E /* ProductRepositoryProtocol.swift in Sources */,
+				22D5C15C2DEF857200A0831E /* ProductsView.swift in Sources */,
+				22D5C1452DEF73EC00A0831E /* Configuration.swift in Sources */,
+				220998BB2DEF9AA700C26E50 /* TabBarButton.swift in Sources */,
+				22D5C1532DEF794C00A0831E /* ProductViewModel.swift in Sources */,
+				22D5C1432DEF692000A0831E /* Product.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -582,6 +790,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		22D5C14C2DEF76F500A0831E /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		22D5C14D2DEF76F500A0831E /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 22D5C14C2DEF76F500A0831E /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 227F77F32DEF1BFC007B0BF9 /* Project object */;
 }

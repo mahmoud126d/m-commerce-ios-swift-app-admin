@@ -6,3 +6,10 @@
 //
 
 import Foundation
+// MARK: - Product Repository Protocol
+
+protocol ProductRepositoryProtocol {
+    func getProducts(completion: @escaping (Result<[Product], Error>) -> Void)
+    func deleteProduct(productId:Int,completion: @escaping (Result<[Product], Error>) -> Void)
+}
+

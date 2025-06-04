@@ -6,3 +6,22 @@
 //
 
 import Foundation
+
+protocol DeleteProductsUseCaseProtocol {
+    func execute(productId:Int,completion: @escaping (Result<[Product], Error>) -> Void)
+}
+
+class DeleteProductsUseCase: DeleteProductsUseCaseProtocol {
+    
+    private let repository: ProductRepositoryProtocol
+    
+    init(repository: ProductRepositoryProtocol) {
+        self.repository = repository
+    }
+    
+    func execute(productId:Int,completion: @escaping (Result<[Product], Error>) -> Void) {
+        repository.deleteProduct(productId: productId) { result in
+            completion(result)
+        }
+    }
+}

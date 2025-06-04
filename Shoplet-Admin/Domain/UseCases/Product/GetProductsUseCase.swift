@@ -6,3 +6,24 @@
 //
 
 import Foundation
+
+// MARK: - Get Products UseCase
+protocol GetProductsUseCaseProtocol {
+    func execute(completion: @escaping (Result<[Product], Error>) -> Void)
+}
+
+class GetProductsUseCase: GetProductsUseCaseProtocol {
+    
+    private let repository: ProductRepositoryProtocol
+    
+    init(repository: ProductRepositoryProtocol) {
+        self.repository = repository
+    }
+    
+    func execute(completion: @escaping (Result<[Product], Error>) -> Void) {
+        repository.getProducts { result in
+            completion(result)
+        }
+    }
+}
+
