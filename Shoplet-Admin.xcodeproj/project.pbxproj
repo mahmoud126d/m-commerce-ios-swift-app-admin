@@ -14,6 +14,7 @@
 		223EBB082DF07EA20087CFDF /* DeleteProductUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EBB072DF07EA20087CFDF /* DeleteProductUseCase.swift */; };
 		223EBB0A2DF09DE40087CFDF /* AddProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EBB092DF09DE40087CFDF /* AddProductView.swift */; };
 		223EBB0C2DF0C1C80087CFDF /* CreateProductUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EBB0B2DF0C1C80087CFDF /* CreateProductUseCase.swift */; };
+		2256D36B2DF4B713004F27EB /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 2256D36A2DF4B713004F27EB /* Alamofire */; };
 		227F77FF2DEF1BFC007B0BF9 /* Shoplet_AdminApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F77FE2DEF1BFC007B0BF9 /* Shoplet_AdminApp.swift */; };
 		227F78032DEF1BFD007B0BF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 227F78022DEF1BFD007B0BF9 /* Assets.xcassets */; };
 		227F78062DEF1BFD007B0BF9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 227F78052DEF1BFD007B0BF9 /* Preview Assets.xcassets */; };
@@ -25,7 +26,6 @@
 		22D5C1472DEF748F00A0831E /* APIEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C1462DEF748F00A0831E /* APIEndpoints.swift */; };
 		22D5C1492DEF757000A0831E /* ProductResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C1482DEF757000A0831E /* ProductResponse.swift */; };
 		22D5C14B2DEF75B300A0831E /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C14A2DEF75B300A0831E /* NetworkManager.swift */; };
-		22D5C14E2DEF76F500A0831E /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 22D5C14D2DEF76F500A0831E /* Alamofire */; };
 		22D5C1532DEF794C00A0831E /* ProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C1522DEF794C00A0831E /* ProductViewModel.swift */; };
 		22D5C1562DEF7BC200A0831E /* GetProductsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C1552DEF7BC200A0831E /* GetProductsUseCase.swift */; };
 		22D5C1582DEF7E2400A0831E /* ProductRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C1572DEF7E2400A0831E /* ProductRepository.swift */; };
@@ -84,7 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22D5C14E2DEF76F500A0831E /* Alamofire in Frameworks */,
+				2256D36B2DF4B713004F27EB /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,7 +338,7 @@
 			);
 			name = "Shoplet-Admin";
 			packageProductDependencies = (
-				22D5C14D2DEF76F500A0831E /* Alamofire */,
+				2256D36A2DF4B713004F27EB /* Alamofire */,
 			);
 			productName = "Shoplet-Admin";
 			productReference = 227F77FB2DEF1BFC007B0BF9 /* Shoplet-Admin.app */;
@@ -413,7 +413,7 @@
 			);
 			mainGroup = 227F77F22DEF1BFC007B0BF9;
 			packageReferences = (
-				22D5C14C2DEF76F500A0831E /* XCRemoteSwiftPackageReference "Alamofire" */,
+				2256D3692DF4B713004F27EB /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 227F77FC2DEF1BFC007B0BF9 /* Products */;
 			projectDirPath = "";
@@ -800,7 +800,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		22D5C14C2DEF76F500A0831E /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+		2256D3692DF4B713004F27EB /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire";
 			requirement = {
@@ -811,9 +811,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		22D5C14D2DEF76F500A0831E /* Alamofire */ = {
+		2256D36A2DF4B713004F27EB /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 22D5C14C2DEF76F500A0831E /* XCRemoteSwiftPackageReference "Alamofire" */;
+			package = 2256D3692DF4B713004F27EB /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */

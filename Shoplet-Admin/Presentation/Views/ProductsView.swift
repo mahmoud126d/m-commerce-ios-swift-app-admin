@@ -17,41 +17,71 @@ struct ProductsView: View {
     }
     
     var body: some View {
-        VStack{
+        VStack(spacing: 0) {
+            // Top Bar with Title and Add Button
             HStack {
-                Text("\(selectedTab.title)")
-                    .font(.title)
+                Text(selectedTab.title)
+                    .font(.largeTitle)
                     .bold()
+
                 Spacer()
-                Button("+") {
-                    print("add product button pressed")
+
+                Button(action: {
+                    print("Add product button pressed")
                     openAddProductView.toggle()
+                }) {
+                    Image(systemName: "plus")
+                        .foregroundColor(.white)
+                        .padding(10)
+                        .background(Color.blue)
+                        .clipShape(Circle())
                 }
-                .foregroundColor(.blue)
-                .sheet(isPresented: $openAddProductView){
+                .sheet(isPresented: $openAddProductView) {
                     AddProductView(productViewModel: viewModel)
                 }
             }
             .padding()
-            
-            List(viewModel.productList ?? [], id: \.id)  {product in
-                ProductCustomCell(
-                    productTitle: product.title ?? "",
-                    productPrice: product.variants?.first?.price ?? "",
-                    productCategory: product.productType ?? "", productImageURL:product.image?.src ?? "",
-                    deleteAction: {
-                        viewModel.deleteProduct(productId: product.id ?? 0)
-                    },
-                    editAction: {
-                        
-                    }
-                )
-            }            
-            Spacer()
+            .background(Color(UIColor.systemGray6))
+            .cornerRadius(15)
+            .padding(.horizontal)
+            .padding(.top)
+
+            // Product List
+            if let products = viewModel.productList, !products.isEmpty {
+                List(products, id: \.id) { product in
+                    ProductCustomCell(
+                        productTitle: product.title ?? "",
+                        productPrice: product.variants?.first?.price ?? "",
+                        productCategory: product.productType ?? "",
+                        productImageURL: product.image?.src ?? "",
+                        deleteAction: {
+                            viewModel.deleteProduct(productId: product.id ?? 0)
+                        },
+                        editAction: {
+
+                            
+                        }
+                    )
+                    .listRowSeparator(.hidden)
+                    .padding(.vertical, 8)
+                    .listRowInsets(EdgeInsets())
+                }
+                .listStyle(PlainListStyle())
+            } else {
+                Spacer()
+                VStack(spacing: 10) {
+                    ProgressView("Loading products...")
+                }
+                Spacer()
+            }
+
             CustomTabBarView(selectedTab: $selectedTab)
-        }.onAppear{
+        }
+        .background(Color.white.ignoresSafeArea())
+        .onAppear {
             viewModel.fetchProducts()
         }
+
     }
 
 }
