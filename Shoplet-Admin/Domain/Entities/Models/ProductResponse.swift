@@ -15,3 +15,7 @@ struct ProductResponse: Codable {
 struct ProductsResponse: Codable {
     let products: [Product]
 }
+// MARK: - ProductRequest
+struct ProductRequest: Codable {
+    let product: Product
+}

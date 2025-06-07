@@ -13,10 +13,15 @@ class ProductViewModel : ObservableObject {
     
     private let getProductsUseCase: GetProductsUseCaseProtocol
     private let deleteProductUseCase: DeleteProductsUseCaseProtocol
+    private let createProductUseCase: CreateProductsUseCaseProtocol
     
-    init(getProductsUseCase: GetProductsUseCaseProtocol, deleteProductUseCase: DeleteProductsUseCaseProtocol) {
+    init(getProductsUseCase: GetProductsUseCaseProtocol,
+         deleteProductUseCase: DeleteProductsUseCaseProtocol,
+         createProductUseCase: CreateProductsUseCaseProtocol
+    ) {
         self.getProductsUseCase = getProductsUseCase
         self.deleteProductUseCase = deleteProductUseCase
+        self.createProductUseCase = createProductUseCase
     }
     
     func fetchProducts() {
@@ -40,5 +45,10 @@ class ProductViewModel : ObservableObject {
 //            }
         }
         )
+    }
+    func createProduct(product:ProductRequest){
+        createProductUseCase.execute(product: product, completion: {result in
+            
+        })
     }
 }

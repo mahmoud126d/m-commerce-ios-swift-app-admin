@@ -38,4 +38,15 @@ class ProductRepository: ProductRepositoryProtocol {
         }
 
     }
+    func createProduct(product: ProductRequest, completion: @escaping (Result<[ProductRequest], Error>) -> Void) {
+        networkManager.createProduct(product: product){result in
+            switch result {
+            case .success(let response):
+                //completion(.success(products))
+                print(response)
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
 }

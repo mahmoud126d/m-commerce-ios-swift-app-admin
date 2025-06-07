@@ -12,6 +12,8 @@
 		220998BB2DEF9AA700C26E50 /* TabBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220998BA2DEF9AA700C26E50 /* TabBarButton.swift */; };
 		223EBB042DF06DCA0087CFDF /* ProductCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EBB032DF06DCA0087CFDF /* ProductCustomCell.swift */; };
 		223EBB082DF07EA20087CFDF /* DeleteProductUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EBB072DF07EA20087CFDF /* DeleteProductUseCase.swift */; };
+		223EBB0A2DF09DE40087CFDF /* AddProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EBB092DF09DE40087CFDF /* AddProductView.swift */; };
+		223EBB0C2DF0C1C80087CFDF /* CreateProductUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EBB0B2DF0C1C80087CFDF /* CreateProductUseCase.swift */; };
 		227F77FF2DEF1BFC007B0BF9 /* Shoplet_AdminApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F77FE2DEF1BFC007B0BF9 /* Shoplet_AdminApp.swift */; };
 		227F78032DEF1BFD007B0BF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 227F78022DEF1BFD007B0BF9 /* Assets.xcassets */; };
 		227F78062DEF1BFD007B0BF9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 227F78052DEF1BFD007B0BF9 /* Preview Assets.xcassets */; };
@@ -54,6 +56,8 @@
 		220998BA2DEF9AA700C26E50 /* TabBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarButton.swift; sourceTree = "<group>"; };
 		223EBB032DF06DCA0087CFDF /* ProductCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCustomCell.swift; sourceTree = "<group>"; };
 		223EBB072DF07EA20087CFDF /* DeleteProductUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProductUseCase.swift; sourceTree = "<group>"; };
+		223EBB092DF09DE40087CFDF /* AddProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductView.swift; sourceTree = "<group>"; };
+		223EBB0B2DF0C1C80087CFDF /* CreateProductUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProductUseCase.swift; sourceTree = "<group>"; };
 		227F77FB2DEF1BFC007B0BF9 /* Shoplet-Admin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Shoplet-Admin.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		227F77FE2DEF1BFC007B0BF9 /* Shoplet_AdminApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoplet_AdminApp.swift; sourceTree = "<group>"; };
 		227F78022DEF1BFD007B0BF9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -106,6 +110,7 @@
 			children = (
 				223EBB022DF06DBD0087CFDF /* Cells */,
 				220998B62DEF99B500C26E50 /* TabBar */,
+				223EBB092DF09DE40087CFDF /* AddProductView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -311,6 +316,7 @@
 			children = (
 				22D5C1552DEF7BC200A0831E /* GetProductsUseCase.swift */,
 				223EBB072DF07EA20087CFDF /* DeleteProductUseCase.swift */,
+				223EBB0B2DF0C1C80087CFDF /* CreateProductUseCase.swift */,
 			);
 			path = Product;
 			sourceTree = "<group>";
@@ -452,8 +458,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				22D5C1562DEF7BC200A0831E /* GetProductsUseCase.swift in Sources */,
+				223EBB0C2DF0C1C80087CFDF /* CreateProductUseCase.swift in Sources */,
 				22D5C1582DEF7E2400A0831E /* ProductRepository.swift in Sources */,
 				223EBB082DF07EA20087CFDF /* DeleteProductUseCase.swift in Sources */,
+				223EBB0A2DF09DE40087CFDF /* AddProductView.swift in Sources */,
 				22D5C1492DEF757000A0831E /* ProductResponse.swift in Sources */,
 				220998B52DEF996A00C26E50 /* CustomTabBarView.swift in Sources */,
 				22D5C1472DEF748F00A0831E /* APIEndpoints.swift in Sources */,

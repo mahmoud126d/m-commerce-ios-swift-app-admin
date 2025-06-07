@@ -10,7 +10,8 @@ import SwiftUI
 struct ProductsView: View {
     @StateObject private var viewModel: ProductViewModel
     @State var selectedTab: Tab = .products
-    
+    @State var openAddProductView: Bool = false
+
     init(viewModel: ProductViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
@@ -24,8 +25,12 @@ struct ProductsView: View {
                 Spacer()
                 Button("+") {
                     print("add product button pressed")
+                    openAddProductView.toggle()
                 }
                 .foregroundColor(.blue)
+                .sheet(isPresented: $openAddProductView){
+                    AddProductView(productViewModel: viewModel)
+                }
             }
             .padding()
             
@@ -33,12 +38,13 @@ struct ProductsView: View {
                 ProductCustomCell(
                     productTitle: product.title ?? "",
                     productPrice: product.variants?.first?.price ?? "",
-                    productCategory: product.productType ?? "", productImageURL:product.image?.url ?? "",
+                    productCategory: product.productType ?? "", productImageURL:product.image?.src ?? "",
                     deleteAction: {
-                        //viewModel.deleteProduct(productId)
                         viewModel.deleteProduct(productId: product.id ?? 0)
                     },
-                    editAction: {}
+                    editAction: {
+                        
+                    }
                 )
             }            
             Spacer()
@@ -52,5 +58,5 @@ struct ProductsView: View {
 
 #Preview {
     ProductsView(
-        viewModel: ProductViewModel(getProductsUseCase: GetProductsUseCase(repository: ProductRepository()), deleteProductUseCase: DeleteProductsUseCase(repository: ProductRepository())))
+        viewModel: ProductViewModel(getProductsUseCase: GetProductsUseCase(repository: ProductRepository()), deleteProductUseCase: DeleteProductsUseCase(repository: ProductRepository()), createProductUseCase: CreateProductsUseCase(repository: ProductRepository())))
 }
