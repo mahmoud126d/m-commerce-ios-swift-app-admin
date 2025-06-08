@@ -1,0 +1,102 @@
+//
+//  PriceRulesView.swift
+//  Shoplet-Admin
+//
+//  Created by Macos on 08/06/2025.
+//
+
+import SwiftUI
+
+struct PriceRulesView: View {
+    @StateObject var viewModel: PriceRulesViewModel
+    @State private var showErrorAlert = false
+    @State private var openAddPriceRuleView = false
+    var body: some View {
+        NavigationView {
+            VStack {
+                if viewModel.isLoading {
+                    Spacer()
+                    ProgressView("Loading price rules...")
+                    Spacer()
+                } else if let priceRules = viewModel.priceRuleList, !priceRules.isEmpty {
+                    List {
+                        ForEach(priceRules) { rule in
+                            VStack(spacing: 0) {
+                                PriceRuleCustomCell(
+                                    title: rule.title ?? "",
+                                    code: rule.title ?? "",
+                                    value: rule.value ?? "",
+                                    startDate: rule.startsAt ?? "",
+                                    endDate: rule.endsAt ?? "",
+                                    deleteAction: {
+                                        // delete logic
+                                    },
+                                    editAction: {
+                                        // edit logic
+                                    }
+                                )
+                                .padding(.vertical, 8)
+                                .background(Color.white)
+                                .cornerRadius(12)
+                                .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 2)
+
+                                Spacer().frame(height: 10)
+                            }
+                            .listRowSeparator(.hidden)
+                            .listRowInsets(EdgeInsets())
+                            .padding(.horizontal)
+                        }
+                    }
+                    .listStyle(PlainListStyle())
+                } else {
+                    Spacer()
+                    Text("No price rules available.")
+                        .foregroundColor(.gray)
+                    Spacer()
+                }
+            }
+            .navigationTitle("Discount Rules")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        openAddPriceRuleView.toggle()
+                    } label: {
+                        Image(systemName: "plus")
+                            .font(.title2)
+                    }
+                }
+            }
+            .sheet(isPresented: $openAddPriceRuleView) {
+                AddPriceRuleView(priceRulesViewModel: viewModel)
+            }
+            .onAppear {
+                viewModel.getPriceRules()
+            }
+            .alert(isPresented: $showErrorAlert) {
+                Alert(
+                    title: Text("Error"),
+                    message: Text(viewModel.userError?.localizedDescription ?? "An unknown error occurred."),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
+            .onChange(of: viewModel.userError) { error in
+                if error != nil {
+                    showErrorAlert = true
+                }
+            }
+        }
+    }
+}
+
+#Preview {
+    let couponsRepo = CouponsRepository()
+    let viewModel = PriceRulesViewModel(
+        getPriceRulesUseCase: GetPriceRulesUseCase(repository: couponsRepo),
+        createPriceRulesUseCase: CreatePriceRulesUseCase(repository: couponsRepo),
+        deletePriceRulesUseCase: DeletePriceRulesUseCase(repository: couponsRepo),
+        updatePriceRulesUseCase: UpdatePriceRulesUseCase(repository: couponsRepo
+    )
+    )
+
+    return PriceRulesView(viewModel: viewModel)
+}

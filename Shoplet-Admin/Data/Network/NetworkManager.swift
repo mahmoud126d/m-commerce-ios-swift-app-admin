@@ -109,3 +109,33 @@ extension NetworkManager {
 }
 
 struct Empty : Codable{}
+
+// MARK: - Discount Management
+extension NetworkManager {
+    func getPriceRules(completion: @escaping (Result<PriceRulesResponse, NetworkError>) -> Void) {
+        request(endpoint: .priceRules) { (result: Result<PriceRulesResponse, NetworkError>) in
+            switch result {
+            case .success(let response):
+                completion(.success(response))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    func createPriceRule(rule: PriceRuleRequest, completion: @escaping (Result<PriceRuleRequest, NetworkError>) -> Void) {
+        do {
+            let parameters: Parameters = try (JSONSerialization.jsonObject(with: JSONEncoder().encode(rule)) as? [String: Any])!
+            request(endpoint: .priceRules, method: .post, parameters: parameters) { (result: Result<PriceRuleRequest, NetworkError>) in
+                switch result {
+                case .success(let response):
+                    completion(.success(response))
+                case .failure(let error):
+                    print("Error details: \(error.localizedDescription)")
+                    completion(.failure(error))
+                }
+            }
+        } catch {
+            //completion(.failure(error))
+        }
+    }
+}

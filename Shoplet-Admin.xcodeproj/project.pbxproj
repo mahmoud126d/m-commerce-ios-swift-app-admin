@@ -15,6 +15,19 @@
 		223EBB0A2DF09DE40087CFDF /* AddProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EBB092DF09DE40087CFDF /* AddProductView.swift */; };
 		223EBB0C2DF0C1C80087CFDF /* CreateProductUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EBB0B2DF0C1C80087CFDF /* CreateProductUseCase.swift */; };
 		2256D36B2DF4B713004F27EB /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 2256D36A2DF4B713004F27EB /* Alamofire */; };
+		2261FBC62DF5BFD300CF7C02 /* PriceRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2261FBC52DF5BFD300CF7C02 /* PriceRules.swift */; };
+		2261FBC92DF5C02600CF7C02 /* GetPriceRulesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2261FBC82DF5C02600CF7C02 /* GetPriceRulesUseCase.swift */; };
+		2261FBCB2DF5C08A00CF7C02 /* CouponsRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2261FBCA2DF5C08A00CF7C02 /* CouponsRepositoryProtocol.swift */; };
+		2261FBCE2DF5C12600CF7C02 /* PriceRulesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2261FBCD2DF5C12600CF7C02 /* PriceRulesViewModel.swift */; };
+		2261FBD02DF5C16100CF7C02 /* CreatePriceRulesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2261FBCF2DF5C16100CF7C02 /* CreatePriceRulesUseCase.swift */; };
+		2261FBD22DF5C16F00CF7C02 /* DeletePriceRulesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2261FBD12DF5C16F00CF7C02 /* DeletePriceRulesUseCase.swift */; };
+		2261FBD42DF5C18000CF7C02 /* UpdatePriceRulesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2261FBD32DF5C18000CF7C02 /* UpdatePriceRulesUseCase.swift */; };
+		2261FBD82DF5C39700CF7C02 /* PriceRuleCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2261FBD72DF5C39700CF7C02 /* PriceRuleCustomCell.swift */; };
+		2261FBDB2DF5C49400CF7C02 /* PriceRulesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2261FBDA2DF5C49400CF7C02 /* PriceRulesView.swift */; };
+		2261FBDD2DF5C6BB00CF7C02 /* CouponsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2261FBDC2DF5C6BB00CF7C02 /* CouponsRepository.swift */; };
+		2261FBDF2DF5C94500CF7C02 /* AddPriceRuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2261FBDE2DF5C94500CF7C02 /* AddPriceRuleView.swift */; };
+		2261FBE12DF5EA9000CF7C02 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2261FBE02DF5EA9000CF7C02 /* ContentView.swift */; };
+		2261FBE42DF5EE3D00CF7C02 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2261FBE32DF5EE3D00CF7C02 /* DateFormatter.swift */; };
 		226548CB2DF5AD7D0035A84E /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226548CA2DF5AD7D0035A84E /* NetworkError.swift */; };
 		227F77FF2DEF1BFC007B0BF9 /* Shoplet_AdminApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F77FE2DEF1BFC007B0BF9 /* Shoplet_AdminApp.swift */; };
 		227F78032DEF1BFD007B0BF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 227F78022DEF1BFD007B0BF9 /* Assets.xcassets */; };
@@ -59,6 +72,19 @@
 		223EBB072DF07EA20087CFDF /* DeleteProductUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProductUseCase.swift; sourceTree = "<group>"; };
 		223EBB092DF09DE40087CFDF /* AddProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductView.swift; sourceTree = "<group>"; };
 		223EBB0B2DF0C1C80087CFDF /* CreateProductUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProductUseCase.swift; sourceTree = "<group>"; };
+		2261FBC52DF5BFD300CF7C02 /* PriceRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceRules.swift; sourceTree = "<group>"; };
+		2261FBC82DF5C02600CF7C02 /* GetPriceRulesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPriceRulesUseCase.swift; sourceTree = "<group>"; };
+		2261FBCA2DF5C08A00CF7C02 /* CouponsRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponsRepositoryProtocol.swift; sourceTree = "<group>"; };
+		2261FBCD2DF5C12600CF7C02 /* PriceRulesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceRulesViewModel.swift; sourceTree = "<group>"; };
+		2261FBCF2DF5C16100CF7C02 /* CreatePriceRulesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePriceRulesUseCase.swift; sourceTree = "<group>"; };
+		2261FBD12DF5C16F00CF7C02 /* DeletePriceRulesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletePriceRulesUseCase.swift; sourceTree = "<group>"; };
+		2261FBD32DF5C18000CF7C02 /* UpdatePriceRulesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePriceRulesUseCase.swift; sourceTree = "<group>"; };
+		2261FBD72DF5C39700CF7C02 /* PriceRuleCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceRuleCustomCell.swift; sourceTree = "<group>"; };
+		2261FBDA2DF5C49400CF7C02 /* PriceRulesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceRulesView.swift; sourceTree = "<group>"; };
+		2261FBDC2DF5C6BB00CF7C02 /* CouponsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponsRepository.swift; sourceTree = "<group>"; };
+		2261FBDE2DF5C94500CF7C02 /* AddPriceRuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPriceRuleView.swift; sourceTree = "<group>"; };
+		2261FBE02DF5EA9000CF7C02 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		2261FBE32DF5EE3D00CF7C02 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		226548CA2DF5AD7D0035A84E /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		227F77FB2DEF1BFC007B0BF9 /* Shoplet-Admin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Shoplet-Admin.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		227F77FE2DEF1BFC007B0BF9 /* Shoplet_AdminApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoplet_AdminApp.swift; sourceTree = "<group>"; };
@@ -131,8 +157,45 @@
 			isa = PBXGroup;
 			children = (
 				223EBB032DF06DCA0087CFDF /* ProductCustomCell.swift */,
+				2261FBD72DF5C39700CF7C02 /* PriceRuleCustomCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		2261FBC72DF5C00600CF7C02 /* Coupons */ = {
+			isa = PBXGroup;
+			children = (
+				2261FBC82DF5C02600CF7C02 /* GetPriceRulesUseCase.swift */,
+				2261FBCF2DF5C16100CF7C02 /* CreatePriceRulesUseCase.swift */,
+				2261FBD12DF5C16F00CF7C02 /* DeletePriceRulesUseCase.swift */,
+				2261FBD32DF5C18000CF7C02 /* UpdatePriceRulesUseCase.swift */,
+			);
+			path = Coupons;
+			sourceTree = "<group>";
+		};
+		2261FBCC2DF5C10100CF7C02 /* Coupons */ = {
+			isa = PBXGroup;
+			children = (
+				2261FBCD2DF5C12600CF7C02 /* PriceRulesViewModel.swift */,
+			);
+			path = Coupons;
+			sourceTree = "<group>";
+		};
+		2261FBD92DF5C47F00CF7C02 /* Coupons */ = {
+			isa = PBXGroup;
+			children = (
+				2261FBDA2DF5C49400CF7C02 /* PriceRulesView.swift */,
+				2261FBDE2DF5C94500CF7C02 /* AddPriceRuleView.swift */,
+			);
+			path = Coupons;
+			sourceTree = "<group>";
+		};
+		2261FBE22DF5EE2100CF7C02 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				2261FBE32DF5EE3D00CF7C02 /* DateFormatter.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		227F77F22DEF1BFC007B0BF9 = {
@@ -158,6 +221,7 @@
 		227F77FD2DEF1BFC007B0BF9 /* Shoplet-Admin */ = {
 			isa = PBXGroup;
 			children = (
+				2261FBE22DF5EE2100CF7C02 /* Utils */,
 				22D5C1402DEF64EF00A0831E /* Application */,
 				22D5C1382DEF633A00A0831E /* Data */,
 				22D5C1372DEF630D00A0831E /* Presentation */,
@@ -232,6 +296,7 @@
 		22D5C13A2DEF636F00A0831E /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				2261FBC72DF5C00600CF7C02 /* Coupons */,
 				22D5C1542DEF7BAD00A0831E /* Product */,
 			);
 			path = UseCases;
@@ -249,6 +314,7 @@
 			isa = PBXGroup;
 			children = (
 				22D5C1592DEF7F1D00A0831E /* ProductRepositoryProtocol.swift */,
+				2261FBCA2DF5C08A00CF7C02 /* CouponsRepositoryProtocol.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -257,6 +323,7 @@
 			isa = PBXGroup;
 			children = (
 				22D5C1572DEF7E2400A0831E /* ProductRepository.swift */,
+				2261FBDC2DF5C6BB00CF7C02 /* CouponsRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -276,6 +343,7 @@
 			isa = PBXGroup;
 			children = (
 				227F77FE2DEF1BFC007B0BF9 /* Shoplet_AdminApp.swift */,
+				2261FBE02DF5EA9000CF7C02 /* ContentView.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -285,6 +353,7 @@
 			children = (
 				22D5C1422DEF692000A0831E /* Product.swift */,
 				22D5C1482DEF757000A0831E /* ProductResponse.swift */,
+				2261FBC52DF5BFD300CF7C02 /* PriceRules.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -292,6 +361,7 @@
 		22D5C14F2DEF78B800A0831E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2261FBD92DF5C47F00CF7C02 /* Coupons */,
 				220998B32DEF994700C26E50 /* CustomViews */,
 				22D5C15B2DEF857200A0831E /* ProductsView.swift */,
 			);
@@ -301,6 +371,7 @@
 		22D5C1502DEF78BE00A0831E /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				2261FBCC2DF5C10100CF7C02 /* Coupons */,
 				22D5C1512DEF793B00A0831E /* Product */,
 			);
 			path = ViewModels;
@@ -460,12 +531,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2261FBE42DF5EE3D00CF7C02 /* DateFormatter.swift in Sources */,
 				22D5C1562DEF7BC200A0831E /* GetProductsUseCase.swift in Sources */,
+				2261FBC92DF5C02600CF7C02 /* GetPriceRulesUseCase.swift in Sources */,
 				223EBB0C2DF0C1C80087CFDF /* CreateProductUseCase.swift in Sources */,
 				22D5C1582DEF7E2400A0831E /* ProductRepository.swift in Sources */,
+				2261FBD42DF5C18000CF7C02 /* UpdatePriceRulesUseCase.swift in Sources */,
 				223EBB082DF07EA20087CFDF /* DeleteProductUseCase.swift in Sources */,
+				2261FBD82DF5C39700CF7C02 /* PriceRuleCustomCell.swift in Sources */,
 				223EBB0A2DF09DE40087CFDF /* AddProductView.swift in Sources */,
+				2261FBDB2DF5C49400CF7C02 /* PriceRulesView.swift in Sources */,
+				2261FBC62DF5BFD300CF7C02 /* PriceRules.swift in Sources */,
 				22D5C1492DEF757000A0831E /* ProductResponse.swift in Sources */,
+				2261FBE12DF5EA9000CF7C02 /* ContentView.swift in Sources */,
 				220998B52DEF996A00C26E50 /* CustomTabBarView.swift in Sources */,
 				22D5C1472DEF748F00A0831E /* APIEndpoints.swift in Sources */,
 				22D5C14B2DEF75B300A0831E /* NetworkManager.swift in Sources */,
@@ -475,8 +553,14 @@
 				22D5C15A2DEF7F1D00A0831E /* ProductRepositoryProtocol.swift in Sources */,
 				22D5C15C2DEF857200A0831E /* ProductsView.swift in Sources */,
 				22D5C1452DEF73EC00A0831E /* Configuration.swift in Sources */,
+				2261FBDF2DF5C94500CF7C02 /* AddPriceRuleView.swift in Sources */,
 				220998BB2DEF9AA700C26E50 /* TabBarButton.swift in Sources */,
 				22D5C1532DEF794C00A0831E /* ProductsViewModel.swift in Sources */,
+				2261FBD02DF5C16100CF7C02 /* CreatePriceRulesUseCase.swift in Sources */,
+				2261FBCB2DF5C08A00CF7C02 /* CouponsRepositoryProtocol.swift in Sources */,
+				2261FBCE2DF5C12600CF7C02 /* PriceRulesViewModel.swift in Sources */,
+				2261FBDD2DF5C6BB00CF7C02 /* CouponsRepository.swift in Sources */,
+				2261FBD22DF5C16F00CF7C02 /* DeletePriceRulesUseCase.swift in Sources */,
 				22D5C1432DEF692000A0831E /* Product.swift in Sources */,
 				226548CB2DF5AD7D0035A84E /* NetworkError.swift in Sources */,
 			);

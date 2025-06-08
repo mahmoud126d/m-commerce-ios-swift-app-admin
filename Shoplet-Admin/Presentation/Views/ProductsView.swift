@@ -78,7 +78,6 @@ struct ProductsView: View {
                 Spacer()
             }
 
-            CustomTabBarView(selectedTab: $selectedTab)
         }
         .background(Color.white.ignoresSafeArea())
         .onAppear {
