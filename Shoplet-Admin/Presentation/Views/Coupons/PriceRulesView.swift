@@ -11,6 +11,7 @@ struct PriceRulesView: View {
     @StateObject var viewModel: PriceRulesViewModel
     @State private var showErrorAlert = false
     @State private var openAddPriceRuleView = false
+    @State private var selectedPriceRule: PriceRule?
     var body: some View {
         NavigationView {
             VStack {
@@ -29,10 +30,19 @@ struct PriceRulesView: View {
                                     startDate: rule.startsAt ?? "",
                                     endDate: rule.endsAt ?? "",
                                     deleteAction: {
-                                        // delete logic
+                                        viewModel.deletePriceRule(id: rule.id ?? 0)
                                     },
                                     editAction: {
-                                        // edit logic
+                                        print("edit button pressed")
+                                        print("Setting selectedPriceRule to: \(rule.title ?? "nil")")
+                                        
+                                        self.selectedPriceRule = rule
+                                        
+                                        
+                                        DispatchQueue.main.async {
+                                            print("Opening sheet with selectedPriceRule: \(self.selectedPriceRule?.title ?? "nil")")
+                                            self.openAddPriceRuleView = true
+                                        }
                                     }
                                 )
                                 .padding(.vertical, 8)
@@ -66,8 +76,10 @@ struct PriceRulesView: View {
                     }
                 }
             }
-            .sheet(isPresented: $openAddPriceRuleView) {
-                AddPriceRuleView(priceRulesViewModel: viewModel)
+            .sheet(isPresented: $openAddPriceRuleView, onDismiss: {
+                selectedPriceRule = nil
+            }) {
+                AddPriceRuleView(priceRulesViewModel: viewModel, selectedPriceRule: selectedPriceRule)
             }
             .onAppear {
                 viewModel.getPriceRules()

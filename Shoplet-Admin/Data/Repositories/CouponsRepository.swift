@@ -35,5 +35,24 @@ class CouponsRepository: CouponsRepositoryProtocol{
             }
         }
     }
-    
+    func deletePriceRule(id: Int, completion: @escaping (Result<Empty, NetworkError>) -> Void) {
+        networkManager.deletePriceRule(id: id){result in
+            switch result {
+            case .success(let response):
+                completion(.success(response))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    func updatePriceRule(priceRule:PriceRuleRequest, completion: @escaping (Result<PriceRuleRequest, NetworkError>) -> Void) {
+        networkManager.updatePriceRule(priceRuleRequest: priceRule){result in
+            switch result {
+            case .success(let response):
+                completion(.success(response))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
 }

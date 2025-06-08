@@ -10,4 +10,6 @@ import Foundation
 protocol CouponsRepositoryProtocol {
     func getPriceRules(completion: @escaping (Result<PriceRulesResponse, NetworkError>) -> Void)
     func createPriceRule(priceRule:PriceRuleRequest,completion: @escaping (Result<PriceRuleRequest, NetworkError>) -> Void)
+    func deletePriceRule(id:Int,completion: @escaping (Result<Empty, NetworkError>) -> Void)
+    func updatePriceRule(priceRule:PriceRuleRequest, completion: @escaping (Result<PriceRuleRequest, NetworkError>) -> Void)
 }

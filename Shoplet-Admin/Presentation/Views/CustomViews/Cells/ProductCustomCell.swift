@@ -65,8 +65,7 @@ struct ProductCustomCell: View {
                                 .foregroundColor(.red)
                                 .frame(width: 44, height: 44)
                         }
-                        .buttonStyle(PlainButtonStyle())
-                        
+                        .buttonStyle(PlainButtonStyle())   
                         // Edit Button
                         Button(action: {
                             print("edit button pressed")

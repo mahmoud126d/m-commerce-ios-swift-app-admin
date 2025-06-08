@@ -39,14 +39,44 @@ class PriceRulesViewModel: ObservableObject{
     }
     func createPriceRule(priceRule:PriceRuleRequest){
         createPriceRulesUseCase.execute(priceRule: priceRule){ [weak self] result in
-                switch result{
-                case .success(_):
-                    self?.isLoading = false
-                    self?.userError = nil
-                    self?.priceRuleList?.append(priceRule.priceRule)
-                case .failure(let error):
-                    self?.userError = error
+            switch result{
+            case .success(_):
+                self?.isLoading = false
+                self?.userError = nil
+                self?.priceRuleList?.append(priceRule.priceRule)
+            case .failure(let error):
+                self?.userError = error
+            }
+        }
+    }
+    func deletePriceRule(id:Int){
+        deletePriceRulesUseCase.execute(id: id){ [weak self] result in
+            switch result{
+            case .success(_):
+                self?.isLoading = false
+                self?.userError = nil
+                if let index = self?.priceRuleList?.firstIndex(where: { $0.id == id }) {
+                    self?.priceRuleList?.remove(at: index)
                 }
+            case .failure(let error):
+                self?.userError = error
+            }
+        }
+    }
+    func updatePriceRule(priceRule:PriceRuleRequest){
+        updatePriceRulesUseCase.execute(priceRule: priceRule){ [weak self] result in
+            switch result{
+            case .success(_):
+                self?.isLoading = false
+                self?.userError = nil
+                if let index = self?.priceRuleList?.firstIndex(where: { $0.id == priceRule.priceRule.id }) {
+                    self?.priceRuleList?.remove(at: index)
+                }
+                self?.priceRuleList?.append(priceRule.priceRule)
+            case .failure(let error):
+                self?.userError = error
+            }
+            
         }
     }
 }

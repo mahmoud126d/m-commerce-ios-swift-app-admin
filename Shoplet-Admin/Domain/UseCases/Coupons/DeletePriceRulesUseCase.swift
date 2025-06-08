@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - Get PriceRules UseCase
 protocol DeletePriceRulesUseCaseProtocol {
-    func execute(completion: @escaping (Result<PriceRulesResponse, NetworkError>) -> Void)
+    func execute(id:Int,completion: @escaping (Result<Empty, NetworkError>) -> Void)
 }
 
 class DeletePriceRulesUseCase: DeletePriceRulesUseCaseProtocol {
@@ -20,8 +20,8 @@ class DeletePriceRulesUseCase: DeletePriceRulesUseCaseProtocol {
         self.repository = repository
     }
     
-    func execute(completion: @escaping (Result<PriceRulesResponse, NetworkError>) -> Void) {
-        repository.getPriceRules { result in
+    func execute(id:Int,completion: @escaping (Result<Empty, NetworkError>) -> Void) {
+        repository.deletePriceRule(id: id) { result in
             completion(result)
         }
     }

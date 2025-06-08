@@ -42,16 +42,26 @@ struct PriceRuleCustomCell: View {
                     
                     Spacer()
 
-                    HStack(spacing: 10) {
-                        Button(action: editAction) {
-                            Image(systemName: "pencil")
-                                .foregroundColor(.blue)
-                        }
-
-                        Button(action: deleteAction) {
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            print("delete button pressed")
+                            deleteAction()
+                        }) {
                             Image(systemName: "trash")
                                 .foregroundColor(.red)
+                                .frame(width: 44, height: 44)
                         }
+                        .buttonStyle(PlainButtonStyle())
+                        Button(action: {
+                            print("edit button pressed")
+                            editAction()
+                        }) {
+                            Image(systemName: "pencil")
+                                .foregroundColor(.blue)
+                                .frame(width: 44, height: 44)
+                        }
+                        .buttonStyle(PlainButtonStyle())
                     }
                 }
                 .padding()

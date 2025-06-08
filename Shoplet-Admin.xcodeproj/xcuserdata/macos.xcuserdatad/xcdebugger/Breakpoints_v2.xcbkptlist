@@ -3,4 +3,70 @@
    uuid = "2B1DC0D0-429B-4672-9FE6-6AF30FF0FD02"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "717562EB-9488-47A7-A997-B3B6085F8329"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shoplet-Admin/Presentation/Views/Coupons/AddPriceRuleView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D9EECE27-507B-42CD-AF3C-15E93B015DAD"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shoplet-Admin/Presentation/Views/Coupons/AddPriceRuleView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "135"
+            endingLineNumber = "135"
+            landmarkName = "savePriceRule()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "D9EECE27-507B-42CD-AF3C-15E93B015DAD - ba9ee4acf26ba84d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Shoplet_Admin.AddPriceRuleView.savePriceRule() -&gt; ()"
+                  moduleName = "Shoplet-Admin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macos/Documents/m-commerce-ios-swift-app-admin/Shoplet-Admin/Presentation/Views/Coupons/AddPriceRuleView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "135"
+                  endingLineNumber = "135"
+                  offsetFromSymbolStart = "5935">
+               </Location>
+               <Location
+                  uuid = "D9EECE27-507B-42CD-AF3C-15E93B015DAD - ba9ee4acf26ba84d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Shoplet_Admin.AddPriceRuleView.savePriceRule() -&gt; ()"
+                  moduleName = "Shoplet-Admin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macos/Documents/m-commerce-ios-swift-app-admin/Shoplet-Admin/Presentation/Views/Coupons/AddPriceRuleView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "135"
+                  endingLineNumber = "135"
+                  offsetFromSymbolStart = "7952">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

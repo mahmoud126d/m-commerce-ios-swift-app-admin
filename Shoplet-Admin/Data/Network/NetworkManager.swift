@@ -138,4 +138,30 @@ extension NetworkManager {
             //completion(.failure(error))
         }
     }
+    func deletePriceRule(id: Int, completion: @escaping (Result<Empty, NetworkError>) -> Void) {
+        request(endpoint: .priceRule(id: id),method: .delete) { (result: Result<Empty, NetworkError>) in
+            switch result {
+            case .success(let response):
+                completion(.success(response))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    func updatePriceRule(priceRuleRequest: PriceRuleRequest, completion: @escaping (Result<PriceRuleRequest, NetworkError>) -> Void) {
+            do {
+                let parameters: Parameters = try (JSONSerialization.jsonObject(with: JSONEncoder().encode(priceRuleRequest)) as? [String: Any])!
+                request(endpoint: .priceRule(id: priceRuleRequest.priceRule.id ?? 0), method: .put, parameters: parameters) { (result: Result<PriceRuleRequest, NetworkError>) in
+                    switch result {
+                    case .success(let response):
+                        completion(.success(response))
+                    case .failure(let error):
+                        print("Error details: \(error.localizedDescription)")
+                        completion(.failure(error))
+                    }
+                }
+            } catch {
+                //completion(.failure(error))
+            }
+    }
 }
