@@ -16,7 +16,7 @@ struct Shoplet_AdminApp: App {
             let getProductsUseCase = GetProductsUseCase(repository: repository)
             let deleteProductsUseCase = DeleteProductsUseCase(repository: repository)
             let createProductsUseCase = CreateProductsUseCase(repository: repository)
-            let viewModel = ProductViewModel(
+            let viewModel = ProductsViewModel(
                 getProductsUseCase: getProductsUseCase,
                 deleteProductUseCase: deleteProductsUseCase, 
                 createProductUseCase: createProductsUseCase)

@@ -9,8 +9,8 @@ import Foundation
 // MARK: - Product Repository Protocol
 
 protocol ProductRepositoryProtocol {
-    func getProducts(completion: @escaping (Result<[Product], Error>) -> Void)
-    func deleteProduct(productId:Int,completion: @escaping (Result<[Product], Error>) -> Void)
-    func createProduct(product:ProductRequest,completion: @escaping (Result<[ProductRequest], Error>) -> Void)
+    func getProducts(completion: @escaping (Result<ProductsResponse, NetworkError>) -> Void)
+    func deleteProduct(productId:Int,completion: @escaping (Result<Empty, NetworkError>) -> Void)
+    func createProduct(product:ProductRequest,completion: @escaping (Result<ProductRequest, NetworkError>) -> Void)
 }
 

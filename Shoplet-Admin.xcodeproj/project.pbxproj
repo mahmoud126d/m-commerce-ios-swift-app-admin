@@ -15,6 +15,7 @@
 		223EBB0A2DF09DE40087CFDF /* AddProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EBB092DF09DE40087CFDF /* AddProductView.swift */; };
 		223EBB0C2DF0C1C80087CFDF /* CreateProductUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EBB0B2DF0C1C80087CFDF /* CreateProductUseCase.swift */; };
 		2256D36B2DF4B713004F27EB /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 2256D36A2DF4B713004F27EB /* Alamofire */; };
+		226548CB2DF5AD7D0035A84E /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226548CA2DF5AD7D0035A84E /* NetworkError.swift */; };
 		227F77FF2DEF1BFC007B0BF9 /* Shoplet_AdminApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F77FE2DEF1BFC007B0BF9 /* Shoplet_AdminApp.swift */; };
 		227F78032DEF1BFD007B0BF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 227F78022DEF1BFD007B0BF9 /* Assets.xcassets */; };
 		227F78062DEF1BFD007B0BF9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 227F78052DEF1BFD007B0BF9 /* Preview Assets.xcassets */; };
@@ -26,7 +27,7 @@
 		22D5C1472DEF748F00A0831E /* APIEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C1462DEF748F00A0831E /* APIEndpoints.swift */; };
 		22D5C1492DEF757000A0831E /* ProductResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C1482DEF757000A0831E /* ProductResponse.swift */; };
 		22D5C14B2DEF75B300A0831E /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C14A2DEF75B300A0831E /* NetworkManager.swift */; };
-		22D5C1532DEF794C00A0831E /* ProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C1522DEF794C00A0831E /* ProductViewModel.swift */; };
+		22D5C1532DEF794C00A0831E /* ProductsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C1522DEF794C00A0831E /* ProductsViewModel.swift */; };
 		22D5C1562DEF7BC200A0831E /* GetProductsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C1552DEF7BC200A0831E /* GetProductsUseCase.swift */; };
 		22D5C1582DEF7E2400A0831E /* ProductRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C1572DEF7E2400A0831E /* ProductRepository.swift */; };
 		22D5C15A2DEF7F1D00A0831E /* ProductRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C1592DEF7F1D00A0831E /* ProductRepositoryProtocol.swift */; };
@@ -58,6 +59,7 @@
 		223EBB072DF07EA20087CFDF /* DeleteProductUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProductUseCase.swift; sourceTree = "<group>"; };
 		223EBB092DF09DE40087CFDF /* AddProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductView.swift; sourceTree = "<group>"; };
 		223EBB0B2DF0C1C80087CFDF /* CreateProductUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProductUseCase.swift; sourceTree = "<group>"; };
+		226548CA2DF5AD7D0035A84E /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		227F77FB2DEF1BFC007B0BF9 /* Shoplet-Admin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Shoplet-Admin.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		227F77FE2DEF1BFC007B0BF9 /* Shoplet_AdminApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoplet_AdminApp.swift; sourceTree = "<group>"; };
 		227F78022DEF1BFD007B0BF9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -72,7 +74,7 @@
 		22D5C1462DEF748F00A0831E /* APIEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoints.swift; sourceTree = "<group>"; };
 		22D5C1482DEF757000A0831E /* ProductResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductResponse.swift; sourceTree = "<group>"; };
 		22D5C14A2DEF75B300A0831E /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		22D5C1522DEF794C00A0831E /* ProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewModel.swift; sourceTree = "<group>"; };
+		22D5C1522DEF794C00A0831E /* ProductsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsViewModel.swift; sourceTree = "<group>"; };
 		22D5C1552DEF7BC200A0831E /* GetProductsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProductsUseCase.swift; sourceTree = "<group>"; };
 		22D5C1572DEF7E2400A0831E /* ProductRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRepository.swift; sourceTree = "<group>"; };
 		22D5C1592DEF7F1D00A0831E /* ProductRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRepositoryProtocol.swift; sourceTree = "<group>"; };
@@ -265,6 +267,7 @@
 				22D5C1442DEF73EC00A0831E /* Configuration.swift */,
 				22D5C1462DEF748F00A0831E /* APIEndpoints.swift */,
 				22D5C14A2DEF75B300A0831E /* NetworkManager.swift */,
+				226548CA2DF5AD7D0035A84E /* NetworkError.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -306,7 +309,7 @@
 		22D5C1512DEF793B00A0831E /* Product */ = {
 			isa = PBXGroup;
 			children = (
-				22D5C1522DEF794C00A0831E /* ProductViewModel.swift */,
+				22D5C1522DEF794C00A0831E /* ProductsViewModel.swift */,
 			);
 			path = Product;
 			sourceTree = "<group>";
@@ -473,8 +476,9 @@
 				22D5C15C2DEF857200A0831E /* ProductsView.swift in Sources */,
 				22D5C1452DEF73EC00A0831E /* Configuration.swift in Sources */,
 				220998BB2DEF9AA700C26E50 /* TabBarButton.swift in Sources */,
-				22D5C1532DEF794C00A0831E /* ProductViewModel.swift in Sources */,
+				22D5C1532DEF794C00A0831E /* ProductsViewModel.swift in Sources */,
 				22D5C1432DEF692000A0831E /* Product.swift in Sources */,
+				226548CB2DF5AD7D0035A84E /* NetworkError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

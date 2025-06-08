@@ -16,7 +16,7 @@ class ProductRepository: ProductRepositoryProtocol {
             self.networkManager = networkManager
         }
         
-        func getProducts(completion: @escaping (Result<[Product], Error>) -> Void) {
+        func getProducts(completion: @escaping (Result<ProductsResponse, NetworkError>) -> Void) {
             networkManager.getProducts { result in
                 switch result {
                 case .success(let products):
@@ -26,23 +26,22 @@ class ProductRepository: ProductRepositoryProtocol {
                 }
             }
         }
-    func deleteProduct(productId: Int, completion: @escaping (Result<[Product], Error>) -> Void) {
+    func deleteProduct(productId: Int, completion: @escaping (Result<Empty, NetworkError>) -> Void) {
         networkManager.deleteProduct(id: productId){result in
             switch result {
             case .success(let response):
-                //completion(.success(products))
-                print(response)
+                completion(.success(response))
             case .failure(let error):
                 completion(.failure(error))
             }
         }
 
     }
-    func createProduct(product: ProductRequest, completion: @escaping (Result<[ProductRequest], Error>) -> Void) {
+    func createProduct(product: ProductRequest, completion: @escaping (Result<ProductRequest, NetworkError>) -> Void) {
         networkManager.createProduct(product: product){result in
             switch result {
             case .success(let response):
-                //completion(.success(products))
+                completion(.success(response))
                 print(response)
             case .failure(let error):
                 completion(.failure(error))

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol CreateProductsUseCaseProtocol {
-    func execute(product:ProductRequest,completion: @escaping (Result<[ProductRequest], Error>) -> Void)
+    func execute(product:ProductRequest,completion: @escaping (Result<ProductRequest, NetworkError>) -> Void)
 }
 
 class CreateProductsUseCase: CreateProductsUseCaseProtocol {
@@ -19,7 +19,7 @@ class CreateProductsUseCase: CreateProductsUseCaseProtocol {
         self.repository = repository
     }
     
-    func execute(product:ProductRequest,completion: @escaping (Result<[ProductRequest], Error>) -> Void) {
+    func execute(product:ProductRequest,completion: @escaping (Result<ProductRequest, NetworkError>) -> Void) {
         repository.createProduct(product: product) { result in
             completion(result)
         }

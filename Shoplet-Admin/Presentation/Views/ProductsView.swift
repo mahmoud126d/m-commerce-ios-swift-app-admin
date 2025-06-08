@@ -8,17 +8,19 @@
 import SwiftUI
 
 struct ProductsView: View {
-    @StateObject private var viewModel: ProductViewModel
+    @StateObject private var viewModel: ProductsViewModel
     @State var selectedTab: Tab = .products
     @State var openAddProductView: Bool = false
 
-    init(viewModel: ProductViewModel) {
+    @State private var showAlert = false
+
+    init(viewModel: ProductsViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
     
     var body: some View {
         VStack(spacing: 0) {
-            // Top Bar with Title and Add Button
+            // Top Bar
             HStack {
                 Text(selectedTab.title)
                     .font(.largeTitle)
@@ -27,7 +29,6 @@ struct ProductsView: View {
                 Spacer()
 
                 Button(action: {
-                    print("Add product button pressed")
                     openAddProductView.toggle()
                 }) {
                     Image(systemName: "plus")
@@ -46,8 +47,12 @@ struct ProductsView: View {
             .padding(.horizontal)
             .padding(.top)
 
-            // Product List
-            if let products = viewModel.productList, !products.isEmpty {
+            // Main Content
+            if viewModel.isLoading {
+                Spacer()
+                ProgressView("Loading products...")
+                Spacer()
+            } else if let products = viewModel.productList, !products.isEmpty {
                 List(products, id: \.id) { product in
                     ProductCustomCell(
                         productTitle: product.title ?? "",
@@ -58,8 +63,7 @@ struct ProductsView: View {
                             viewModel.deleteProduct(productId: product.id ?? 0)
                         },
                         editAction: {
-
-                            
+                            // edit logic
                         }
                     )
                     .listRowSeparator(.hidden)
@@ -69,9 +73,8 @@ struct ProductsView: View {
                 .listStyle(PlainListStyle())
             } else {
                 Spacer()
-                VStack(spacing: 10) {
-                    ProgressView("Loading products...")
-                }
+                Text("No products found.")
+                    .foregroundColor(.gray)
                 Spacer()
             }
 
@@ -81,12 +84,21 @@ struct ProductsView: View {
         .onAppear {
             viewModel.fetchProducts()
         }
-
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text("Error"),
+                message: Text(viewModel.userError?.localizedDescription ?? "Unknown error"),
+                dismissButton: .default(Text("OK"))
+            )
+        }
+        .onChange(of: viewModel.userError) { newValue in
+            showAlert = newValue != nil
+        }
     }
 
 }
 
 #Preview {
     ProductsView(
-        viewModel: ProductViewModel(getProductsUseCase: GetProductsUseCase(repository: ProductRepository()), deleteProductUseCase: DeleteProductsUseCase(repository: ProductRepository()), createProductUseCase: CreateProductsUseCase(repository: ProductRepository())))
+        viewModel: ProductsViewModel(getProductsUseCase: GetProductsUseCase(repository: ProductRepository()), deleteProductUseCase: DeleteProductsUseCase(repository: ProductRepository()), createProductUseCase: CreateProductsUseCase(repository: ProductRepository())))
 }

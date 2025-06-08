@@ -21,7 +21,7 @@ struct AddProductView: View {
     @State private var productColorTextFieldValue = ""
     @State private var productQuantityTextFieldValue = ""
     
-    let productViewModel:ProductViewModel
+    let productViewModel:ProductsViewModel
     
     var body: some View {
         ScrollView {
@@ -163,7 +163,7 @@ struct AddProductView: View {
 }
 
 #Preview {
-    AddProductView(productViewModel: ProductViewModel(getProductsUseCase: GetProductsUseCase(repository: ProductRepository() ), deleteProductUseCase: DeleteProductsUseCase(repository: ProductRepository()), createProductUseCase: CreateProductsUseCase(repository: ProductRepository())))
+    AddProductView(productViewModel: ProductsViewModel(getProductsUseCase: GetProductsUseCase(repository: ProductRepository() ), deleteProductUseCase: DeleteProductsUseCase(repository: ProductRepository()), createProductUseCase: CreateProductsUseCase(repository: ProductRepository())))
 }
 extension UIImage {
     func toBase64(compressionQuality: CGFloat = 0.8) -> String? {

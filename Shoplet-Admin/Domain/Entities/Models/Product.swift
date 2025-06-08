@@ -210,8 +210,8 @@ struct ProductImage: Codable {
         case adminGraphqlAPIID = "admin_graphql_api_id"
         case width, height, src
         case variantIDS = "variant_ids"
-        case attachment  // ← Added this
-        case filename    // ← Added this
+        case attachment 
+        case filename
     }
 
     init(
@@ -226,8 +226,8 @@ struct ProductImage: Codable {
         height: Int? = nil,
         src: String? = nil,
         variantIDS: [Int]? = nil,
-        attachment: String? = nil,  // ← Added this
-        filename: String? = nil     // ← Added this
+        attachment: String? = nil,
+        filename: String? = nil
     ) {
         self.id = id
         self.alt = alt

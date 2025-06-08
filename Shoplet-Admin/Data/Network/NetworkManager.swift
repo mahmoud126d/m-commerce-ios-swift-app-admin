@@ -28,7 +28,7 @@ class NetworkManager{
             endpoint: APIEndpoints,
             method: HTTPMethod = .get,
             parameters: Parameters? = nil,
-            completion: @escaping (Result<T, Error>) -> Void
+            completion: @escaping (Result<T, NetworkError>) -> Void
         ) {
         
             session.request(
@@ -44,7 +44,21 @@ class NetworkManager{
                 case .success(let data):
                     completion(.success(data))
                 case .failure(let error):
-                    completion(.failure(error))
+                    do {
+                        guard let data = response.data else {
+                            completion(.failure(.invalidResponse))
+                            return
+                        }
+                        let json = try JSONSerialization.jsonObject(with: data, options: [])
+                        if (json as? [String: Any])?["Message"] is String {
+                            completion(.failure(.decodingError))
+                        } else {
+                            completion(.failure(.serverError(error.localizedDescription)))
+                        }
+                    } catch {
+                        completion(.failure(.other(error.localizedDescription)))
+                    }
+                    break
                 }
             }
         }
@@ -53,22 +67,22 @@ class NetworkManager{
 // MARK: - Product Management
 extension NetworkManager {
     
-    func getProducts(completion: @escaping (Result<[Product], Error>) -> Void) {
-        request(endpoint: .products) { (result: Result<ProductsResponse, Error>) in
+    func getProducts(completion: @escaping (Result<ProductsResponse, NetworkError>) -> Void) {
+        request(endpoint: .products) { (result: Result<ProductsResponse, NetworkError>) in
             switch result {
             case .success(let response):
-                completion(.success(response.products))
+                completion(.success(response))
             case .failure(let error):
                 completion(.failure(error))
             }
         }
     }
     
-    func deleteProduct(id: Int, completion: @escaping (Result<Void, Error>) -> Void) {
-        request(endpoint: .product(id: id),method: .delete) { (result: Result<ProductResponse, Error>) in
+    func deleteProduct(id: Int, completion: @escaping (Result<Empty, NetworkError>) -> Void) {
+        request(endpoint: .product(id: id),method: .delete) { (result: Result<Empty, NetworkError>) in
             switch result {
             case .success(let response):
-                //completion(.success(response.products))
+                completion(.success(response))
                 print(response)
             case .failure(let error):
                 completion(.failure(error))
@@ -76,30 +90,22 @@ extension NetworkManager {
         }
     }
     
-    func createProduct(product: ProductRequest, completion: @escaping (Result<Product, Error>) -> Void) {
+    func createProduct(product: ProductRequest, completion: @escaping (Result<ProductRequest, NetworkError>) -> Void) {
         do {
             let parameters: Parameters = try (JSONSerialization.jsonObject(with: JSONEncoder().encode(product)) as? [String: Any])!
-            request(endpoint: .products, method: .post, parameters: parameters) { (result: Result<ProductResponse, Error>) in
+            request(endpoint: .products, method: .post, parameters: parameters) { (result: Result<ProductRequest, NetworkError>) in
                 switch result {
                 case .success(let response):
-                    completion(.success(response.product))
+                    completion(.success(response))
                 case .failure(let error):
                     print("Error details: \(error.localizedDescription)")
-                    if let afError = error as? AFError {
-                        switch afError {
-                        case .responseValidationFailed(let reason):
-                            print("Validation failed: \(reason)")
-                        case .responseSerializationFailed(let reason):
-                            print("Serialization failed: \(reason)")
-                        default:
-                            print("AF Error: \(afError)")
-                        }
-                    }
                     completion(.failure(error))
                 }
             }
         } catch {
-            completion(.failure(error))
+            //completion(.failure(error))
         }
     }
 }
+
+struct Empty : Codable{}
