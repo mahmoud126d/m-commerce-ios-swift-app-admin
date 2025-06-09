@@ -55,4 +55,46 @@ class CouponsRepository: CouponsRepositoryProtocol{
             }
         }
     }
+    func getDiscountCodes(priceRuleId: Int, completion: @escaping (Result<DiscountCodesResponse, NetworkError>) -> Void) {
+        networkManager.getDiscountCodes(priceRuleId: priceRuleId){ result in
+            switch result {
+            case .success(let discountCodes):
+                completion(.success(discountCodes))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func createDiscountCode(priceRuleId: Int, discountCode: DiscountCodesRequest, completion: @escaping (Result<DiscountCodesRequest, NetworkError>) -> Void) {
+        networkManager.createDiscountCode(priceRuleId: priceRuleId, discountCode: discountCode){ result in
+            switch result {
+            case .success(let response):
+                completion(.success(response))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func deleteDiscountCode(ruleId: Int, codeId: Int, completion: @escaping (Result<Empty, NetworkError>) -> Void) {
+        networkManager.deleteDiscountCode(ruleId: ruleId, codeId: codeId){result in
+            switch result {
+            case .success(let response):
+                completion(.success(response))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    func updateDiscountCode(priceRuleId: Int, discountCode: DiscountCodesRequest, completion: @escaping (Result<DiscountCodesRequest, NetworkError>) -> Void) {
+        networkManager.updateDiscountCode(priceRuleId: priceRuleId, discountCode: discountCode){result in
+                switch result {
+                case .success(let response):
+                    completion(.success(response))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+        }
+    }
 }

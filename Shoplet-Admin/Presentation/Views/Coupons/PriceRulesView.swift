@@ -12,8 +12,11 @@ struct PriceRulesView: View {
     @State private var showErrorAlert = false
     @State private var openAddPriceRuleView = false
     @State private var selectedPriceRule: PriceRule?
+    @State private var selectedRuleId: Int? = nil
+    @State private var isShowingDiscountCodesView = false
+    
     var body: some View {
-        NavigationView {
+         NavigationView {
             VStack {
                 if viewModel.isLoading {
                     Spacer()
@@ -35,10 +38,7 @@ struct PriceRulesView: View {
                                     editAction: {
                                         print("edit button pressed")
                                         print("Setting selectedPriceRule to: \(rule.title ?? "nil")")
-                                        
                                         self.selectedPriceRule = rule
-                                        
-                                        
                                         DispatchQueue.main.async {
                                             print("Opening sheet with selectedPriceRule: \(self.selectedPriceRule?.title ?? "nil")")
                                             self.openAddPriceRuleView = true
@@ -52,12 +52,26 @@ struct PriceRulesView: View {
 
                                 Spacer().frame(height: 10)
                             }
+                            .onTapGesture {
+                                print("Tapped rule id: \(rule.id ?? 0)")
+                                selectedRuleId = rule.id
+                                isShowingDiscountCodesView = true
+                            }
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets())
                             .padding(.horizontal)
                         }
                     }
                     .listStyle(PlainListStyle())
+                    
+                    NavigationLink(
+                        destination: DiscountCodesView(ruleId: selectedRuleId),
+                        isActive: $isShowingDiscountCodesView,
+                        label: { EmptyView() }
+                    )
+                    .hidden()
+
+                    
                 } else {
                     Spacer()
                     Text("No price rules available.")
@@ -97,6 +111,7 @@ struct PriceRulesView: View {
                 }
             }
         }
+
     }
 }
 

@@ -76,7 +76,6 @@ class PriceRulesViewModel: ObservableObject{
             case .failure(let error):
                 self?.userError = error
             }
-            
         }
     }
 }

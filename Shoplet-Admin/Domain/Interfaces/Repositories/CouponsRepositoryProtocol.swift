@@ -12,4 +12,8 @@ protocol CouponsRepositoryProtocol {
     func createPriceRule(priceRule:PriceRuleRequest,completion: @escaping (Result<PriceRuleRequest, NetworkError>) -> Void)
     func deletePriceRule(id:Int,completion: @escaping (Result<Empty, NetworkError>) -> Void)
     func updatePriceRule(priceRule:PriceRuleRequest, completion: @escaping (Result<PriceRuleRequest, NetworkError>) -> Void)
+    func getDiscountCodes(priceRuleId:Int,completion: @escaping (Result<DiscountCodesResponse, NetworkError>) -> Void)
+    func createDiscountCode(priceRuleId:Int,discountCode:DiscountCodesRequest, completion: @escaping (Result<DiscountCodesRequest, NetworkError>) -> Void)
+    func deleteDiscountCode(ruleId: Int, codeId: Int, completion: @escaping (Result<Empty, NetworkError>) -> Void)
+    func updateDiscountCode(priceRuleId:Int,discountCode:DiscountCodesRequest, completion: @escaping (Result<DiscountCodesRequest, NetworkError>) -> Void)
 }

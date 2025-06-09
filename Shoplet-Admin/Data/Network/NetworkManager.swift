@@ -110,7 +110,7 @@ extension NetworkManager {
 
 struct Empty : Codable{}
 
-// MARK: - Discount Management
+// MARK: - Price Rule Management
 extension NetworkManager {
     func getPriceRules(completion: @escaping (Result<PriceRulesResponse, NetworkError>) -> Void) {
         request(endpoint: .priceRules) { (result: Result<PriceRulesResponse, NetworkError>) in
@@ -152,6 +152,63 @@ extension NetworkManager {
             do {
                 let parameters: Parameters = try (JSONSerialization.jsonObject(with: JSONEncoder().encode(priceRuleRequest)) as? [String: Any])!
                 request(endpoint: .priceRule(id: priceRuleRequest.priceRule.id ?? 0), method: .put, parameters: parameters) { (result: Result<PriceRuleRequest, NetworkError>) in
+                    switch result {
+                    case .success(let response):
+                        completion(.success(response))
+                    case .failure(let error):
+                        print("Error details: \(error.localizedDescription)")
+                        completion(.failure(error))
+                    }
+                }
+            } catch {
+                //completion(.failure(error))
+            }
+    }
+}
+// MARK: - Discount Codes Management
+
+extension NetworkManager{
+    func getDiscountCodes(priceRuleId:Int,completion: @escaping (Result<DiscountCodesResponse, NetworkError>) -> Void) {
+        request(endpoint: .discountCodes(priceRuleId: priceRuleId)) { (result: Result<DiscountCodesResponse, NetworkError>) in
+            switch result {
+            case .success(let response):
+                completion(.success(response))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    func createDiscountCode(priceRuleId:Int,discountCode:DiscountCodesRequest, completion: @escaping (Result<DiscountCodesRequest, NetworkError>) -> Void) {
+        do {
+            let parameters: Parameters = try (JSONSerialization.jsonObject(with: JSONEncoder().encode(discountCode)) as? [String: Any])!
+            print(parameters)
+            request(endpoint: .discountCodes(priceRuleId: priceRuleId), method: .post, parameters: parameters) { (result: Result<DiscountCodesRequest, NetworkError>) in
+                switch result {
+                case .success(let response):
+                    completion(.success(response))
+                case .failure(let error):
+                    print("Error details: \(error.localizedDescription)")
+                    completion(.failure(error))
+                }
+            }
+        } catch {
+            //completion(.failure(error))
+        }
+    }
+    func deleteDiscountCode(ruleId: Int, codeId: Int, completion: @escaping (Result<Empty, NetworkError>) -> Void) {
+        request(endpoint: .discountCode(priceRuleId: ruleId, discountCodeId: codeId),method: .delete) { (result: Result<Empty, NetworkError>) in
+            switch result {
+            case .success(let response):
+                completion(.success(response))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    func updateDiscountCode(priceRuleId:Int,discountCode:DiscountCodesRequest, completion: @escaping (Result<DiscountCodesRequest, NetworkError>) -> Void) {
+            do {
+                let parameters: Parameters = try (JSONSerialization.jsonObject(with: JSONEncoder().encode(discountCode)) as? [String: Any])!
+                request(endpoint: .discountCode(priceRuleId: priceRuleId, discountCodeId: discountCode.discountCode.id ?? 0), method: .put, parameters: parameters) { (result: Result<DiscountCodesRequest, NetworkError>) in
                     switch result {
                     case .success(let response):
                         completion(.success(response))
