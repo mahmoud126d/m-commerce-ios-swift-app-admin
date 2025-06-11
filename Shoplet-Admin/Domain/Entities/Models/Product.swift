@@ -286,13 +286,13 @@ extension Encodable {
 }
 
 struct ProductImageRequest: Codable {
-    let attachment: String?  
+    let src: String?
     
     enum CodingKeys: String, CodingKey {
-        case attachment
+        case src
     }
     
-    init(attachment: String?) {
-        self.attachment = attachment
+    init(src: String?) {
+        self.src = src
     }
 }

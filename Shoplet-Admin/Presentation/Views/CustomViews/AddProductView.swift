@@ -20,38 +20,21 @@ struct AddProductView: View {
     @State private var productSizeTextFieldValue = ""
     @State private var productColorTextFieldValue = ""
     @State private var productQuantityTextFieldValue = ""
+    @State private var productImageUrlTextFieldValue = ""
+    @State private var productImageUrlsTextFieldValue: [String] = [
+        "https://cdn.shopify.com/s/files/1/0763/3138/5050/files/product_24_image1.jpg?v=1748773578",
+    ]
+
     
+    
+    @State private var productTypeSegment: ProductType = .first
+    @State private var selectedLanguage: ProductVendor = .swift
     let productViewModel:ProductsViewModel
     
     var body: some View {
         ScrollView {
             VStack {
-                ScrollView(.horizontal) {
-                    HStack {
-                        ForEach(selectedImages, id: \.self) { image in
-                            SwiftUI.Image(uiImage: image)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 100, height: 100)
-                                .clipped()
-                                .cornerRadius(10)
-                        }
-                    }
-                    .padding()
-                }
-                
-                PhotosPicker(
-                    selection: $selectedItems,
-                    maxSelectionCount: 5,
-                    matching: .images,
-                    photoLibrary: .shared()
-                ) {
-                    Text("Select Images")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                    //.cornerRadius(8)
-                }
+                Text("Product Details")
                 HStack{
                     Text("Title")
                     TextField("Product Title", text: $producttitleTextFieldValue)
@@ -59,7 +42,13 @@ struct AddProductView: View {
                 }.padding()
                 HStack {
                     Text("Type: ")
-                    TextField("Product Type", text: $productTypeTextFieldValue)
+                    Picker("Choose Segment", selection: $productTypeSegment) {
+                                    ForEach(ProductType.allCases) { segment in
+                                        Text(segment.rawValue).tag(segment)
+                                    }
+                                }
+                                .pickerStyle(.segmented)
+
                     Spacer()
                 }.padding()
                 HStack {
@@ -69,13 +58,83 @@ struct AddProductView: View {
                 }.padding()
                 HStack {
                     Text("Vendor ")
-                    TextField("Product Type", text: $productVendorTextFieldValue)
+                    Menu {
+                                   ForEach(ProductVendor.allCases) { language in
+                                       Button {
+                                           selectedLanguage = language
+                                       } label: {
+                                           Label(language.rawValue, systemImage: selectedLanguage == language ? "checkmark" : "")
+                                       }
+                                   }
+                               } label: {
+                                   Label(selectedLanguage.rawValue, systemImage: "chevron.down")
+                                       .padding()
+                                       .background(Color.gray.opacity(0.2))
+                                       .cornerRadius(10)
+                               }
                     Spacer()
                 }.padding()
                 HStack {
                     Text("Description ")
-                    TextField("Product Type", text: $productDescriptionTextFieldValue)
+                    TextEditor(text: $productDescriptionTextFieldValue)
+                                    .frame(height: 150)
+                                    .padding(8)
+                                    .background(Color.gray.opacity(0.1))
+                                    .cornerRadius(10)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .stroke(Color.gray.opacity(0.4), lineWidth: 1)
+                                    )
                     Spacer()
+                }.padding()
+                VStack(alignment: .leading) {
+                    Text("Product Images")
+                        .font(.headline)
+                    
+                    ForEach(productImageUrlsTextFieldValue, id: \.self) { url in
+                        HStack {
+                            AsyncImage(url: URL(string: url)) { phase in
+                                switch phase {
+                                case .empty:
+                                    ProgressView()
+                                        .frame(width: 60, height: 60)
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 60, height: 60)
+                                case .failure:
+                                    Image(systemName: "photo.badge.exclamationmark")
+                                        .foregroundColor(.red)
+                                        .frame(width: 60, height: 60)
+                                @unknown default:
+                                    EmptyView()
+                                }
+                            }
+                            
+                            Text(url)
+                                .font(.caption)
+                                .lineLimit(1)
+                            
+                            Spacer()
+                            
+                            Button("Remove") {
+                                if let index = productImageUrlsTextFieldValue.firstIndex(of: url) {
+                                    productImageUrlsTextFieldValue.remove(at: index)
+                                }
+                            }
+                            .foregroundColor(.red)
+                        }
+                        .padding(.vertical, 4)
+                    }
+                }
+                .padding()
+                HStack{
+                    TextField("image url", text: $productImageUrlTextFieldValue)
+                    Button("add"){
+                        addUrl()
+                        print(productImageUrlsTextFieldValue)
+                    }
                 }.padding()
                 HStack(alignment: .center) {
                     Text("Product Variant ")
@@ -131,19 +190,32 @@ struct AddProductView: View {
         return productImages
     }
     private func createProduct() {
-        let base64Images = convertImagesToBase64(selectedImages)
-        let productImages = base64Images.map { ProductImageRequest(attachment: $0) }
+        let productImages = productImageUrlsTextFieldValue.map { ProductImageRequest(src: $0) }
+        
+        let option1 = Option(
+            id: nil,
+            productId: nil,
+            name: "Color",
+            values: [productColorTextFieldValue])
+        let option2 = Option(
+            id: nil,
+            productId: nil,
+            name: "Size",
+            values: [productSizeTextFieldValue])
         let product = ProductRequest(product: Product(
             title: producttitleTextFieldValue, 
             description: productDescriptionTextFieldValue,
             vendor: productVendorTextFieldValue,
-            productType: productTypeTextFieldValue,
+            productType: productTypeSegment.id,
             tags: productTagsTextFieldValue,
             variants: [Variant(
                 price:productPriceTextFieldValue,
+                option1: productColorTextFieldValue,
+                option2: productSizeTextFieldValue,
                 inventoryQuantity: Int(productQuantityTextFieldValue)
                 
             )],
+            options: [option1,option2],
             images: productImages
         ))
         
@@ -158,7 +230,13 @@ struct AddProductView: View {
             return imageData.base64EncodedString()
         }
     }
-    
+    private func addUrl() {
+        let trimmedUrl = productImageUrlTextFieldValue.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedUrl.isEmpty else { return }
+        productImageUrlsTextFieldValue.append(trimmedUrl)
+        productImageUrlTextFieldValue = ""
+    }
+
     
 }
 
@@ -172,4 +250,20 @@ extension UIImage {
         }
         return imageData.base64EncodedString()
     }
+}
+
+enum ProductType: String, CaseIterable, Identifiable {
+    case first = "SHOES"
+    case second = "ACCESSORIES"
+    case third = "T-Shirt"
+
+    var id: String { self.rawValue }
+}
+
+enum ProductVendor: String, CaseIterable, Identifiable {
+    case swift = "NIKE"
+    case kotlin = "PALLADIUM"
+    case java = "PUMA"
+    
+    var id: String { self.rawValue }
 }

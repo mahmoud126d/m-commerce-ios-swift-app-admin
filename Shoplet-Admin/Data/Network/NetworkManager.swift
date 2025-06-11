@@ -93,6 +93,7 @@ extension NetworkManager {
     func createProduct(product: ProductRequest, completion: @escaping (Result<ProductRequest, NetworkError>) -> Void) {
         do {
             let parameters: Parameters = try (JSONSerialization.jsonObject(with: JSONEncoder().encode(product)) as? [String: Any])!
+            print("json is \(parameters)")
             request(endpoint: .products, method: .post, parameters: parameters) { (result: Result<ProductRequest, NetworkError>) in
                 switch result {
                 case .success(let response):
