@@ -13,7 +13,8 @@ struct ProductsView: View {
     @State var openAddProductView: Bool = false
 
     @State private var showAlert = false
-
+    
+    @State private var selectedProduct:Product? = nil
     init(viewModel: ProductsViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
@@ -37,8 +38,10 @@ struct ProductsView: View {
                         .background(Color.blue)
                         .clipShape(Circle())
                 }
-                .sheet(isPresented: $openAddProductView) {
-                    AddProductView(productViewModel: viewModel)
+                .sheet(isPresented: $openAddProductView,onDismiss: {
+                    selectedProduct = nil
+                }) {
+                    AddProductView(product: selectedProduct ,productViewModel: viewModel)
                 }
             }
             .padding()
@@ -64,6 +67,8 @@ struct ProductsView: View {
                         },
                         editAction: {
                             // edit logic
+                            selectedProduct = product
+                            openAddProductView = true
                         }
                     )
                     .listRowSeparator(.hidden)
@@ -99,5 +104,5 @@ struct ProductsView: View {
 
 #Preview {
     ProductsView(
-        viewModel: ProductsViewModel(getProductsUseCase: GetProductsUseCase(repository: ProductRepository()), deleteProductUseCase: DeleteProductsUseCase(repository: ProductRepository()), createProductUseCase: CreateProductsUseCase(repository: ProductRepository())))
+        viewModel: ProductsViewModel(getProductsUseCase: GetProductsUseCase(repository: ProductRepository()), deleteProductUseCase: DeleteProductsUseCase(repository: ProductRepository()), createProductUseCase: CreateProductsUseCase(repository: ProductRepository()), updateProductUseCase: UpdateProductUseCase(repository: ProductRepository())))
 }

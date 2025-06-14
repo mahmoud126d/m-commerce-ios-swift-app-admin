@@ -12,5 +12,6 @@ protocol ProductRepositoryProtocol {
     func getProducts(completion: @escaping (Result<ProductsResponse, NetworkError>) -> Void)
     func deleteProduct(productId:Int,completion: @escaping (Result<Empty, NetworkError>) -> Void)
     func createProduct(product:ProductRequest,completion: @escaping (Result<ProductRequest, NetworkError>) -> Void)
+    func updateProduct(product: ProductRequest, completion: @escaping (Result<ProductRequest, NetworkError>) -> Void)
 }
 

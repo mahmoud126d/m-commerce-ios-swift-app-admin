@@ -48,4 +48,15 @@ class ProductRepository: ProductRepositoryProtocol {
             }
         }
     }
+    func updateProduct(product: ProductRequest, completion: @escaping (Result<ProductRequest, NetworkError>) -> Void) {
+        networkManager.updateProduct(product: product){result in
+            switch result {
+            case .success(let response):
+                completion(.success(response))
+                print(response)
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
 }

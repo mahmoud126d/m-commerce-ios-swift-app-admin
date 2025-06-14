@@ -16,7 +16,7 @@ struct ContentView: View {
                     VStack {
                         switch selectedTab{
                         case .products:
-                            ProductsView(viewModel: ProductsViewModel(getProductsUseCase: GetProductsUseCase(repository: ProductRepository()), deleteProductUseCase: DeleteProductsUseCase(repository: ProductRepository()), createProductUseCase: CreateProductsUseCase(repository: ProductRepository())))
+                            ProductsView(viewModel: ProductsViewModel(getProductsUseCase: GetProductsUseCase(repository: ProductRepository()), deleteProductUseCase: DeleteProductsUseCase(repository: ProductRepository()), createProductUseCase: CreateProductsUseCase(repository: ProductRepository()), updateProductUseCase: UpdateProductUseCase(repository: ProductRepository())))
                         case .collections:
                             //CollectionsView()
                             Text("collection")

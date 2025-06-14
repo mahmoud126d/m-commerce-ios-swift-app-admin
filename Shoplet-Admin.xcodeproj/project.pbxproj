@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2207133C2DFE0EED0074AFA3 /* UpdateProductUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2207133B2DFE0EED0074AFA3 /* UpdateProductUseCase.swift */; };
 		220998B52DEF996A00C26E50 /* CustomTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220998B42DEF996A00C26E50 /* CustomTabBarView.swift */; };
 		220998B92DEF99E700C26E50 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220998B82DEF99E700C26E50 /* Tab.swift */; };
 		220998BB2DEF9AA700C26E50 /* TabBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220998BA2DEF9AA700C26E50 /* TabBarButton.swift */; };
@@ -74,6 +75,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2207133B2DFE0EED0074AFA3 /* UpdateProductUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProductUseCase.swift; sourceTree = "<group>"; };
 		220998B42DEF996A00C26E50 /* CustomTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarView.swift; sourceTree = "<group>"; };
 		220998B82DEF99E700C26E50 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		220998BA2DEF9AA700C26E50 /* TabBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarButton.swift; sourceTree = "<group>"; };
@@ -151,12 +153,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2207133D2DFE12880074AFA3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				223EBB092DF09DE40087CFDF /* AddProductView.swift */,
+				22D5C15B2DEF857200A0831E /* ProductsView.swift */,
+			);
+			path = Products;
+			sourceTree = "<group>";
+		};
 		220998B32DEF994700C26E50 /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
 				223EBB022DF06DBD0087CFDF /* Cells */,
 				220998B62DEF99B500C26E50 /* TabBar */,
-				223EBB092DF09DE40087CFDF /* AddProductView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -388,9 +398,9 @@
 		22D5C14F2DEF78B800A0831E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2207133D2DFE12880074AFA3 /* Products */,
 				2261FBD92DF5C47F00CF7C02 /* Coupons */,
 				220998B32DEF994700C26E50 /* CustomViews */,
-				22D5C15B2DEF857200A0831E /* ProductsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -418,6 +428,7 @@
 				22D5C1552DEF7BC200A0831E /* GetProductsUseCase.swift */,
 				223EBB072DF07EA20087CFDF /* DeleteProductUseCase.swift */,
 				223EBB0B2DF0C1C80087CFDF /* CreateProductUseCase.swift */,
+				2207133B2DFE0EED0074AFA3 /* UpdateProductUseCase.swift */,
 			);
 			path = Product;
 			sourceTree = "<group>";
@@ -592,6 +603,7 @@
 				2261FBD02DF5C16100CF7C02 /* CreatePriceRulesUseCase.swift in Sources */,
 				2261FBCB2DF5C08A00CF7C02 /* CouponsRepositoryProtocol.swift in Sources */,
 				2261FBCE2DF5C12600CF7C02 /* PriceRulesViewModel.swift in Sources */,
+				2207133C2DFE0EED0074AFA3 /* UpdateProductUseCase.swift in Sources */,
 				2261FBFB2DF6398B00CF7C02 /* AddDiscountCodeView.swift in Sources */,
 				2261FBDD2DF5C6BB00CF7C02 /* CouponsRepository.swift in Sources */,
 				2261FBD22DF5C16F00CF7C02 /* DeletePriceRulesUseCase.swift in Sources */,

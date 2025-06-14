@@ -93,6 +93,7 @@ extension NetworkManager {
     func createProduct(product: ProductRequest, completion: @escaping (Result<ProductRequest, NetworkError>) -> Void) {
         do {
             let parameters: Parameters = try (JSONSerialization.jsonObject(with: JSONEncoder().encode(product)) as? [String: Any])!
+            print("json is \(parameters)")
             request(endpoint: .products, method: .post, parameters: parameters) { (result: Result<ProductRequest, NetworkError>) in
                 switch result {
                 case .success(let response):
@@ -106,6 +107,24 @@ extension NetworkManager {
             //completion(.failure(error))
         }
     }
+    
+    func updateProduct(product: ProductRequest, completion: @escaping (Result<ProductRequest, NetworkError>) -> Void) {
+            do {
+                let parameters: Parameters = try (JSONSerialization.jsonObject(with: JSONEncoder().encode(product)) as? [String: Any])!
+                request(endpoint: .product(id: product.product.id ?? 0), method: .put, parameters: parameters) { (result: Result<ProductRequest, NetworkError>) in
+                    switch result {
+                    case .success(let response):
+                        completion(.success(response))
+                    case .failure(let error):
+                        print("Error details: \(error.localizedDescription)")
+                        completion(.failure(error))
+                    }
+                }
+            } catch {
+                //completion(.failure(error))
+            }
+    }
+    
 }
 
 struct Empty : Codable{}

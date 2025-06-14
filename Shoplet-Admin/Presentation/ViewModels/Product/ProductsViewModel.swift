@@ -16,14 +16,16 @@ class ProductsViewModel : ObservableObject {
     private let getProductsUseCase: GetProductsUseCaseProtocol
     private let deleteProductUseCase: DeleteProductsUseCaseProtocol
     private let createProductUseCase: CreateProductsUseCaseProtocol
-    
+    private let updateProductUseCase: UpdateProductUseCaseProtocol
     init(getProductsUseCase: GetProductsUseCaseProtocol,
          deleteProductUseCase: DeleteProductsUseCaseProtocol,
-         createProductUseCase: CreateProductsUseCaseProtocol
+         createProductUseCase: CreateProductsUseCaseProtocol,
+         updateProductUseCase:UpdateProductUseCaseProtocol
     ) {
         self.getProductsUseCase = getProductsUseCase
         self.deleteProductUseCase = deleteProductUseCase
         self.createProductUseCase = createProductUseCase
+        self.updateProductUseCase = updateProductUseCase
     }
     
     func fetchProducts() {
@@ -63,6 +65,18 @@ class ProductsViewModel : ObservableObject {
             case .failure(let error):
                 self?.userError = error
             }
+        }
+    }
+    func updateProduct(product:ProductRequest){
+        updateProductUseCase.execute(product: product){[weak self] result in
+                switch result {
+                case .success( _):
+                    self?.isLoading = false
+                    self?.userError = nil
+                    //self?.productList?.append(product.product)
+                case .failure(let error):
+                    self?.userError = error
+                }
         }
     }
 }
