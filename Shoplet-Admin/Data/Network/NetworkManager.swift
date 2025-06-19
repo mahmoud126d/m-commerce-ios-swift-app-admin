@@ -241,3 +241,61 @@ extension NetworkManager{
             }
     }
 }
+
+// MARK: - Discount Codes Management
+
+extension NetworkManager{
+    func getCollections(completion: @escaping (Result<CollectionsResponse, NetworkError>) -> Void) {
+        request(endpoint: .collections) { (result: Result<CollectionsResponse, NetworkError>) in
+            switch result {
+            case .success(let response):
+                completion(.success(response))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    func deleteCollection(collectionId: Int, completion: @escaping (Result<Empty, NetworkError>) -> Void){
+        request(endpoint: .deleteCollection(collectionId: collectionId),method: .delete) { (result: Result<Empty, NetworkError>) in
+            switch result {
+            case .success(let response):
+                completion(.success(response))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    func updateCollection(collection: CollectionRequest, completion: @escaping (Result<CollectionRequest, NetworkError>) -> Void){
+        do {
+            let parameters: Parameters = try (JSONSerialization.jsonObject(with: JSONEncoder().encode(collection)) as? [String: Any])!
+            request(endpoint: .updateCollection(collectionId: collection.collection.id ?? 0), method: .put, parameters: parameters) { (result: Result<CollectionRequest, NetworkError>) in
+                switch result {
+                case .success(let response):
+                    completion(.success(response))
+                case .failure(let error):
+                    print("Error details: \(error.localizedDescription)")
+                    completion(.failure(error))
+                }
+            }
+        } catch {
+            //completion(.failure(error))
+        }
+    }
+    func createCollection(collection: CollectionRequest, completion: @escaping (Result<CollectionRequest, NetworkError>) -> Void){
+        do {
+            let parameters: Parameters = try (JSONSerialization.jsonObject(with: JSONEncoder().encode(collection)) as? [String: Any])!
+            print(parameters)
+            request(endpoint: .collections, method: .post, parameters: parameters) { (result: Result<CollectionRequest, NetworkError>) in
+                switch result {
+                case .success(let response):
+                    completion(.success(response))
+                case .failure(let error):
+                    print("Error details: \(error.localizedDescription)")
+                    completion(.failure(error))
+                }
+            }
+        } catch {
+            //completion(.failure(error))
+        }
+    }
+}

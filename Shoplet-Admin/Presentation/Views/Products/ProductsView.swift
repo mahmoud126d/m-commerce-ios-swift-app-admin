@@ -66,7 +66,6 @@ struct ProductsView: View {
                             viewModel.deleteProduct(productId: product.id ?? 0)
                         },
                         editAction: {
-                            // edit logic
                             selectedProduct = product
                             openAddProductView = true
                         }

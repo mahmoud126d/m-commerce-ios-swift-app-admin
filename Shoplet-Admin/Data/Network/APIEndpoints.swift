@@ -13,8 +13,9 @@ enum APIEndpoints {
     case product(id: Int)
     case productVariants(productId: Int)
     case productVariant(productId: Int, variantId: Int)
-    case inventoryLevels
-    case inventoryLevel(inventoryItemId: Int, locationId: Int)
+    case collections
+    case deleteCollection(collectionId: Int)
+    case updateCollection(collectionId: Int)
     case discountCodes(priceRuleId: Int)
     case discountCode(priceRuleId: Int, discountCodeId: Int)
     case deleteDiscountCode(priceRuleId: Int, discountCodeId: Int)
@@ -32,10 +33,12 @@ enum APIEndpoints {
             return "/products/\(productId)/variants.json"
         case .productVariant(let productId, let variantId):
             return "/products/\(productId)/variants/\(variantId).json"
-        case .inventoryLevels:
-            return "/inventory_levels.json"
-        case .inventoryLevel(let inventoryItemId, let locationId):
-            return "/inventory_levels.json?inventory_item_ids=\(inventoryItemId)&location_ids=\(locationId)"
+        case .collections:
+            return "/smart_collections.json"
+        case .deleteCollection(let collectionId):
+            return "/smart_collections/\(collectionId).json"
+        case .updateCollection(let collectionId):
+            return "/smart_collections/\(collectionId).json"
         case .discountCodes(let priceRuleId):
             return "/price_rules/\(priceRuleId)/discount_codes.json"
         case .discountCode(let priceRuleId, let discountCodeId),

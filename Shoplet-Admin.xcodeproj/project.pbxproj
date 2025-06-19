@@ -45,6 +45,16 @@
 		227F78102DEF1BFD007B0BF9 /* Shoplet_AdminTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F780F2DEF1BFD007B0BF9 /* Shoplet_AdminTests.swift */; };
 		227F781A2DEF1BFD007B0BF9 /* Shoplet_AdminUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F78192DEF1BFD007B0BF9 /* Shoplet_AdminUITests.swift */; };
 		227F781C2DEF1BFD007B0BF9 /* Shoplet_AdminUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F781B2DEF1BFD007B0BF9 /* Shoplet_AdminUITestsLaunchTests.swift */; };
+		22BB9C802E04763F009B4DDE /* Collections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BB9C7F2E04763F009B4DDE /* Collections.swift */; };
+		22BB9C822E047B0C009B4DDE /* CollectionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BB9C812E047B0C009B4DDE /* CollectionsRepository.swift */; };
+		22BB9C842E047B48009B4DDE /* CollectionsRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BB9C832E047B48009B4DDE /* CollectionsRepositoryProtocol.swift */; };
+		22BB9C892E0484E9009B4DDE /* CollectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BB9C882E0484E9009B4DDE /* CollectionsView.swift */; };
+		22BB9C8D2E048523009B4DDE /* AddCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BB9C8C2E048523009B4DDE /* AddCollectionView.swift */; };
+		22BB9C902E04856A009B4DDE /* CollectionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BB9C8F2E04856A009B4DDE /* CollectionsViewModel.swift */; };
+		22BB9C932E0485BD009B4DDE /* GetCollectionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BB9C922E0485BD009B4DDE /* GetCollectionsUseCase.swift */; };
+		22BB9C952E048662009B4DDE /* DeleteCollectionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BB9C942E048662009B4DDE /* DeleteCollectionUseCase.swift */; };
+		22BB9C972E0487C6009B4DDE /* CreateCollectionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BB9C962E0487C6009B4DDE /* CreateCollectionsUseCase.swift */; };
+		22BB9C9C2E04883A009B4DDE /* UpdateCollectionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BB9C9B2E04883A009B4DDE /* UpdateCollectionUseCase.swift */; };
 		22D5C1432DEF692000A0831E /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C1422DEF692000A0831E /* Product.swift */; };
 		22D5C1452DEF73EC00A0831E /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C1442DEF73EC00A0831E /* Configuration.swift */; };
 		22D5C1472DEF748F00A0831E /* APIEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C1462DEF748F00A0831E /* APIEndpoints.swift */; };
@@ -115,6 +125,16 @@
 		227F78152DEF1BFD007B0BF9 /* Shoplet-AdminUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Shoplet-AdminUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		227F78192DEF1BFD007B0BF9 /* Shoplet_AdminUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoplet_AdminUITests.swift; sourceTree = "<group>"; };
 		227F781B2DEF1BFD007B0BF9 /* Shoplet_AdminUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoplet_AdminUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		22BB9C7F2E04763F009B4DDE /* Collections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collections.swift; sourceTree = "<group>"; };
+		22BB9C812E047B0C009B4DDE /* CollectionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionsRepository.swift; sourceTree = "<group>"; };
+		22BB9C832E047B48009B4DDE /* CollectionsRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionsRepositoryProtocol.swift; sourceTree = "<group>"; };
+		22BB9C882E0484E9009B4DDE /* CollectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionsView.swift; sourceTree = "<group>"; };
+		22BB9C8C2E048523009B4DDE /* AddCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCollectionView.swift; sourceTree = "<group>"; };
+		22BB9C8F2E04856A009B4DDE /* CollectionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionsViewModel.swift; sourceTree = "<group>"; };
+		22BB9C922E0485BD009B4DDE /* GetCollectionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCollectionsUseCase.swift; sourceTree = "<group>"; };
+		22BB9C942E048662009B4DDE /* DeleteCollectionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "\U0010DeleteCollectionUseCase.swift"; sourceTree = "<group>"; };
+		22BB9C962E0487C6009B4DDE /* CreateCollectionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCollectionsUseCase.swift; sourceTree = "<group>"; };
+		22BB9C9B2E04883A009B4DDE /* UpdateCollectionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCollectionUseCase.swift; sourceTree = "<group>"; };
 		22D5C1422DEF692000A0831E /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		22D5C1442DEF73EC00A0831E /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		22D5C1462DEF748F00A0831E /* APIEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoints.swift; sourceTree = "<group>"; };
@@ -293,6 +313,34 @@
 			path = "Shoplet-AdminUITests";
 			sourceTree = "<group>";
 		};
+		22BB9C852E0484BF009B4DDE /* Collections */ = {
+			isa = PBXGroup;
+			children = (
+				22BB9C882E0484E9009B4DDE /* CollectionsView.swift */,
+				22BB9C8C2E048523009B4DDE /* AddCollectionView.swift */,
+			);
+			path = Collections;
+			sourceTree = "<group>";
+		};
+		22BB9C8E2E048553009B4DDE /* Collections */ = {
+			isa = PBXGroup;
+			children = (
+				22BB9C8F2E04856A009B4DDE /* CollectionsViewModel.swift */,
+			);
+			path = Collections;
+			sourceTree = "<group>";
+		};
+		22BB9C912E0485A6009B4DDE /* Collections */ = {
+			isa = PBXGroup;
+			children = (
+				22BB9C922E0485BD009B4DDE /* GetCollectionsUseCase.swift */,
+				22BB9C942E048662009B4DDE /* DeleteCollectionUseCase.swift */,
+				22BB9C962E0487C6009B4DDE /* CreateCollectionsUseCase.swift */,
+				22BB9C9B2E04883A009B4DDE /* UpdateCollectionUseCase.swift */,
+			);
+			path = Collections;
+			sourceTree = "<group>";
+		};
 		22D5C1362DEF62FC00A0831E /* Domain */ = {
 			isa = PBXGroup;
 			children = (
@@ -332,6 +380,7 @@
 		22D5C13A2DEF636F00A0831E /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				22BB9C912E0485A6009B4DDE /* Collections */,
 				2261FBC72DF5C00600CF7C02 /* Coupons */,
 				22D5C1542DEF7BAD00A0831E /* Product */,
 			);
@@ -351,6 +400,7 @@
 			children = (
 				22D5C1592DEF7F1D00A0831E /* ProductRepositoryProtocol.swift */,
 				2261FBCA2DF5C08A00CF7C02 /* CouponsRepositoryProtocol.swift */,
+				22BB9C832E047B48009B4DDE /* CollectionsRepositoryProtocol.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -360,6 +410,7 @@
 			children = (
 				22D5C1572DEF7E2400A0831E /* ProductRepository.swift */,
 				2261FBDC2DF5C6BB00CF7C02 /* CouponsRepository.swift */,
+				22BB9C812E047B0C009B4DDE /* CollectionsRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -391,6 +442,7 @@
 				22D5C1482DEF757000A0831E /* ProductResponse.swift */,
 				2261FBC52DF5BFD300CF7C02 /* PriceRules.swift */,
 				2261FBEA2DF628E300CF7C02 /* DiscountCodes.swift */,
+				22BB9C7F2E04763F009B4DDE /* Collections.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -398,6 +450,7 @@
 		22D5C14F2DEF78B800A0831E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				22BB9C852E0484BF009B4DDE /* Collections */,
 				2207133D2DFE12880074AFA3 /* Products */,
 				2261FBD92DF5C47F00CF7C02 /* Coupons */,
 				220998B32DEF994700C26E50 /* CustomViews */,
@@ -408,6 +461,7 @@
 		22D5C1502DEF78BE00A0831E /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				22BB9C8E2E048553009B4DDE /* Collections */,
 				2261FBCC2DF5C10100CF7C02 /* Coupons */,
 				22D5C1512DEF793B00A0831E /* Product */,
 			);
@@ -569,7 +623,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22BB9C902E04856A009B4DDE /* CollectionsViewModel.swift in Sources */,
 				2261FBE42DF5EE3D00CF7C02 /* DateFormatter.swift in Sources */,
+				22BB9C8D2E048523009B4DDE /* AddCollectionView.swift in Sources */,
+				22BB9C952E048662009B4DDE /* DeleteCollectionUseCase.swift in Sources */,
 				22D5C1562DEF7BC200A0831E /* GetProductsUseCase.swift in Sources */,
 				2261FBEF2DF62ED900CF7C02 /* DeleteDiscountCodeUseCase.swift in Sources */,
 				2261FBC92DF5C02600CF7C02 /* GetPriceRulesUseCase.swift in Sources */,
@@ -587,15 +644,18 @@
 				2261FBE12DF5EA9000CF7C02 /* ContentView.swift in Sources */,
 				220998B52DEF996A00C26E50 /* CustomTabBarView.swift in Sources */,
 				2261FBF72DF631B000CF7C02 /* DiscountCodesView.swift in Sources */,
+				22BB9C9C2E04883A009B4DDE /* UpdateCollectionUseCase.swift in Sources */,
 				22D5C1472DEF748F00A0831E /* APIEndpoints.swift in Sources */,
 				22D5C14B2DEF75B300A0831E /* NetworkManager.swift in Sources */,
 				227F77FF2DEF1BFC007B0BF9 /* Shoplet_AdminApp.swift in Sources */,
 				220998B92DEF99E700C26E50 /* Tab.swift in Sources */,
 				2261FBF92DF631E000CF7C02 /* DiscountCodeCustomCell.swift in Sources */,
 				223EBB042DF06DCA0087CFDF /* ProductCustomCell.swift in Sources */,
+				22BB9C842E047B48009B4DDE /* CollectionsRepositoryProtocol.swift in Sources */,
 				22D5C15A2DEF7F1D00A0831E /* ProductRepositoryProtocol.swift in Sources */,
 				22D5C15C2DEF857200A0831E /* ProductsView.swift in Sources */,
 				22D5C1452DEF73EC00A0831E /* Configuration.swift in Sources */,
+				22BB9C892E0484E9009B4DDE /* CollectionsView.swift in Sources */,
 				2261FBDF2DF5C94500CF7C02 /* AddPriceRuleView.swift in Sources */,
 				2261FBEB2DF628E300CF7C02 /* DiscountCodes.swift in Sources */,
 				220998BB2DEF9AA700C26E50 /* TabBarButton.swift in Sources */,
@@ -607,9 +667,13 @@
 				2261FBFB2DF6398B00CF7C02 /* AddDiscountCodeView.swift in Sources */,
 				2261FBDD2DF5C6BB00CF7C02 /* CouponsRepository.swift in Sources */,
 				2261FBD22DF5C16F00CF7C02 /* DeletePriceRulesUseCase.swift in Sources */,
+				22BB9C972E0487C6009B4DDE /* CreateCollectionsUseCase.swift in Sources */,
 				22D5C1432DEF692000A0831E /* Product.swift in Sources */,
+				22BB9C932E0485BD009B4DDE /* GetCollectionsUseCase.swift in Sources */,
 				2261FBE92DF6288800CF7C02 /* DiscountCodeViewModel.swift in Sources */,
 				226548CB2DF5AD7D0035A84E /* NetworkError.swift in Sources */,
+				22BB9C822E047B0C009B4DDE /* CollectionsRepository.swift in Sources */,
+				22BB9C802E04763F009B4DDE /* Collections.swift in Sources */,
 				2261FBF12DF62EE800CF7C02 /* UpdateDiscountCodeUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
