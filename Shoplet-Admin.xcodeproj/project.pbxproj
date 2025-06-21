@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1E0AED1A2E070C970096E6DC /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0AED192E070C970096E6DC /* DIContainer.swift */; };
 		2207133C2DFE0EED0074AFA3 /* UpdateProductUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2207133B2DFE0EED0074AFA3 /* UpdateProductUseCase.swift */; };
 		220998B52DEF996A00C26E50 /* CustomTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220998B42DEF996A00C26E50 /* CustomTabBarView.swift */; };
 		220998B92DEF99E700C26E50 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220998B82DEF99E700C26E50 /* Tab.swift */; };
@@ -40,6 +39,10 @@
 		2261FBF92DF631E000CF7C02 /* DiscountCodeCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2261FBF82DF631E000CF7C02 /* DiscountCodeCustomCell.swift */; };
 		2261FBFB2DF6398B00CF7C02 /* AddDiscountCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2261FBFA2DF6398B00CF7C02 /* AddDiscountCodeView.swift */; };
 		226548CB2DF5AD7D0035A84E /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226548CA2DF5AD7D0035A84E /* NetworkError.swift */; };
+		22701FFF2E071A2B00876D8F /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22701FFE2E071A2B00876D8F /* DIContainer.swift */; };
+		227020022E07226800876D8F /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227020012E07226800876D8F /* Color.swift */; };
+		227020042E0722A000876D8F /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227020032E0722A000876D8F /* Font.swift */; };
+		227020062E0722C000876D8F /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227020052E0722C000876D8F /* AppTheme.swift */; };
 		227F77FF2DEF1BFC007B0BF9 /* Shoplet_AdminApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F77FE2DEF1BFC007B0BF9 /* Shoplet_AdminApp.swift */; };
 		227F78032DEF1BFD007B0BF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 227F78022DEF1BFD007B0BF9 /* Assets.xcassets */; };
 		227F78062DEF1BFD007B0BF9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 227F78052DEF1BFD007B0BF9 /* Preview Assets.xcassets */; };
@@ -86,7 +89,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1E0AED192E070C970096E6DC /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DIContainer.swift; path = ../../../DIContainer.swift; sourceTree = "<group>"; };
 		2207133B2DFE0EED0074AFA3 /* UpdateProductUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProductUseCase.swift; sourceTree = "<group>"; };
 		220998B42DEF996A00C26E50 /* CustomTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarView.swift; sourceTree = "<group>"; };
 		220998B82DEF99E700C26E50 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
@@ -118,6 +120,10 @@
 		2261FBF82DF631E000CF7C02 /* DiscountCodeCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscountCodeCustomCell.swift; sourceTree = "<group>"; };
 		2261FBFA2DF6398B00CF7C02 /* AddDiscountCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDiscountCodeView.swift; sourceTree = "<group>"; };
 		226548CA2DF5AD7D0035A84E /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		22701FFE2E071A2B00876D8F /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
+		227020012E07226800876D8F /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		227020032E0722A000876D8F /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		227020052E0722C000876D8F /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		227F77FB2DEF1BFC007B0BF9 /* Shoplet-Admin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Shoplet-Admin.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		227F77FE2DEF1BFC007B0BF9 /* Shoplet_AdminApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoplet_AdminApp.swift; sourceTree = "<group>"; };
 		227F78022DEF1BFD007B0BF9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -251,9 +257,20 @@
 		2261FBE22DF5EE2100CF7C02 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				227020002E07224500876D8F /* Color+Theme */,
 				2261FBE32DF5EE3D00CF7C02 /* DateFormatter.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		227020002E07224500876D8F /* Color+Theme */ = {
+			isa = PBXGroup;
+			children = (
+				227020012E07226800876D8F /* Color.swift */,
+				227020032E0722A000876D8F /* Font.swift */,
+				227020052E0722C000876D8F /* AppTheme.swift */,
+			);
+			path = "Color+Theme";
 			sourceTree = "<group>";
 		};
 		227F77F22DEF1BFC007B0BF9 = {
@@ -433,7 +450,7 @@
 			children = (
 				227F77FE2DEF1BFC007B0BF9 /* Shoplet_AdminApp.swift */,
 				2261FBE02DF5EA9000CF7C02 /* ContentView.swift */,
-				1E0AED192E070C970096E6DC /* DIContainer.swift */,
+				22701FFE2E071A2B00876D8F /* DIContainer.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -638,13 +655,16 @@
 				2261FBD42DF5C18000CF7C02 /* UpdatePriceRulesUseCase.swift in Sources */,
 				223EBB082DF07EA20087CFDF /* DeleteProductUseCase.swift in Sources */,
 				2261FBD82DF5C39700CF7C02 /* PriceRuleCustomCell.swift in Sources */,
+				227020042E0722A000876D8F /* Font.swift in Sources */,
 				2261FBED2DF62ECB00CF7C02 /* GetDiscountCodesUseCase.swift in Sources */,
 				223EBB0A2DF09DE40087CFDF /* AddProductView.swift in Sources */,
 				2261FBDB2DF5C49400CF7C02 /* PriceRulesView.swift in Sources */,
 				2261FBC62DF5BFD300CF7C02 /* PriceRules.swift in Sources */,
 				2261FBF32DF62EFD00CF7C02 /* CreateDiscountCodeUseCase.swift in Sources */,
+				227020022E07226800876D8F /* Color.swift in Sources */,
 				22D5C1492DEF757000A0831E /* ProductResponse.swift in Sources */,
 				2261FBE12DF5EA9000CF7C02 /* ContentView.swift in Sources */,
+				227020062E0722C000876D8F /* AppTheme.swift in Sources */,
 				220998B52DEF996A00C26E50 /* CustomTabBarView.swift in Sources */,
 				2261FBF72DF631B000CF7C02 /* DiscountCodesView.swift in Sources */,
 				22BB9C9C2E04883A009B4DDE /* UpdateCollectionUseCase.swift in Sources */,
@@ -657,7 +677,6 @@
 				22BB9C842E047B48009B4DDE /* CollectionsRepositoryProtocol.swift in Sources */,
 				22D5C15A2DEF7F1D00A0831E /* ProductRepositoryProtocol.swift in Sources */,
 				22D5C15C2DEF857200A0831E /* ProductsView.swift in Sources */,
-				1E0AED1A2E070C970096E6DC /* DIContainer.swift in Sources */,
 				22D5C1452DEF73EC00A0831E /* Configuration.swift in Sources */,
 				22BB9C892E0484E9009B4DDE /* CollectionsView.swift in Sources */,
 				2261FBDF2DF5C94500CF7C02 /* AddPriceRuleView.swift in Sources */,
@@ -678,6 +697,7 @@
 				226548CB2DF5AD7D0035A84E /* NetworkError.swift in Sources */,
 				22BB9C822E047B0C009B4DDE /* CollectionsRepository.swift in Sources */,
 				22BB9C802E04763F009B4DDE /* Collections.swift in Sources */,
+				22701FFF2E071A2B00876D8F /* DIContainer.swift in Sources */,
 				2261FBF12DF62EE800CF7C02 /* UpdateDiscountCodeUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

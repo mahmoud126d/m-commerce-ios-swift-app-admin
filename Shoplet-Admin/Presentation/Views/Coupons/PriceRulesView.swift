@@ -14,9 +14,9 @@ struct PriceRulesView: View {
     @State private var selectedPriceRule: PriceRule?
     @State private var selectedRuleId: Int? = nil
     @State private var isShowingDiscountCodesView = false
-    
+
     var body: some View {
-         NavigationView {
+        NavigationView {
             VStack {
                 if viewModel.isLoading {
                     Spacer()
@@ -36,13 +36,8 @@ struct PriceRulesView: View {
                                         viewModel.deletePriceRule(id: rule.id ?? 0)
                                     },
                                     editAction: {
-                                        print("edit button pressed")
-                                        print("Setting selectedPriceRule to: \(rule.title ?? "nil")")
                                         self.selectedPriceRule = rule
-                                        DispatchQueue.main.async {
-                                            print("Opening sheet with selectedPriceRule: \(self.selectedPriceRule?.title ?? "nil")")
-                                            self.openAddPriceRuleView = true
-                                        }
+                                        self.openAddPriceRuleView = true
                                     }
                                 )
                                 .padding(.vertical, 8)
@@ -53,7 +48,6 @@ struct PriceRulesView: View {
                                 Spacer().frame(height: 10)
                             }
                             .onTapGesture {
-                                print("Tapped rule id: \(rule.id ?? 0)")
                                 selectedRuleId = rule.id
                                 isShowingDiscountCodesView = true
                             }
@@ -63,33 +57,60 @@ struct PriceRulesView: View {
                         }
                     }
                     .listStyle(PlainListStyle())
-                    
+
                     NavigationLink(
-                        destination: DiscountCodesView(viewModel: DIContainer.shared.resolve(DiscountCodeViewModel.self), ruleId: selectedRuleId),
+                        destination: DiscountCodesView(
+                            viewModel: DIContainer.shared.resolve(DiscountCodeViewModel.self),
+                            ruleId: selectedRuleId
+                        ),
                         isActive: $isShowingDiscountCodesView,
                         label: { EmptyView() }
                     )
                     .hidden()
 
-                    
+                    Button(action: {
+                        openAddPriceRuleView = true
+                    }) {
+                        HStack {
+                            Image(systemName: "plus")
+                            Text("Add New Price Rule")
+                                .fontWeight(.semibold)
+                        }
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.primaryColor)
+                        .cornerRadius(12)
+                        .padding(.horizontal)
+                        .padding(.bottom, 8)
+                    }
                 } else {
                     Spacer()
                     Text("No price rules available.")
                         .foregroundColor(.gray)
                     Spacer()
-                }
-            }
-            .navigationTitle("Discount Rules")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        openAddPriceRuleView.toggle()
-                    } label: {
-                        Image(systemName: "plus")
-                            .font(.title2)
+
+                    Button(action: {
+                        openAddPriceRuleView = true
+                    }) {
+                        HStack {
+                            Image(systemName: "plus")
+                            Text("Add New Price Rule")
+                                .fontWeight(.semibold)
+                        }
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.primaryColor)
+                        .cornerRadius(12)
+                        .padding(.horizontal)
+                        .padding(.bottom)
                     }
                 }
             }
+            .navigationTitle("Discount Rules")
+
+
             .sheet(isPresented: $openAddPriceRuleView, onDismiss: {
                 selectedPriceRule = nil
             }) {
@@ -111,7 +132,6 @@ struct PriceRulesView: View {
                 }
             }
         }
-
     }
 }
 
