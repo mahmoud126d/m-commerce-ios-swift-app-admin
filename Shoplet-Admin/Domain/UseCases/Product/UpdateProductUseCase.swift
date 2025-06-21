@@ -8,20 +8,19 @@
 import Foundation
 
 protocol UpdateProductUseCaseProtocol {
-    func execute(product:ProductRequest,completion: @escaping (Result<ProductRequest, NetworkError>) -> Void)
+    func execute(product: ProductRequest) async throws -> ProductRequest
 }
 
 class UpdateProductUseCase: UpdateProductUseCaseProtocol {
-   
+
     private let repository: ProductRepositoryProtocol
-    
+
     init(repository: ProductRepositoryProtocol) {
         self.repository = repository
     }
-    
-    func execute(product:ProductRequest,completion: @escaping (Result<ProductRequest, NetworkError>) -> Void) {
-        repository.updateProduct(product: product) { result in
-            completion(result)
-        }
+
+    func execute(product: ProductRequest) async throws -> ProductRequest {
+        try await repository.updateProduct(product: product)
     }
 }
+

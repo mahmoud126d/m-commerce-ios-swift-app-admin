@@ -30,7 +30,10 @@ struct DiscountCodesView: View {
                         DiscountCodeCustomCell(
                             code: code.code,
                             deleteAction: {
-                                viewModel.deleteDiscountCode(ruleId: ruleId ?? 0, codeId: code.id ?? 0)
+                                Task {
+                                    await viewModel.deleteDiscountCode(ruleId: ruleId ?? 0, codeId: code.id ?? 0)
+                                    }
+
                             },
                             editAction: {
                                 self.code = code.code
@@ -63,8 +66,10 @@ struct DiscountCodesView: View {
             }
             .onAppear {
                 if let id = ruleId {
-                    viewModel.getDiscountCodes(ruleId: id)
-                }
+                       Task {
+                           await viewModel.getDiscountCodes(ruleId: id)
+                       }
+                   }
             }
             .alert(isPresented: $showErrorAlert) {
                 Alert(

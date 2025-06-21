@@ -8,12 +8,12 @@
 import Foundation
 
 protocol CouponsRepositoryProtocol {
-    func getPriceRules(completion: @escaping (Result<PriceRulesResponse, NetworkError>) -> Void)
-    func createPriceRule(priceRule:PriceRuleRequest,completion: @escaping (Result<PriceRuleRequest, NetworkError>) -> Void)
-    func deletePriceRule(id:Int,completion: @escaping (Result<Empty, NetworkError>) -> Void)
-    func updatePriceRule(priceRule:PriceRuleRequest, completion: @escaping (Result<PriceRuleRequest, NetworkError>) -> Void)
-    func getDiscountCodes(priceRuleId:Int,completion: @escaping (Result<DiscountCodesResponse, NetworkError>) -> Void)
-    func createDiscountCode(priceRuleId:Int,discountCode:DiscountCodesRequest, completion: @escaping (Result<DiscountCodesRequest, NetworkError>) -> Void)
-    func deleteDiscountCode(ruleId: Int, codeId: Int, completion: @escaping (Result<Empty, NetworkError>) -> Void)
-    func updateDiscountCode(priceRuleId:Int,discountCode:DiscountCodesRequest, completion: @escaping (Result<DiscountCodesRequest, NetworkError>) -> Void)
+    func getPriceRules() async throws -> PriceRulesResponse
+    func createPriceRule(priceRule: PriceRuleRequest) async throws -> PriceRuleRequest
+    func deletePriceRule(id: Int) async throws -> Empty
+    func updatePriceRule(priceRule: PriceRuleRequest) async throws -> PriceRuleRequest
+    func getDiscountCodes(priceRuleId: Int) async throws -> DiscountCodesResponse
+    func createDiscountCode(priceRuleId: Int, discountCode: DiscountCodesRequest) async throws -> DiscountCodesRequest
+    func deleteDiscountCode(ruleId: Int, codeId: Int) async throws -> Empty
+    func updateDiscountCode(priceRuleId: Int, discountCode: DiscountCodesRequest) async throws -> DiscountCodesRequest
 }

@@ -10,20 +10,17 @@ import Foundation
 
 // MARK: - Get Collections UseCase
 protocol GetCollectionsUseCaseProtocol {
-    func execute(completion: @escaping (Result<CollectionsResponse, NetworkError>) -> Void)
+    func execute() async throws -> CollectionsResponse
 }
 
 class GetCollectionsUseCase: GetCollectionsUseCaseProtocol {
-    
     private let repository: CollectionsRepositoryProtocol
     
     init(repository: CollectionsRepositoryProtocol) {
         self.repository = repository
     }
     
-    func execute(completion: @escaping (Result<CollectionsResponse, NetworkError>) -> Void) {
-        repository.getCollections { result in
-            completion(result)
-        }
+    func execute() async throws -> CollectionsResponse {
+        try await repository.getCollections()
     }
 }

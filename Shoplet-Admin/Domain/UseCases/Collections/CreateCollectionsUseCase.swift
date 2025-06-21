@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - Create Collections UseCase
 protocol CreateCollectionUseCaseProtocol {
-    func execute(collection:CollectionRequest,completion: @escaping (Result<CollectionRequest, NetworkError>) -> Void)
+    func execute(collection: CollectionRequest) async throws -> CollectionRequest
 }
 
 class CreateCollectionUseCase: CreateCollectionUseCaseProtocol {
@@ -20,9 +20,7 @@ class CreateCollectionUseCase: CreateCollectionUseCaseProtocol {
         self.repository = repository
     }
     
-    func execute(collection:CollectionRequest,completion: @escaping (Result<CollectionRequest, NetworkError>) -> Void) {
-        repository.createCollection(collection: collection) { result in
-            completion(result)
-        }
+    func execute(collection: CollectionRequest) async throws -> CollectionRequest {
+        try await repository.createCollection(collection: collection)
     }
 }

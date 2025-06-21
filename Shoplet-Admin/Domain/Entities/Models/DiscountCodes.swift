@@ -50,15 +50,6 @@ struct DiscountCode: Codable, Identifiable {
     }
 }
 
-// MARK: - DiscountCodeCreationResponse
-//struct DiscountCodeCreationResponse: Codable {
-//    let discountCodeCreation: DiscountCodeCreation
-//    
-//    enum CodingKeys: String, CodingKey {
-//        case discountCodeCreation = "discount_code_creation"
-//    }
-//}
-
 
 struct DiscountCodeCreation: Codable {
     let id: Int

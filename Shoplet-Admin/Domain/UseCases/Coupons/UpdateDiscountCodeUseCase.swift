@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - Update DiscountCode UseCase
 protocol UpdateDiscountCodeUseCaseProtocol {
-    func execute(priceRuleId: Int, discountCode: DiscountCodesRequest, completion: @escaping (Result<DiscountCodesRequest, NetworkError>) -> Void)
+    func execute(priceRuleId: Int, discountCode: DiscountCodesRequest) async throws -> DiscountCodesRequest
 }
 class UpdateDiscountCodeUseCase: UpdateDiscountCodeUseCaseProtocol {
     
@@ -19,9 +19,7 @@ class UpdateDiscountCodeUseCase: UpdateDiscountCodeUseCaseProtocol {
         self.repository = repository
     }
     
-    func execute(priceRuleId: Int, discountCode: DiscountCodesRequest, completion: @escaping (Result<DiscountCodesRequest, NetworkError>) -> Void) {
-        repository.updateDiscountCode(priceRuleId: priceRuleId, discountCode: discountCode){result in
-           completion(result)
-        }
+    func execute(priceRuleId: Int, discountCode: DiscountCodesRequest) async throws -> DiscountCodesRequest {
+        try await repository.updateDiscountCode(priceRuleId: priceRuleId, discountCode: discountCode)
     }
 }

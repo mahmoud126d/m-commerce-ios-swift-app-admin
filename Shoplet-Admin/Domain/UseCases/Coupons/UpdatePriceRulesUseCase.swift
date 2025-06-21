@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - Get PriceRules UseCase
 protocol UpdatePriceRulesUseCaseProtocol {
-    func execute(priceRule:PriceRuleRequest,completion: @escaping (Result<PriceRuleRequest, NetworkError>) -> Void)
+    func execute(priceRule: PriceRuleRequest) async throws -> PriceRuleRequest
 }
 
 class UpdatePriceRulesUseCase: UpdatePriceRulesUseCaseProtocol {
@@ -20,9 +20,7 @@ class UpdatePriceRulesUseCase: UpdatePriceRulesUseCaseProtocol {
         self.repository = repository
     }
     
-    func execute(priceRule:PriceRuleRequest, completion: @escaping (Result<PriceRuleRequest, NetworkError>) -> Void) {
-        repository.updatePriceRule(priceRule: priceRule) { result in
-            completion(result)
-        }
+    func execute(priceRule: PriceRuleRequest) async throws -> PriceRuleRequest {
+        try await repository.updatePriceRule(priceRule: priceRule)
     }
 }

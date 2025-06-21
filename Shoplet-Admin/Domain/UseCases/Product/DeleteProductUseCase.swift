@@ -8,7 +8,7 @@
 import Foundation
 
 protocol DeleteProductsUseCaseProtocol {
-    func execute(productId:Int,completion: @escaping (Result<Empty, NetworkError>) -> Void)
+    func execute(productId: Int) async throws -> Empty
 }
 
 class DeleteProductsUseCase: DeleteProductsUseCaseProtocol {
@@ -19,9 +19,7 @@ class DeleteProductsUseCase: DeleteProductsUseCaseProtocol {
         self.repository = repository
     }
     
-    func execute(productId:Int,completion: @escaping (Result<Empty, NetworkError>) -> Void) {
-        repository.deleteProduct(productId: productId) { result in
-            completion(result)
-        }
+    func execute(productId: Int) async throws -> Empty {
+        try await repository.deleteProduct(productId: productId)
     }
 }

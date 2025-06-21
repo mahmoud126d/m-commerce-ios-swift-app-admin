@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - Get DiscountCode UseCase
 protocol DeleteDiscountCodeUseCaseProtocol {
-    func execute(ruleId: Int, codeId: Int, completion: @escaping (Result<Empty, NetworkError>) -> Void)
+    func execute(ruleId: Int, codeId: Int) async throws -> Empty
 }
 
 class DeleteDiscountCodeUseCase: DeleteDiscountCodeUseCaseProtocol {
@@ -20,9 +20,7 @@ class DeleteDiscountCodeUseCase: DeleteDiscountCodeUseCaseProtocol {
         self.repository = repository
     }
     
-    func execute(ruleId: Int, codeId: Int, completion: @escaping (Result<Empty, NetworkError>) -> Void) {
-        repository.deleteDiscountCode(ruleId: ruleId, codeId: codeId) { result in
-            completion(result)
-        }
+    func execute(ruleId: Int, codeId: Int) async throws -> Empty {
+        try await repository.deleteDiscountCode(ruleId: ruleId, codeId: codeId)
     }
 }

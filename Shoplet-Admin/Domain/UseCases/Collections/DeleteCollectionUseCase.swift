@@ -9,20 +9,17 @@ import Foundation
 
 // MARK: - Delete Collections UseCase
 protocol DeleteCollectionUseCaseProtocol {
-    func execute(collectionId:Int,completion: @escaping (Result<Empty, NetworkError>) -> Void)
+    func execute(collectionId: Int) async throws -> Empty
 }
 
 class DeleteCollectionUseCase: DeleteCollectionUseCaseProtocol {
-    
     private let repository: CollectionsRepositoryProtocol
     
     init(repository: CollectionsRepositoryProtocol) {
         self.repository = repository
     }
     
-    func execute(collectionId:Int,completion: @escaping (Result<Empty, NetworkError>) -> Void) {
-        repository.deleteCollection(collectionId: collectionId) { result in
-            completion(result)
-        }
+    func execute(collectionId: Int) async throws -> Empty {
+        try await repository.deleteCollection(collectionId: collectionId)
     }
 }

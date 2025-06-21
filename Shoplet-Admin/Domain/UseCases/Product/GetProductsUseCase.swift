@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - Get Products UseCase
 protocol GetProductsUseCaseProtocol {
-    func execute(completion: @escaping (Result<ProductsResponse, NetworkError>) -> Void)
+    func execute() async throws -> ProductsResponse
 }
 
 class GetProductsUseCase: GetProductsUseCaseProtocol {
@@ -20,10 +20,7 @@ class GetProductsUseCase: GetProductsUseCaseProtocol {
         self.repository = repository
     }
     
-    func execute(completion: @escaping (Result<ProductsResponse, NetworkError>) -> Void) {
-        repository.getProducts { result in
-            completion(result)
-        }
+    func execute() async throws -> ProductsResponse {
+        try await repository.getProducts()
     }
 }
-

@@ -28,10 +28,12 @@ struct AddDiscountCodeView: View {
             Button(action: {
                 let dicountCodeRequest = DiscountCodesRequest(discountCode:
                                                                 DiscountCode(id: codeId, code: discountCode))
-                if selectedCode.isEmpty{
-                    dicountCodesViewModel.createDiscountCode(ruleId: ruleId, discountCode: dicountCodeRequest)
-                }else{
-                    dicountCodesViewModel.updateDiscountCode(ruleId: ruleId, discountCode: dicountCodeRequest)
+                Task{
+                    if selectedCode.isEmpty{
+                        await dicountCodesViewModel.createDiscountCode(ruleId: ruleId, discountCode: dicountCodeRequest)
+                    }else{
+                        await dicountCodesViewModel.updateDiscountCode(ruleId: ruleId, discountCode: dicountCodeRequest)
+                    }
                 }
                 
             }) {

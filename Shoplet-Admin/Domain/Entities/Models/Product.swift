@@ -199,8 +199,8 @@ struct ProductImage: Codable {
     let height: Int?
     let src: String?
     let variantIDS: [Int]?
-    let attachment: String?  // Base64 encoded image data
-    let filename: String?    // Optional filename
+    let attachment: String?  
+    let filename: String?
     
     enum CodingKeys: String, CodingKey {
         case id, alt, position

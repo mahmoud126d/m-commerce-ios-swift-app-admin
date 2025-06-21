@@ -4,18 +4,18 @@
 //
 //  Created by Macos on 19/06/2025.
 //
-
 import Foundation
 
-class CollectionsViewModel: ObservableObject{
-    @Published var collections:[Collection]?
+@MainActor
+class CollectionsViewModel: ObservableObject {
+    @Published var collections: [Collection]?
     @Published var isLoading = true
-    @Published var userError: NetworkError? = nil
+    @Published var userError: NetworkError?
     
-    private let getCollectionsUseCase : GetCollectionsUseCaseProtocol
-    private let createCollectionUseCase : CreateCollectionUseCaseProtocol
-    private let updateCollectionUseCase : UpdateCollectionUseCaseProtocol
-    private let deleteCollectionUseCase : DeleteCollectionUseCaseProtocol
+    private let getCollectionsUseCase: GetCollectionsUseCaseProtocol
+    private let createCollectionUseCase: CreateCollectionUseCaseProtocol
+    private let updateCollectionUseCase: UpdateCollectionUseCaseProtocol
+    private let deleteCollectionUseCase: DeleteCollectionUseCaseProtocol
     
     init(
         getCollectionsUseCase: GetCollectionsUseCaseProtocol,
@@ -28,74 +28,67 @@ class CollectionsViewModel: ObservableObject{
         self.updateCollectionUseCase = updateCollectionUseCase
         self.deleteCollectionUseCase = deleteCollectionUseCase
     }
-    func createCollection(collectionName:String,collectionImageURL:String,collectionDescription:String) {
+    
+    func createCollection(collectionName: String, collectionImageURL: String, collectionDescription: String) async {
         let collection = CollectionRequest(
             collection: Collection(
-                title: collectionName.uppercased(), 
-                bodyHTML:collectionDescription,
+                title: collectionName.uppercased(),
+                bodyHTML: collectionDescription,
                 image: CollectionImage(src: collectionImageURL)
             )
         )
-        createCollectionUseCase.execute(collection: collection) { [weak self] result in
-            switch result {
-            case .success(let createdCollection):
-                self?.userError = nil
-                //self?.collections.append(createdCollection.collection)
-                print("Collection created: \(createdCollection.collection)")
-            case .failure(let error):
-                self?.userError = error
-                print("Failed to create collection: \(error.localizedDescription)")
-            }
+        do {
+            let createdCollection = try await createCollectionUseCase.execute(collection: collection)
+            userError = nil
+            // collections?.append(createdCollection.collection) 
+            print("Collection created: \(createdCollection.collection)")
+        } catch {
+            userError = error as? NetworkError
+            print("Failed to create collection: \(error.localizedDescription)")
         }
     }
     
-    func getCollections() {
-        getCollectionsUseCase.execute { [weak self] result in
-            switch result {
-            case .success(let success):
-                self?.userError = nil
-                self?.isLoading = false
-                self?.collections = success.collections ?? []
-            case .failure(let failure):
-                self?.userError = failure
-                self?.isLoading = false
-                print(failure.localizedDescription)
-            }
+    func getCollections() async {
+        do {
+            let response = try await getCollectionsUseCase.execute()
+            userError = nil
+            isLoading = false
+            collections = response.collections ?? []
+        } catch {
+            userError = error as? NetworkError
+            isLoading = false
+            print("Failed to fetch collections: \(error.localizedDescription)")
         }
     }
     
-    func updateCollection(collectionName:String,collectionImageURL:String,collectionDescription:String,collectionId:Int) {
+    func updateCollection(collectionName: String, collectionImageURL: String, collectionDescription: String, collectionId: Int) async {
         let collection = CollectionRequest(
             collection: Collection(
-                id:collectionId,
+                id: collectionId,
                 title: collectionName.uppercased(),
-                bodyHTML:collectionDescription,
+                bodyHTML: collectionDescription,
                 image: CollectionImage(src: collectionImageURL)
-            ))
-        updateCollectionUseCase.execute(collection: collection) { [weak self] result in
-            switch result {
-            case .success(let updatedCollection):
-                self?.userError = nil
-                self?.getCollections()
-                print("Collection updated: \(updatedCollection.collection)")
-            case .failure(let error):
-                self?.userError = error
-                print("Failed to update collection: \(error.localizedDescription)")
-            }
+            )
+        )
+        do {
+            let updatedCollection = try await updateCollectionUseCase.execute(collection: collection)
+            userError = nil
+            await getCollections() // Refresh collections after update
+            print("Collection updated: \(updatedCollection.collection)")
+        } catch {
+            userError = error as? NetworkError
+            print("Failed to update collection: \(error.localizedDescription)")
         }
     }
     
-    func deleteCollection(collectionId: Int) {
-        deleteCollectionUseCase.execute(collectionId: collectionId) {[weak self] result in
-            switch result {
-            case .success:
-                self?.userError = nil
-                print("Collection Deleted Successfully!")
-            case .failure(let error):
-                self?.userError = error
-                print("Failed to delete collection: \(error.localizedDescription)")
-            }
+    func deleteCollection(collectionId: Int) async {
+        do {
+            _ = try await deleteCollectionUseCase.execute(collectionId: collectionId)
+            userError = nil
+            print("Collection deleted successfully!")
+        } catch {
+            userError = error as? NetworkError
+            print("Failed to delete collection: \(error.localizedDescription)")
         }
     }
-    
 }

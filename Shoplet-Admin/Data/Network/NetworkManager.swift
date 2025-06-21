@@ -7,295 +7,158 @@
 
 import Foundation
 import Alamofire
-class NetworkManager{
+class NetworkManager {
     private let session: Session
-        
+    
     init() {
-            let configuration = URLSessionConfiguration.default
-            configuration.timeoutIntervalForRequest = 30
-            configuration.timeoutIntervalForResource = 60
-            self.session = Session(configuration: configuration)
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 30
+        configuration.timeoutIntervalForResource = 60
+        self.session = Session(configuration: configuration)
     }
     
     private var headers: HTTPHeaders {
-            return [
-                "X-Shopify-Access-Token": ShopifyConfig.accessToken,
-                "Content-Type": "application/json"
-            ]
+        return [
+            "X-Shopify-Access-Token": ShopifyConfig.accessToken,
+            "Content-Type": "application/json"
+        ]
     }
     
     private func request<T: Codable>(
-            endpoint: APIEndpoints,
-            method: HTTPMethod = .get,
-            parameters: Parameters? = nil,
-            completion: @escaping (Result<T, NetworkError>) -> Void
-        ) {
+        endpoint: APIEndpoints,
+        method: HTTPMethod = .get,
+        parameters: Parameters? = nil
+    ) async throws -> T {
+        let response = await session.request(
+            endpoint.url,
+            method: method,
+            parameters: parameters,
+            encoding: JSONEncoding.default,
+            headers: headers
+        )
+        .validate()
+        .serializingDecodable(T.self, automaticallyCancelling: true)
+        .response
         
-            session.request(
-                endpoint.url,
-                method: method,
-                parameters: parameters,
-                encoding: JSONEncoding.default,
-                headers: headers
-            )
-            .validate()
-            .responseDecodable(of: T.self) { response in
-                switch response.result {
-                case .success(let data):
-                    completion(.success(data))
-                case .failure(let error):
-                    do {
-                        guard let data = response.data else {
-                            completion(.failure(.invalidResponse))
-                            return
-                        }
-                        let json = try JSONSerialization.jsonObject(with: data, options: [])
-                        if (json as? [String: Any])?["Message"] is String {
-                            completion(.failure(.decodingError))
-                        } else {
-                            completion(.failure(.serverError(error.localizedDescription)))
-                        }
-                    } catch {
-                        completion(.failure(.other(error.localizedDescription)))
-                    }
-                    break
+        switch response.result {
+        case .success(let data):
+            return data
+        case .failure(let error):
+            guard let data = response.data else {
+                throw NetworkError.invalidResponse
+            }
+            do {
+                let json = try JSONSerialization.jsonObject(with: data, options: [])
+                if (json as? [String: Any])?["Message"] is String {
+                    throw NetworkError.decodingError
+                } else {
+                    throw NetworkError.serverError(error.localizedDescription)
                 }
+            } catch {
+                throw NetworkError.other(error.localizedDescription)
             }
         }
+    }
 }
 
 // MARK: - Product Management
 extension NetworkManager {
     
-    func getProducts(completion: @escaping (Result<ProductsResponse, NetworkError>) -> Void) {
-        request(endpoint: .products) { (result: Result<ProductsResponse, NetworkError>) in
-            switch result {
-            case .success(let response):
-                completion(.success(response))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    func getProducts() async throws -> ProductsResponse {
+        try await request(endpoint: .products)
     }
     
-    func deleteProduct(id: Int, completion: @escaping (Result<Empty, NetworkError>) -> Void) {
-        request(endpoint: .product(id: id),method: .delete) { (result: Result<Empty, NetworkError>) in
-            switch result {
-            case .success(let response):
-                completion(.success(response))
-                print(response)
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    func deleteProduct(id: Int) async throws -> Empty {
+        try await request(endpoint: .product(id: id), method: .delete)
     }
     
-    func createProduct(product: ProductRequest, completion: @escaping (Result<ProductRequest, NetworkError>) -> Void) {
-        do {
-            let parameters: Parameters = try (JSONSerialization.jsonObject(with: JSONEncoder().encode(product)) as? [String: Any])!
-            print("json is \(parameters)")
-            request(endpoint: .products, method: .post, parameters: parameters) { (result: Result<ProductRequest, NetworkError>) in
-                switch result {
-                case .success(let response):
-                    completion(.success(response))
-                case .failure(let error):
-                    print("Error details: \(error.localizedDescription)")
-                    completion(.failure(error))
-                }
-            }
-        } catch {
-            //completion(.failure(error))
-        }
+    func createProduct(product: ProductRequest) async throws -> ProductRequest {
+        let parameters = try encodeToParameters(product)
+        return try await request(endpoint: .products, method: .post, parameters: parameters)
     }
     
-    func updateProduct(product: ProductRequest, completion: @escaping (Result<ProductRequest, NetworkError>) -> Void) {
-            do {
-                let parameters: Parameters = try (JSONSerialization.jsonObject(with: JSONEncoder().encode(product)) as? [String: Any])!
-                request(endpoint: .product(id: product.product.id ?? 0), method: .put, parameters: parameters) { (result: Result<ProductRequest, NetworkError>) in
-                    switch result {
-                    case .success(let response):
-                        completion(.success(response))
-                    case .failure(let error):
-                        print("Error details: \(error.localizedDescription)")
-                        completion(.failure(error))
-                    }
-                }
-            } catch {
-                //completion(.failure(error))
-            }
+    func updateProduct(product: ProductRequest) async throws -> ProductRequest {
+        let parameters = try encodeToParameters(product)
+        return try await request(endpoint: .product(id: product.product.id ?? 0), method: .put, parameters: parameters)
     }
     
 }
-
-struct Empty : Codable{}
 
 // MARK: - Price Rule Management
 extension NetworkManager {
-    func getPriceRules(completion: @escaping (Result<PriceRulesResponse, NetworkError>) -> Void) {
-        request(endpoint: .priceRules) { (result: Result<PriceRulesResponse, NetworkError>) in
-            switch result {
-            case .success(let response):
-                completion(.success(response))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    
+    func getPriceRules() async throws -> PriceRulesResponse {
+        try await request(endpoint: .priceRules)
     }
-    func createPriceRule(rule: PriceRuleRequest, completion: @escaping (Result<PriceRuleRequest, NetworkError>) -> Void) {
-        do {
-            let parameters: Parameters = try (JSONSerialization.jsonObject(with: JSONEncoder().encode(rule)) as? [String: Any])!
-            request(endpoint: .priceRules, method: .post, parameters: parameters) { (result: Result<PriceRuleRequest, NetworkError>) in
-                switch result {
-                case .success(let response):
-                    completion(.success(response))
-                case .failure(let error):
-                    print("Error details: \(error.localizedDescription)")
-                    completion(.failure(error))
-                }
-            }
-        } catch {
-            //completion(.failure(error))
-        }
+    
+    func createPriceRule(rule: PriceRuleRequest) async throws -> PriceRuleRequest {
+        let parameters = try encodeToParameters(rule)
+        return try await request(endpoint: .priceRules, method: .post, parameters: parameters)
     }
-    func deletePriceRule(id: Int, completion: @escaping (Result<Empty, NetworkError>) -> Void) {
-        request(endpoint: .priceRule(id: id),method: .delete) { (result: Result<Empty, NetworkError>) in
-            switch result {
-            case .success(let response):
-                completion(.success(response))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    
+    func deletePriceRule(id: Int) async throws -> Empty {
+        try await request(endpoint: .priceRule(id: id), method: .delete)
     }
-    func updatePriceRule(priceRuleRequest: PriceRuleRequest, completion: @escaping (Result<PriceRuleRequest, NetworkError>) -> Void) {
-            do {
-                let parameters: Parameters = try (JSONSerialization.jsonObject(with: JSONEncoder().encode(priceRuleRequest)) as? [String: Any])!
-                request(endpoint: .priceRule(id: priceRuleRequest.priceRule.id ?? 0), method: .put, parameters: parameters) { (result: Result<PriceRuleRequest, NetworkError>) in
-                    switch result {
-                    case .success(let response):
-                        completion(.success(response))
-                    case .failure(let error):
-                        print("Error details: \(error.localizedDescription)")
-                        completion(.failure(error))
-                    }
-                }
-            } catch {
-                //completion(.failure(error))
-            }
-    }
-}
-// MARK: - Discount Codes Management
-
-extension NetworkManager{
-    func getDiscountCodes(priceRuleId:Int,completion: @escaping (Result<DiscountCodesResponse, NetworkError>) -> Void) {
-        request(endpoint: .discountCodes(priceRuleId: priceRuleId)) { (result: Result<DiscountCodesResponse, NetworkError>) in
-            switch result {
-            case .success(let response):
-                completion(.success(response))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-    func createDiscountCode(priceRuleId:Int,discountCode:DiscountCodesRequest, completion: @escaping (Result<DiscountCodesRequest, NetworkError>) -> Void) {
-        do {
-            let parameters: Parameters = try (JSONSerialization.jsonObject(with: JSONEncoder().encode(discountCode)) as? [String: Any])!
-            print(parameters)
-            request(endpoint: .discountCodes(priceRuleId: priceRuleId), method: .post, parameters: parameters) { (result: Result<DiscountCodesRequest, NetworkError>) in
-                switch result {
-                case .success(let response):
-                    completion(.success(response))
-                case .failure(let error):
-                    print("Error details: \(error.localizedDescription)")
-                    completion(.failure(error))
-                }
-            }
-        } catch {
-            //completion(.failure(error))
-        }
-    }
-    func deleteDiscountCode(ruleId: Int, codeId: Int, completion: @escaping (Result<Empty, NetworkError>) -> Void) {
-        request(endpoint: .discountCode(priceRuleId: ruleId, discountCodeId: codeId),method: .delete) { (result: Result<Empty, NetworkError>) in
-            switch result {
-            case .success(let response):
-                completion(.success(response))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-    func updateDiscountCode(priceRuleId:Int,discountCode:DiscountCodesRequest, completion: @escaping (Result<DiscountCodesRequest, NetworkError>) -> Void) {
-            do {
-                let parameters: Parameters = try (JSONSerialization.jsonObject(with: JSONEncoder().encode(discountCode)) as? [String: Any])!
-                request(endpoint: .discountCode(priceRuleId: priceRuleId, discountCodeId: discountCode.discountCode.id ?? 0), method: .put, parameters: parameters) { (result: Result<DiscountCodesRequest, NetworkError>) in
-                    switch result {
-                    case .success(let response):
-                        completion(.success(response))
-                    case .failure(let error):
-                        print("Error details: \(error.localizedDescription)")
-                        completion(.failure(error))
-                    }
-                }
-            } catch {
-                //completion(.failure(error))
-            }
+    
+    func updatePriceRule(priceRuleRequest: PriceRuleRequest) async throws -> PriceRuleRequest {
+        let parameters = try encodeToParameters(priceRuleRequest)
+        return try await request(endpoint: .priceRule(id: priceRuleRequest.priceRule.id ?? 0), method: .put, parameters: parameters)
     }
 }
 
 // MARK: - Discount Codes Management
-
-extension NetworkManager{
-    func getCollections(completion: @escaping (Result<CollectionsResponse, NetworkError>) -> Void) {
-        request(endpoint: .collections) { (result: Result<CollectionsResponse, NetworkError>) in
-            switch result {
-            case .success(let response):
-                completion(.success(response))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+extension NetworkManager {
+    
+    func getDiscountCodes(priceRuleId: Int) async throws -> DiscountCodesResponse {
+        try await request(endpoint: .discountCodes(priceRuleId: priceRuleId))
     }
-    func deleteCollection(collectionId: Int, completion: @escaping (Result<Empty, NetworkError>) -> Void){
-        request(endpoint: .deleteCollection(collectionId: collectionId),method: .delete) { (result: Result<Empty, NetworkError>) in
-            switch result {
-            case .success(let response):
-                completion(.success(response))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    
+    func createDiscountCode(priceRuleId: Int, discountCode: DiscountCodesRequest) async throws -> DiscountCodesRequest {
+        let parameters = try encodeToParameters(discountCode)
+        return try await request(endpoint: .discountCodes(priceRuleId: priceRuleId), method: .post, parameters: parameters)
     }
-    func updateCollection(collection: CollectionRequest, completion: @escaping (Result<CollectionRequest, NetworkError>) -> Void){
-        do {
-            let parameters: Parameters = try (JSONSerialization.jsonObject(with: JSONEncoder().encode(collection)) as? [String: Any])!
-            request(endpoint: .updateCollection(collectionId: collection.collection.id ?? 0), method: .put, parameters: parameters) { (result: Result<CollectionRequest, NetworkError>) in
-                switch result {
-                case .success(let response):
-                    completion(.success(response))
-                case .failure(let error):
-                    print("Error details: \(error.localizedDescription)")
-                    completion(.failure(error))
-                }
-            }
-        } catch {
-            //completion(.failure(error))
-        }
+    
+    func deleteDiscountCode(ruleId: Int, codeId: Int) async throws -> Empty {
+        try await request(endpoint: .discountCode(priceRuleId: ruleId, discountCodeId: codeId), method: .delete)
     }
-    func createCollection(collection: CollectionRequest, completion: @escaping (Result<CollectionRequest, NetworkError>) -> Void){
-        do {
-            let parameters: Parameters = try (JSONSerialization.jsonObject(with: JSONEncoder().encode(collection)) as? [String: Any])!
-            print(parameters)
-            request(endpoint: .collections, method: .post, parameters: parameters) { (result: Result<CollectionRequest, NetworkError>) in
-                switch result {
-                case .success(let response):
-                    completion(.success(response))
-                case .failure(let error):
-                    print("Error details: \(error.localizedDescription)")
-                    completion(.failure(error))
-                }
-            }
-        } catch {
-            //completion(.failure(error))
-        }
+    
+    func updateDiscountCode(priceRuleId: Int, discountCode: DiscountCodesRequest) async throws -> DiscountCodesRequest {
+        let parameters = try encodeToParameters(discountCode)
+        return try await request(endpoint: .discountCode(priceRuleId: priceRuleId, discountCodeId: discountCode.discountCode.id ?? 0), method: .put, parameters: parameters)
     }
 }
+
+// MARK: - Collections Management
+extension NetworkManager {
+    
+    func getCollections() async throws -> CollectionsResponse {
+        try await request(endpoint: .collections)
+    }
+    
+    func deleteCollection(collectionId: Int) async throws -> Empty {
+        try await request(endpoint: .deleteCollection(collectionId: collectionId), method: .delete)
+    }
+    
+    func updateCollection(collection: CollectionRequest) async throws -> CollectionRequest {
+        let parameters = try encodeToParameters(collection)
+        return try await request(endpoint: .updateCollection(collectionId: collection.collection.id ?? 0), method: .put, parameters: parameters)
+    }
+    
+    func createCollection(collection: CollectionRequest) async throws -> CollectionRequest {
+        let parameters = try encodeToParameters(collection)
+        return try await request(endpoint: .collections, method: .post, parameters: parameters)
+    }
+}
+
+// MARK: - Helper
+extension NetworkManager {
+    private func encodeToParameters<T: Encodable>(_ value: T) throws -> Parameters {
+        let data = try JSONEncoder().encode(value)
+        guard let json = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+            throw NetworkError.decodingError
+        }
+        return json
+    }
+}
+
+struct Empty: Codable {}

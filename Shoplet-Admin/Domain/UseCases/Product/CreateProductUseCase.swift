@@ -8,20 +8,18 @@
 import Foundation
 
 protocol CreateProductsUseCaseProtocol {
-    func execute(product:ProductRequest,completion: @escaping (Result<ProductRequest, NetworkError>) -> Void)
+    func execute(product: ProductRequest) async throws -> ProductRequest
 }
 
 class CreateProductsUseCase: CreateProductsUseCaseProtocol {
-   
-    private let repository: ProductRepositoryProtocol
     
+    private let repository: ProductRepositoryProtocol
+
     init(repository: ProductRepositoryProtocol) {
         self.repository = repository
     }
-    
-    func execute(product:ProductRequest,completion: @escaping (Result<ProductRequest, NetworkError>) -> Void) {
-        repository.createProduct(product: product) { result in
-            completion(result)
-        }
+
+    func execute(product: ProductRequest) async throws -> ProductRequest {
+        try await repository.createProduct(product: product)
     }
 }

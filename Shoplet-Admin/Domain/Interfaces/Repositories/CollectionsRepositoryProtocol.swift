@@ -7,9 +7,9 @@
 
 import Foundation
 
-protocol CollectionsRepositoryProtocol{
-    func getCollections(completion: @escaping (Result<CollectionsResponse, NetworkError>) -> Void)
-    func deleteCollection(collectionId: Int, completion: @escaping (Result<Empty, NetworkError>) -> Void)
-    func updateCollection(collection: CollectionRequest, completion: @escaping (Result<CollectionRequest, NetworkError>) -> Void)
-    func createCollection(collection: CollectionRequest, completion: @escaping (Result<CollectionRequest, NetworkError>) -> Void)
+protocol CollectionsRepositoryProtocol {
+    func getCollections() async throws -> CollectionsResponse
+    func deleteCollection(collectionId: Int) async throws -> Empty
+    func updateCollection(collection: CollectionRequest) async throws -> CollectionRequest
+    func createCollection(collection: CollectionRequest) async throws -> CollectionRequest
 }

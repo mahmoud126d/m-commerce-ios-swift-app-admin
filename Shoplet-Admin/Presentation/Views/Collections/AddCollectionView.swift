@@ -56,17 +56,19 @@ struct AddCollectionView: View {
                 }
                 
                 Button(action: {
-                    if collection == nil{
-                        collectionsViewModel.createCollection(
-                            collectionName: collectionTitle,
-                            collectionImageURL: collectionImageUrl,
-                            collectionDescription:collectionDescription)
-                    }else{
-                        collectionsViewModel.updateCollection(
-                            collectionName: collectionTitle,
-                            collectionImageURL: collectionImageUrl,
-                            collectionDescription:collectionDescription,
-                            collectionId: collection?.id ?? 0)
+                    Task{
+                        if collection == nil{
+                            await collectionsViewModel.createCollection(
+                                collectionName: collectionTitle,
+                                collectionImageURL: collectionImageUrl,
+                                collectionDescription:collectionDescription)
+                        }else{
+                            await collectionsViewModel.updateCollection(
+                                collectionName: collectionTitle,
+                                collectionImageURL: collectionImageUrl,
+                                collectionDescription:collectionDescription,
+                                collectionId: collection?.id ?? 0)
+                        }
                     }
                 }) {
                     Text(collection == nil ? "Create Collection" : "Update Collection")

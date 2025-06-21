@@ -8,7 +8,9 @@
 import Foundation
 
 
-class CollectionsRepository: CollectionsRepositoryProtocol{
+import Foundation
+
+class CollectionsRepository: CollectionsRepositoryProtocol {
     
     private let networkManager: NetworkManager
     
@@ -16,47 +18,19 @@ class CollectionsRepository: CollectionsRepositoryProtocol{
         self.networkManager = networkManager
     }
     
-    func getCollections(completion: @escaping (Result<CollectionsResponse, NetworkError>) -> Void) {
-        networkManager.getCollections{ result in
-            switch result {
-            case .success(let collections):
-                completion(.success(collections))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    func getCollections() async throws -> CollectionsResponse {
+        try await networkManager.getCollections()
     }
     
-    func deleteCollection(collectionId: Int, completion: @escaping (Result<Empty, NetworkError>) -> Void) {
-        networkManager.deleteCollection(collectionId: collectionId){ result in
-            switch result {
-            case .success(let collections):
-                completion(.success(collections))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    func deleteCollection(collectionId: Int) async throws -> Empty {
+        try await networkManager.deleteCollection(collectionId: collectionId)
     }
     
-    func updateCollection(collection: CollectionRequest, completion: @escaping (Result<CollectionRequest, NetworkError>) -> Void) {
-        networkManager.updateCollection(collection: collection){ result in
-            switch result {
-            case .success(let collections):
-                completion(.success(collections))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    func updateCollection(collection: CollectionRequest) async throws -> CollectionRequest {
+        try await networkManager.updateCollection(collection: collection)
     }
     
-    func createCollection(collection: CollectionRequest, completion: @escaping (Result<CollectionRequest, NetworkError>) -> Void) {
-        networkManager.createCollection(collection: collection){ result in
-            switch result {
-            case .success(let collections):
-                completion(.success(collections))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    func createCollection(collection: CollectionRequest) async throws -> CollectionRequest {
+        try await networkManager.createCollection(collection: collection)
     }
 }

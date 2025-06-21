@@ -10,20 +10,17 @@ import Foundation
 
 // MARK: - Update Collection UseCase
 protocol UpdateCollectionUseCaseProtocol {
-    func execute(collection:CollectionRequest,completion: @escaping (Result<CollectionRequest, NetworkError>) -> Void)
+    func execute(collection: CollectionRequest) async throws -> CollectionRequest
 }
 
 class UpdateCollectionUseCase: UpdateCollectionUseCaseProtocol {
-    
     private let repository: CollectionsRepositoryProtocol
     
     init(repository: CollectionsRepositoryProtocol) {
         self.repository = repository
     }
     
-    func execute(collection:CollectionRequest,completion: @escaping (Result<CollectionRequest, NetworkError>) -> Void) {
-        repository.updateCollection(collection: collection){ result in
-            completion(result)
-        }
+    func execute(collection: CollectionRequest) async throws -> CollectionRequest {
+        try await repository.updateCollection(collection: collection)
     }
 }

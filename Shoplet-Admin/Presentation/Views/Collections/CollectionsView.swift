@@ -77,7 +77,9 @@ struct CollectionsView: View {
                                         }
 
                                         Button(action: {
-                                            viewModel.deleteCollection(collectionId: collection.id ?? 0)
+                                            Task{
+                                                await viewModel.deleteCollection(collectionId: collection.id ?? 0)
+                                            }
                                         }) {
                                             Image(systemName: "trash.fill")
                                                 .foregroundColor(.red)
@@ -105,7 +107,9 @@ struct CollectionsView: View {
             })
         }
         .onAppear {
-            viewModel.getCollections()
+            Task{
+                await viewModel.getCollections()
+            }
         }
     }
 }

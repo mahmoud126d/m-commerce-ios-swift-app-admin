@@ -7,94 +7,44 @@
 
 import Foundation
 
-class CouponsRepository: CouponsRepositoryProtocol{
 
+class CouponsRepository: CouponsRepositoryProtocol {
+    
     private let networkManager: NetworkManager
-
-        init(networkManager: NetworkManager = NetworkManager()) {
-            self.networkManager = networkManager
-        }
     
-    func getPriceRules(completion: @escaping (Result<PriceRulesResponse, NetworkError>) -> Void) {
-        networkManager.getPriceRules{ result in
-            switch result {
-            case .success(let priceRules):
-                completion(.success(priceRules))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-    func createPriceRule(priceRule:PriceRuleRequest,completion: @escaping (Result<PriceRuleRequest, NetworkError>) -> Void) {
-        networkManager.createPriceRule(rule:priceRule){ result in
-            switch result {
-            case .success(let priceRules):
-                completion(.success(priceRules))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-    func deletePriceRule(id: Int, completion: @escaping (Result<Empty, NetworkError>) -> Void) {
-        networkManager.deletePriceRule(id: id){result in
-            switch result {
-            case .success(let response):
-                completion(.success(response))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-    func updatePriceRule(priceRule:PriceRuleRequest, completion: @escaping (Result<PriceRuleRequest, NetworkError>) -> Void) {
-        networkManager.updatePriceRule(priceRuleRequest: priceRule){result in
-            switch result {
-            case .success(let response):
-                completion(.success(response))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-    func getDiscountCodes(priceRuleId: Int, completion: @escaping (Result<DiscountCodesResponse, NetworkError>) -> Void) {
-        networkManager.getDiscountCodes(priceRuleId: priceRuleId){ result in
-            switch result {
-            case .success(let discountCodes):
-                completion(.success(discountCodes))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    init(networkManager: NetworkManager = NetworkManager()) {
+        self.networkManager = networkManager
     }
     
-    func createDiscountCode(priceRuleId: Int, discountCode: DiscountCodesRequest, completion: @escaping (Result<DiscountCodesRequest, NetworkError>) -> Void) {
-        networkManager.createDiscountCode(priceRuleId: priceRuleId, discountCode: discountCode){ result in
-            switch result {
-            case .success(let response):
-                completion(.success(response))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    func getPriceRules() async throws -> PriceRulesResponse {
+        try await networkManager.getPriceRules()
     }
     
-    func deleteDiscountCode(ruleId: Int, codeId: Int, completion: @escaping (Result<Empty, NetworkError>) -> Void) {
-        networkManager.deleteDiscountCode(ruleId: ruleId, codeId: codeId){result in
-            switch result {
-            case .success(let response):
-                completion(.success(response))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    func createPriceRule(priceRule: PriceRuleRequest) async throws -> PriceRuleRequest {
+        try await networkManager.createPriceRule(rule: priceRule)
     }
-    func updateDiscountCode(priceRuleId: Int, discountCode: DiscountCodesRequest, completion: @escaping (Result<DiscountCodesRequest, NetworkError>) -> Void) {
-        networkManager.updateDiscountCode(priceRuleId: priceRuleId, discountCode: discountCode){result in
-                switch result {
-                case .success(let response):
-                    completion(.success(response))
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-        }
+    
+    func deletePriceRule(id: Int) async throws -> Empty {
+        try await networkManager.deletePriceRule(id: id)
+    }
+    
+    func updatePriceRule(priceRule: PriceRuleRequest) async throws -> PriceRuleRequest {
+        try await networkManager.updatePriceRule(priceRuleRequest: priceRule)
+    }
+    
+    func getDiscountCodes(priceRuleId: Int) async throws -> DiscountCodesResponse {
+        try await networkManager.getDiscountCodes(priceRuleId: priceRuleId)
+    }
+    
+    func createDiscountCode(priceRuleId: Int, discountCode: DiscountCodesRequest) async throws -> DiscountCodesRequest {
+        try await networkManager.createDiscountCode(priceRuleId: priceRuleId, discountCode: discountCode)
+    }
+    
+    func deleteDiscountCode(ruleId: Int, codeId: Int) async throws -> Empty {
+        try await networkManager.deleteDiscountCode(ruleId: ruleId, codeId: codeId)
+    }
+    
+    func updateDiscountCode(priceRuleId: Int, discountCode: DiscountCodesRequest) async throws -> DiscountCodesRequest {
+        try await networkManager.updateDiscountCode(priceRuleId: priceRuleId, discountCode: discountCode)
     }
 }

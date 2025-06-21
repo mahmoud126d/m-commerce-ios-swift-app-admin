@@ -6,77 +6,104 @@
 //
 
 import Foundation
+class ProductsViewModel: ObservableObject {
 
-class ProductsViewModel : ObservableObject {
-    
-    @Published var productList:[Product]?
+    @Published var productList: [Product]?
     @Published var isLoading = true
-    @Published var userError: NetworkError? = nil
-    
+    @Published var userError: NetworkError?
+
     private let getProductsUseCase: GetProductsUseCaseProtocol
     private let deleteProductUseCase: DeleteProductsUseCaseProtocol
     private let createProductUseCase: CreateProductsUseCaseProtocol
     private let updateProductUseCase: UpdateProductUseCaseProtocol
-    init(getProductsUseCase: GetProductsUseCaseProtocol,
-         deleteProductUseCase: DeleteProductsUseCaseProtocol,
-         createProductUseCase: CreateProductsUseCaseProtocol,
-         updateProductUseCase:UpdateProductUseCaseProtocol
+
+    init(
+        getProductsUseCase: GetProductsUseCaseProtocol,
+        deleteProductUseCase: DeleteProductsUseCaseProtocol,
+        createProductUseCase: CreateProductsUseCaseProtocol,
+        updateProductUseCase: UpdateProductUseCaseProtocol
     ) {
         self.getProductsUseCase = getProductsUseCase
         self.deleteProductUseCase = deleteProductUseCase
         self.createProductUseCase = createProductUseCase
         self.updateProductUseCase = updateProductUseCase
     }
-    
+
     func fetchProducts() {
-        getProductsUseCase.execute { [weak self] result in
-            switch result {
-            case .success(let response):
-                self?.isLoading = false
-                self?.userError = nil
-                self?.productList = response.products
-            case .failure(let error):
-                self?.userError = error
-                print(error.localizedDescription)
-            }
-        }
-    }
-    func deleteProduct(productId:Int){
-        deleteProductUseCase.execute(productId:productId) { [weak self] result in
-            switch result {
-            case .success( _):
-                self?.isLoading = false
-                self?.userError = nil
-                if let index = self?.productList?.firstIndex(where: { $0.id == productId }) {
-                    self?.productList?.remove(at: index)
-                        }
-            case .failure(let error):
-                self?.userError = error
-            }
-        }
-    }
-    func createProduct(product:ProductRequest){
-        createProductUseCase.execute(product: product){ [weak self] result in
-            switch result {
-            case .success( _):
-                self?.isLoading = false
-                self?.userError = nil
-                self?.productList?.append(product.product)
-            case .failure(let error):
-                self?.userError = error
-            }
-        }
-    }
-    func updateProduct(product:ProductRequest){
-        updateProductUseCase.execute(product: product){[weak self] result in
-                switch result {
-                case .success( _):
-                    self?.isLoading = false
-                    self?.userError = nil
-                    //self?.productList?.append(product.product)
-                case .failure(let error):
-                    self?.userError = error
+        isLoading = true
+        Task {
+            do {
+                let response = try await getProductsUseCase.execute()
+                await MainActor.run {
+                    self.productList = response.products
+                    self.isLoading = false
+                    self.userError = nil
                 }
+            } catch {
+                await MainActor.run {
+                    self.isLoading = false
+                    self.userError = error as? NetworkError
+                }
+            }
+        }
+    }
+
+    func deleteProduct(productId: Int) {
+        isLoading = true
+        Task {
+            do {
+                _ = try await deleteProductUseCase.execute(productId: productId)
+                await MainActor.run {
+                    self.productList?.removeAll { $0.id == productId }
+                    self.isLoading = false
+                    self.userError = nil
+                }
+            } catch {
+                await MainActor.run {
+                    self.isLoading = false
+                    self.userError = error as? NetworkError
+                }
+            }
+        }
+    }
+
+    func createProduct(product: ProductRequest) {
+        isLoading = true
+        Task {
+            do {
+                let created = try await createProductUseCase.execute(product: product)
+                await MainActor.run {
+                    self.productList?.append(created.product)
+                    self.isLoading = false
+                    self.userError = nil
+                }
+            } catch {
+                await MainActor.run {
+                    self.isLoading = false
+                    self.userError = error as? NetworkError
+                }
+            }
+        }
+    }
+
+    func updateProduct(product: ProductRequest) {
+        isLoading = true
+        Task {
+            do {
+                let updated = try await updateProductUseCase.execute(product: product)
+                await MainActor.run {
+                    if let index = self.productList?.firstIndex(where: { $0.id == updated.product.id }) {
+                        self.productList?[index] = updated.product
+                    }
+                    self.isLoading = false
+                    self.userError = nil
+                }
+            } catch {
+                await MainActor.run {
+                    self.isLoading = false
+                    self.userError = error as? NetworkError
+                }
+            }
         }
     }
 }
