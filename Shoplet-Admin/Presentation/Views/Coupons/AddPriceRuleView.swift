@@ -138,14 +138,11 @@ struct AddPriceRuleView: View {
 }
 
 #Preview {
-    let repo = CouponsRepository()
+    let container = DIContainer.shared
+    let viewModel = container.resolve(PriceRulesViewModel.self)
+
     let view = AddPriceRuleView(
-        priceRulesViewModel: PriceRulesViewModel(
-            getPriceRulesUseCase: GetPriceRulesUseCase(repository: repo),
-            createPriceRulesUseCase: CreatePriceRulesUseCase(repository: repo),
-            deletePriceRulesUseCase: DeletePriceRulesUseCase(repository: repo),
-            updatePriceRulesUseCase: UpdatePriceRulesUseCase(repository: repo)
-        )
+        priceRulesViewModel: viewModel
     )
     return view
 }

@@ -65,7 +65,7 @@ struct PriceRulesView: View {
                     .listStyle(PlainListStyle())
                     
                     NavigationLink(
-                        destination: DiscountCodesView(ruleId: selectedRuleId),
+                        destination: DiscountCodesView(viewModel: DIContainer.shared.resolve(DiscountCodeViewModel.self), ruleId: selectedRuleId),
                         isActive: $isShowingDiscountCodesView,
                         label: { EmptyView() }
                     )
@@ -116,14 +116,8 @@ struct PriceRulesView: View {
 }
 
 #Preview {
-    let couponsRepo = CouponsRepository()
-    let viewModel = PriceRulesViewModel(
-        getPriceRulesUseCase: GetPriceRulesUseCase(repository: couponsRepo),
-        createPriceRulesUseCase: CreatePriceRulesUseCase(repository: couponsRepo),
-        deletePriceRulesUseCase: DeletePriceRulesUseCase(repository: couponsRepo),
-        updatePriceRulesUseCase: UpdatePriceRulesUseCase(repository: couponsRepo
-    )
-    )
+    let container = DIContainer.shared
+    let viewModel = container.resolve(PriceRulesViewModel.self)
 
     return PriceRulesView(viewModel: viewModel)
 }

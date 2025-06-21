@@ -54,12 +54,3 @@ struct AddDiscountCodeView: View {
     }
 }
 
-//#Preview {
-//    AddDiscountCodeView(dicountCodesViewModel: DiscountCodeViewModel(
-//                getDiscountCodesUseCase: GetDiscountCodesUseCase(repository: CouponsRepository()),
-//                createDiscountCodesUseCase: CreateDiscountCodeUseCase(repository: CouponsRepository()),
-//                deleteDiscountCodesUseCase: DeleteDiscountCodeUseCase(repository: CouponsRepository())
-//    )
-//                        )
-//}
-

@@ -240,9 +240,6 @@ struct AddProductView: View {
     
 }
 
-//#Preview {
-//    AddProductView(productViewModel: ProductsViewModel(getProductsUseCase: GetProductsUseCase(repository: ProductRepository() ), deleteProductUseCase: DeleteProductsUseCase(repository: ProductRepository()), createProductUseCase: CreateProductsUseCase(repository: ProductRepository()), updateProductUseCase: UpdateProductUseCase(repository: ProductRepository())))
-//}
 
 
 enum ProductType: String, CaseIterable, Identifiable {

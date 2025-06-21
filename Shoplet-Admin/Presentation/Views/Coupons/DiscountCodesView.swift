@@ -9,11 +9,8 @@ import SwiftUI
 
 struct DiscountCodesView: View {
     
-    @StateObject var viewModel = DiscountCodeViewModel(
-        getDiscountCodesUseCase: GetDiscountCodesUseCase(repository: CouponsRepository()),
-        createDiscountCodesUseCase: CreateDiscountCodeUseCase(repository: CouponsRepository()),
-        deleteDiscountCodesUseCase: DeleteDiscountCodeUseCase(repository: CouponsRepository()), updateDiscountCodesUseCase: UpdateDiscountCodeUseCase(repository: CouponsRepository())
-    )
+    @StateObject var viewModel: DiscountCodeViewModel
+    
     @State private var selectedCode: DiscountCode?
     @State private var showEditSheet = false
     @State private var showErrorAlert = false
@@ -90,12 +87,8 @@ struct DiscountCodesView: View {
 }
 
 #Preview {
-    let repository = CouponsRepository()
-    let viewModel = DiscountCodeViewModel(
-        getDiscountCodesUseCase: GetDiscountCodesUseCase(repository: repository),
-        createDiscountCodesUseCase: CreateDiscountCodeUseCase(repository: repository),
-        deleteDiscountCodesUseCase: DeleteDiscountCodeUseCase(repository: repository), updateDiscountCodesUseCase: UpdateDiscountCodeUseCase(repository: repository)
-    )
+    let container = DIContainer.shared
+    let viewModel = container.resolve(DiscountCodeViewModel.self)
 
     return DiscountCodesView(viewModel: viewModel)
 }
