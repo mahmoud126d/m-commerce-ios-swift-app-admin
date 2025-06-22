@@ -1,9 +1,3 @@
-//
-//  ContentView.swift
-//  Shoplet-Admin
-//
-//  Created by Macos on 08/06/2025.
-//
 import SwiftUI
 
 struct ContentView: View {
@@ -13,7 +7,17 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            VStack {
+            VStack(spacing: 0) {
+                HStack {
+                    Image("logo1")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 60)
+                        .padding(.leading, 16)
+                    Spacer()
+                }
+                .padding(.top, 16)
+                
                 switch selectedTab {
                 case .products:
                     ProductsView(viewModel: container.resolve(ProductsViewModel.self))
@@ -24,13 +28,14 @@ struct ContentView: View {
                 case .priceRules:
                     PriceRulesView(viewModel: container.resolve(PriceRulesViewModel.self))
                 }
+
                 Spacer()
+                
                 CustomTabBarView(selectedTab: $selectedTab)
             }
             .ignoresSafeArea(edges: .bottom)
         }
     }
-
 }
 
 #Preview {

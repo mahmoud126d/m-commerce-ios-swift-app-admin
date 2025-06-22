@@ -8,37 +8,29 @@
 import SwiftUI
 
 struct TabBarButton: View {
-    
-    var tabTitle: String
-    var tabIcon: String
-    var isSelected: Bool
-    
+    var icon: String
+    var title: String
+    var tab: Tab
+    @Binding var selectedTab: Tab
+
     var body: some View {
-        GeometryReader { geo in
-            ZStack(alignment: .top) {
-                if isSelected {
-                    Rectangle()
-                        .foregroundColor(isSelected ? .black : .clear)
-                        .frame(width: geo.size.width / 2, height: isSelected ? 3 : 0)
-                        .padding(.leading, geo.size.width / 4)
-
-                }
-
-                VStack(alignment: .center, spacing: 4) {
-                    SwiftUI.Image(systemName: "star")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 24, height: 24)
-
-                    Text(tabTitle)
-                }
-                .frame(width: geo.size.width, height: geo.size.height)
+        Button(action: {
+            selectedTab = tab
+        }) {
+            VStack(spacing: 4) {
+                Image(systemName: icon)
+                    .font(.system(size: 22, weight: .semibold))
+                    .foregroundColor(selectedTab == tab ? .primaryColor : .gray)
+                Text(title)
+                    .font(.caption)
+                    .foregroundColor(selectedTab == tab ? .primaryColor : .gray)
             }
+            .frame(maxWidth: .infinity)
         }
     }
-
 }
 
-#Preview {
-    TabBarButton(tabTitle: "Products", tabIcon: "ic_products", isSelected: true)
-}
+
+//#Preview {
+//    TabBarButton(tabTitle: "Products", tabIcon: "ic_products", isSelected: true)
+//}

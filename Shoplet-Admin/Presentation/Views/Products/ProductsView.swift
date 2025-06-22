@@ -13,75 +13,119 @@ struct ProductsView: View {
     @State var openAddProductView: Bool = false
 
     @State private var showAlert = false
-    
-    @State private var selectedProduct:Product? = nil
+    @State private var selectedProduct: Product? = nil
+
     init(viewModel: ProductsViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
-    
-    var body: some View {
-        VStack(spacing: 0) {
-            // Top Bar
-            HStack {
-                Text(selectedTab.title)
-                    .font(.largeTitle)
-                    .bold()
 
-                Spacer()
+    var body: some View {
+        VStack(spacing: 8) {
+            VStack(alignment: .leading, spacing: 8) {
+//                Text("Products")
+//                    .font(.largeTitle)
+//                    .bold()
+//                    .foregroundColor(.primaryColor)
+//                    .padding(.horizontal)
 
                 Button(action: {
                     openAddProductView.toggle()
                 }) {
-                    Image(systemName: "plus")
-                        .foregroundColor(.white)
-                        .padding(10)
-                        .background(Color.blue)
-                        .clipShape(Circle())
+                    HStack {
+                        Image(systemName: "plus")
+                        Text("Add New Product")
+                            .fontWeight(.semibold)
+                    }
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.primaryColor)
+                    .cornerRadius(12)
+                    .padding(.horizontal)
                 }
-                .sheet(isPresented: $openAddProductView,onDismiss: {
+                .sheet(isPresented: $openAddProductView, onDismiss: {
                     selectedProduct = nil
                 }) {
-                    AddProductView(product: selectedProduct ,productViewModel: viewModel)
+                    AddProductView(product: selectedProduct, productViewModel: viewModel)
                 }
             }
-            .padding()
-            .background(Color(UIColor.systemGray6))
-            .cornerRadius(15)
-            .padding(.horizontal)
             .padding(.top)
 
-            // Main Content
+            // Main content
             if viewModel.isLoading {
                 Spacer()
                 ProgressView("Loading products...")
                 Spacer()
             } else if let products = viewModel.productList, !products.isEmpty {
-                List(products, id: \.id) { product in
-                    ProductCustomCell(
-                        productTitle: product.title ?? "",
-                        productPrice: product.variants?.first?.price ?? "",
-                        productCategory: product.productType ?? "",
-                        productImageURL: product.image?.src ?? "",
-                        deleteAction: {
-                            viewModel.deleteProduct(productId: product.id ?? 0)
-                        },
-                        editAction: {
-                            selectedProduct = product
-                            openAddProductView = true
+                ScrollView {
+                    LazyVStack(spacing: 16) {
+                        ForEach(products, id: \.id) { product in
+                            VStack(alignment: .leading, spacing: 8) {
+                                ZStack(alignment: .topTrailing) {
+                                    AsyncImage(url: URL(string: product.image?.src ?? "")) { image in
+                                        image
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(height: 180)
+                                            .clipped()
+                                            .cornerRadius(10)
+                                    } placeholder: {
+                                        Color.gray.opacity(0.1)
+                                            .frame(height: 180)
+                                            .cornerRadius(10)
+                                    }
+
+                                    HStack(spacing: 16) {
+                                        Button(action: {
+                                            selectedProduct = product
+                                            openAddProductView = true
+                                        }) {
+                                            Image(systemName: "pencil")
+                                                .font(.system(size: 18, weight: .semibold))
+                                                .foregroundColor(.blue)
+                                        }
+
+                                        Button(action: {
+                                            viewModel.deleteProduct(productId: product.id ?? 0)
+                                        }) {
+                                            Image(systemName: "trash")
+                                                .font(.system(size: 18, weight: .semibold))
+                                                .foregroundColor(.red)
+                                        }
+                                    }
+                                    .padding(12)
+                                }
+
+                                Text(product.title ?? "")
+                                    .font(.headline)
+                                    .foregroundColor(.primaryColor)
+
+                                Text("Category: \(product.productType ?? "")")
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+
+                                if let price = product.variants?.first?.price {
+                                    Text("Price: \(price) USD")
+                                        .foregroundColor(.red)
+                                        .fontWeight(.bold)
+                                        .padding(.bottom, 8)
+                                }
+                            }
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(10)
+                            .shadow(radius: 4)
+                            .padding(.horizontal)
                         }
-                    )
-                    .listRowSeparator(.hidden)
-                    .padding(.vertical, 8)
-                    .listRowInsets(EdgeInsets())
+                    }
+                    .padding(.top, 8)
                 }
-                .listStyle(PlainListStyle())
             } else {
                 Spacer()
                 Text("No products found.")
                     .foregroundColor(.gray)
                 Spacer()
             }
-
         }
         .background(Color.white.ignoresSafeArea())
         .onAppear {
@@ -98,10 +142,27 @@ struct ProductsView: View {
             showAlert = newValue != nil
         }
     }
-
 }
 
 #Preview {
     ProductsView(
-        viewModel: ProductsViewModel(getProductsUseCase: GetProductsUseCase(repository: ProductRepository()), deleteProductUseCase: DeleteProductsUseCase(repository: ProductRepository()), createProductUseCase: CreateProductsUseCase(repository: ProductRepository()), updateProductUseCase: UpdateProductUseCase(repository: ProductRepository())))
+        viewModel: ProductsViewModel(
+            getProductsUseCase: GetProductsUseCase(repository: ProductRepository()),
+            deleteProductUseCase: DeleteProductsUseCase(repository: ProductRepository()),
+            createProductUseCase: CreateProductsUseCase(repository: ProductRepository()),
+            updateProductUseCase: UpdateProductUseCase(repository: ProductRepository())
+        )
+    )
+}
+
+
+#Preview {
+    ProductsView(
+        viewModel: ProductsViewModel(
+            getProductsUseCase: GetProductsUseCase(repository: ProductRepository()),
+            deleteProductUseCase: DeleteProductsUseCase(repository: ProductRepository()),
+            createProductUseCase: CreateProductsUseCase(repository: ProductRepository()),
+            updateProductUseCase: UpdateProductUseCase(repository: ProductRepository())
+        )
+    )
 }
