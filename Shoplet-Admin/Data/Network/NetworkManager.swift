@@ -39,26 +39,37 @@ class NetworkManager {
         .validate()
         .serializingDecodable(T.self, automaticallyCancelling: true)
         .response
-        
+
         switch response.result {
         case .success(let data):
             return data
+
         case .failure(let error):
+            if let statusCode = response.response?.statusCode, statusCode == 204 {
+                if let emptyData = "{}".data(using: .utf8),
+                   let emptyObject = try? JSONDecoder().decode(T.self, from: emptyData) {
+                    return emptyObject
+                }
+                throw NetworkError.serverError("Nothing to decode (204 No Content)")
+            }
+
             guard let data = response.data else {
                 throw NetworkError.invalidResponse
             }
+
             do {
-                let json = try JSONSerialization.jsonObject(with: data, options: [])
-                if (json as? [String: Any])?["Message"] is String {
-                    throw NetworkError.decodingError
+                if let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+                   let message = json["message"] as? String {
+                    throw NetworkError.serverError(message)
                 } else {
-                    throw NetworkError.serverError(error.localizedDescription)
+                    throw NetworkError.invalidResponse
                 }
             } catch {
                 throw NetworkError.other(error.localizedDescription)
             }
         }
     }
+
 }
 
 // MARK: - Product Management

@@ -15,12 +15,29 @@ struct DiscountCodesView: View {
     @State private var showEditSheet = false
     @State private var showErrorAlert = false
     @State private var showAddSheet = false
+    @State private var showToast = false
     @State private var code:String = ""
     @State private var codeId:Int = 0
     var ruleId: Int?
+    
     var body: some View {
         NavigationView {
             VStack {
+                Button(action: {
+                    showAddSheet = true
+                }) {
+                    HStack {
+                        Image(systemName: "plus")
+                        Text("Add Discount Code")
+                            .fontWeight(.semibold)
+                    }
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.primaryColor)
+                    .cornerRadius(12)
+                    .padding()
+                }
                 if viewModel.isLoading {
                     Spacer()
                     ProgressView(
@@ -54,10 +71,6 @@ struct DiscountCodesView: View {
                         .listRowSeparator(
                             .hidden
                         )
-                        .padding(
-                            .vertical,
-                            4
-                        )
                     }
                     .listStyle(
                         PlainListStyle()
@@ -71,25 +84,6 @@ struct DiscountCodesView: View {
                         .gray
                     )
                     Spacer()
-                }
-            }
-            .navigationTitle(
-                "Discount Codes"
-            )
-            .toolbar {
-                ToolbarItem(
-                    placement: .navigationBarTrailing
-                ) {
-                    Button {
-                        showAddSheet = true
-                    } label: {
-                        Image(
-                            systemName: "plus"
-                        )
-                        .font(
-                            .title2
-                        )
-                    }
                 }
             }
             .onAppear {
@@ -128,14 +122,21 @@ struct DiscountCodesView: View {
             .sheet(
                 isPresented: $showAddSheet
             ) {
-                AddDiscountCodeView(
-                    dicountCodesViewModel: viewModel,
-                    ruleId:ruleId ?? 0 ,
-                    codeId: $codeId ,
-                    selectedCode: $code
-                )
+                AddDiscountCodeView(codeId: $codeId,
+                                    selectedCode: $code,
+                                    dicountCodesViewModel: viewModel,
+                                    ruleId: ruleId ?? 0)
             }
-            
+            .onChange(of: viewModel.toastMessage) { message in
+                if message != nil {
+                    withAnimation {
+                        showToast = true
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                        viewModel.toastMessage = nil
+                    }
+                }
+            }.toast(isPresented: $showToast, message: viewModel.toastMessage ?? "")
         }
     }
 }

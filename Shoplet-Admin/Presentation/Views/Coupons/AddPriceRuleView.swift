@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct AddPriceRuleView: View {
+    @Environment(\.dismiss) var dismiss
     @State private var valueType = "percentage"
-    @State private var allocationMethod = "across"
     @State private var usageLimit: String = ""
     @State private var useCodeOncePerCustomer = false
     @State private var startDate = Date()
@@ -24,17 +24,9 @@ struct AddPriceRuleView: View {
             VStack(
                 spacing: 20
             ) {
-                Image(
-                    systemName: "doc.text"
-                ).resizable()
-                    .scaledToFit()
-                    .frame(
-                        height: 150
-                    )
-                    .padding(
-                        .top
-                    )
-                
+                Text("Price Rule Details")
+                    .bold()
+                    .font(.title)
                 VStack(
                     spacing: 12
                 ) {
@@ -84,38 +76,7 @@ struct AddPriceRuleView: View {
                     .cornerRadius(
                         8
                     )
-                    
-                    Picker(
-                        "Allocation Method",
-                        selection: $allocationMethod
-                    ) {
-                        Text(
-                            "Each Item"
-                        ).tag(
-                            "each"
-                        )
-                        Text(
-                            "Across"
-                        ).tag(
-                            "across"
-                        )
-                    }
-                    .pickerStyle(
-                        .menu
-                    )
-                    .frame(
-                        maxWidth: .infinity
-                    )
-                    .padding()
-                    .background(
-                        Color(
-                            .systemGray6
-                        )
-                    )
-                    .cornerRadius(
-                        8
-                    )
-                    
+
                     TextField(
                         "Limit",
                         text: $usageLimit
@@ -156,7 +117,7 @@ struct AddPriceRuleView: View {
                             (
                                 self.selectedPriceRule
                             ) != nil
-                        ) ? "Save Price Rule Changes" : "Create Price Rule"
+                        ) ? "Update Price Rule" : "Create Price Rule"
                     )
                     .foregroundColor(
                         .white
@@ -166,7 +127,7 @@ struct AddPriceRuleView: View {
                     )
                     .padding()
                     .background(
-                        Color.black
+                        Color.primaryColor
                     )
                     .cornerRadius(
                         10
@@ -179,18 +140,11 @@ struct AddPriceRuleView: View {
                     .bottom
                 )
             }
-            .navigationBarTitle(
-                "Price Rule Details",
-                displayMode: .inline
-            )
             .navigationBarBackButtonHidden(
                 false
             )
         }
         .onAppear {
-            print(
-                "🔍 selectedPriceRule title: \(selectedPriceRule?.title ?? "nil")"
-            )
             if selectedPriceRule != nil {
                 fillPriceRuleData()
             }
@@ -224,18 +178,8 @@ struct AddPriceRuleView: View {
             rule.usageLimit ?? 0
         )
         
-        allocationMethod = rule.allocationMethod
         valueType = rule.valueType ?? "percentage"
         
-        print(
-            "🔍 After assignment:"
-        )
-        print(
-            "   - valueType State: '\(valueType)'"
-        )
-        print(
-            "   - allocationMethod State: '\(allocationMethod)'"
-        )
     }
     
     private func savePriceRule() {
@@ -250,7 +194,7 @@ struct AddPriceRuleView: View {
                 id: selectedPriceRule?.id,
                 title: ruleTitle,
                 valueType: valueType,
-                value: "-\(ruleDiscountValue)",
+                value: self.ruleDiscountValue.contains("-") == true ? "\(ruleDiscountValue)" : "-\(ruleDiscountValue)",
                 startsAt: start,
                 endsAt: end
             )
@@ -265,7 +209,9 @@ struct AddPriceRuleView: View {
                 priceRule: priceRuleRequest
             )
         }
+        dismiss()
     }
+    
 }
 
 #Preview {

@@ -17,132 +17,48 @@ struct DiscountCodeCustomCell: View {
     var body: some View {
         ZStack {
             CardShape()
-                .fill(
-                    Color.primaryColor.opacity(
-                        0.4
-                    )
-                )
-                .shadow(
-                    color: .black.opacity(
-                        0.2
-                    ),
-                    radius: 4,
-                    x: 0,
-                    y: 2
-                )
-                .padding()
-                .frame(
-                    height: 120
-                )
+                .fill(Color.primaryColor.opacity(0.4))
+                .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
+                .frame(height: 100)
             
-            HStack(
-                spacing: 16
-            ) {
-                Image(
-                    .sale2
-                )
-                .resizable()
-                .scaledToFit()
-                .frame(
-                    width: 60,
-                    height: 60
-                )
-                .padding(
-                    .leading,
-                    8
-                )
+            HStack(spacing: 16) {
+                Image(.sale2)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 50, height: 50)
+                    .padding(.leading, 8)
                 
-                VStack(
-                    alignment: .leading,
-                    spacing: 6
-                ) {
-                    Text(
-                        code ?? ""
-                    )
-                    .font(
-                        .headline
-                    )
-                    .foregroundColor(
-                        .white
-                    )
-                    
-                    Text(
-                        "Edit or delete"
-                    )
-                    .font(
-                        .system(
-                            size: 12
-                        )
-                    )
-                    .foregroundColor(
-                        .white.opacity(
-                            0.9
-                        )
-                    )
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(code ?? "")
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundColor(.white)
+
                 }
                 
                 Spacer()
                 
-                Button(action: {
-                    editAction()
-                }) {
-                    Image(
-                        systemName: "pencil"
-                    )
-                    .font(
-                        .system(
-                            size: 18,
-                            weight: .semibold
-                        )
-                    )
-                    .foregroundColor(
-                        .primaryColor
-                    )
-                    .frame(
-                        width: 44,
-                        height: 44
-                    )
+                Button(action: editAction) {
+                    Image(systemName: "pencil")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundColor(.primaryColor)
+                        .frame(width: 36, height: 36)
                 }
-                .buttonStyle(
-                    PlainButtonStyle()
-                )
+                .buttonStyle(PlainButtonStyle())
                 
-                Button(action: {
-                    deleteAction()
-                }) {
-                    Image(
-                        systemName: "trash"
-                    )
-                    .font(
-                        .system(
-                            size: 18,
-                            weight: .semibold
-                        )
-                    )
-                    .foregroundColor(
-                        .red
-                    )
-                    .frame(
-                        width: 44,
-                        height: 44
-                    )
+                Button(action: deleteAction) {
+                    Image(systemName: "trash")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundColor(.red)
+                        .frame(width: 36, height: 36)
                 }
-                .buttonStyle(
-                    PlainButtonStyle()
-                )
+                .buttonStyle(PlainButtonStyle())
             }
-            .padding(
-                .vertical
-            )
+            .padding(.horizontal)
         }
-        .frame(
-            height: 150
-        )
-        .padding(
-            .horizontal
-        )
+        .frame(height: 110)
     }
 }
+
 
 struct CardShape: Shape {
     var cornerRadius: CGFloat = 24
@@ -271,7 +187,7 @@ struct CardShape: Shape {
 
 #Preview {
     DiscountCodeCustomCell(
-        code: "EIDOFF"
+        code: "EIDDiscountOFF"
     ) {
         print(
             "Deleted"

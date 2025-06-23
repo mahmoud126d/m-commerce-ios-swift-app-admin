@@ -13,6 +13,7 @@ class PriceRulesViewModel: ObservableObject {
     @Published var isLoading = true
     @Published var userError: NetworkError?
     @Published var toastMessage: String? = nil
+    var selectedPriceRule: PriceRule? = nil
     
     private let getPriceRulesUseCase: GetPriceRulesUseCaseProtocol
     private let createPriceRulesUseCase: CreatePriceRulesUseCaseProtocol
@@ -51,14 +52,14 @@ class PriceRulesViewModel: ObservableObject {
     }
 
     func createPriceRule(priceRule: PriceRuleRequest) {
-        isLoading = true
         Task {
             do {
                 let created = try await createPriceRulesUseCase.execute(priceRule: priceRule)
                 await MainActor.run {
-                    self.priceRuleList?.append(created.priceRule)
+                    self.getPriceRules()
                     self.isLoading = false
                     self.userError = nil
+                    self.toastMessage = "PriceRule created"
                 }
             } catch {
                 await MainActor.run {
@@ -70,14 +71,14 @@ class PriceRulesViewModel: ObservableObject {
     }
 
     func deletePriceRule(id: Int) {
-        isLoading = true
         Task {
             do {
                 _ = try await deletePriceRulesUseCase.execute(id: id)
                 await MainActor.run {
-                    self.priceRuleList?.removeAll { $0.id == id }
+                    self.getPriceRules()
                     self.isLoading = false
                     self.userError = nil
+                    self.toastMessage = "PriceRule deleted"
                 }
             } catch {
                 await MainActor.run {
@@ -89,18 +90,14 @@ class PriceRulesViewModel: ObservableObject {
     }
 
     func updatePriceRule(priceRule: PriceRuleRequest) {
-        isLoading = true
         Task {
             do {
                 let updated = try await updatePriceRulesUseCase.execute(priceRule: priceRule)
                 await MainActor.run {
-                    if let index = self.priceRuleList?.firstIndex(where: { $0.id == updated.priceRule.id }) {
-                        self.priceRuleList?[index] = updated.priceRule
-                    } else {
-                        self.priceRuleList?.append(updated.priceRule)
-                    }
+                    self.getPriceRules()
                     self.isLoading = false
                     self.userError = nil
+                    self.toastMessage = "PriceRule updated"
                 }
             } catch {
                 await MainActor.run {

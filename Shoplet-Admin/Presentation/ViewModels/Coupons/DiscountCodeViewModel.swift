@@ -12,6 +12,7 @@ class DiscountCodeViewModel: ObservableObject {
     @Published var discountCodes: [DiscountCode]?
     @Published var userError: NetworkError?
     @Published var isLoading = true
+    @Published var toastMessage: String? = nil
     
     private let getDiscountCodesUseCase: GetDiscountCodesUseCaseProtocol
     private let createDiscountCodesUseCase: CreateDiscountCodeUseCaseProtocol
@@ -39,7 +40,6 @@ class DiscountCodeViewModel: ObservableObject {
         } catch {
             isLoading = false
             userError = error as? NetworkError
-            print("Failed to fetch discount codes: \(error.localizedDescription)")
         }
     }
     
@@ -47,10 +47,10 @@ class DiscountCodeViewModel: ObservableObject {
         do {
             let response = try await createDiscountCodesUseCase.execute(priceRuleId: ruleId, discountCode: discountCode)
             userError = nil
-            discountCodes?.append(response.discountCode)
+            await self.getDiscountCodes(ruleId: ruleId)
+            self.toastMessage = "DiscountCode created"
         } catch {
             userError = error as? NetworkError
-            print("Failed to create discount code: \(error.localizedDescription)")
         }
     }
     
@@ -58,10 +58,10 @@ class DiscountCodeViewModel: ObservableObject {
         do {
             _ = try await deleteDiscountCodesUseCase.execute(ruleId: ruleId, codeId: codeId)
             userError = nil
-            print("Discount code deleted successfully!")
+            await self.getDiscountCodes(ruleId: ruleId)
+            self.toastMessage = "DiscountCode deleted"
         } catch {
             userError = error as? NetworkError
-            print("Failed to delete discount code: \(error.localizedDescription)")
         }
     }
     
@@ -70,13 +70,10 @@ class DiscountCodeViewModel: ObservableObject {
             let response = try await updateDiscountCodesUseCase.execute(priceRuleId: ruleId, discountCode: discountCode)
             isLoading = false
             userError = nil
-            if let index = discountCodes?.firstIndex(where: { $0.id == discountCode.discountCode.id }) {
-                discountCodes?.remove(at: index)
-            }
-            discountCodes?.append(response.discountCode)
+            await self.getDiscountCodes(ruleId: ruleId)
+            self.toastMessage = "DiscountCode updated"
         } catch {
             userError = error as? NetworkError
-            print("Failed to update discount code: \(error.localizedDescription)")
         }
     }
 }

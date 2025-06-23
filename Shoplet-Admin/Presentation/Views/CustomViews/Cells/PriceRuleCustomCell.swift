@@ -15,144 +15,71 @@ struct PriceRuleCustomCell: View {
     var endDate: String
     var deleteAction: () -> Void
     var editAction: () -> Void
-    
+    var onTap: () -> Void
+
     var body: some View {
-        let discount = abs(
-            Int(
-                Double(
-                    value
-                ) ?? 0
-            )
-        )
-        
+        let discount = abs(Int(Double(value) ?? 0))
+
         ZStack {
-            RoundedRectangle(
-                cornerRadius: 20
-            )
-            .fill(
-                Color.primaryColor.opacity(
-                    0.5
-                )
-            )
-            .frame(
-                height: 140
-            )
-            .shadow(
-                radius: 4
-            )
-            
-            HStack(
-                alignment: .top
-            ) {
-                VStack(
-                    alignment: .leading,
-                    spacing: 6
-                ) {
-                    Text(
-                        title
-                    )
-                    .font(
-                        .headline
-                    )
-                    .foregroundColor(
-                        .white
-                    )
-                    
-                    Text(
-                        "Code: \(code)"
-                    )
-                    .font(
-                        .subheadline
-                    )
-                    .foregroundColor(
-                        .white.opacity(
-                            0.9
-                        )
-                    )
-                    
-                    Text(
-                        "Value: \(discount)%"
-                    )
-                    .font(
-                        .subheadline
-                    )
-                    .foregroundColor(
-                        .green
-                    )
-                    .bold()
-                    
-                    Text(
-                        "Starts at: \(startDate)"
-                    )
-                    .font(
-                        .caption
-                    )
-                    .foregroundColor(
-                        .white.opacity(
-                            0.8
-                        )
-                    )
-                    
-                    Text(
-                        "Ends at: \(endDate)"
-                    )
-                    .font(
-                        .caption
-                    )
-                    .foregroundColor(
-                        .white.opacity(
-                            0.8
-                        )
-                    )
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.primaryColor.opacity(0.5))
+                .frame(height: 140)
+                .shadow(radius: 4)
+
+            HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(title)
+                        .font(.headline)
+                        .foregroundColor(.white)
+
+                    Text("Code: \(code)")
+                        .font(.subheadline)
+                        .foregroundColor(.white.opacity(0.9))
+
+                    Text("Value: \(discount)%")
+                        .font(.subheadline)
+                        .foregroundColor(.red)
+                        .bold()
+
+                    Text("Starts at: \(startDate)")
+                        .font(.caption)
+                        .foregroundColor(.white.opacity(0.8))
+
+                    Text("Ends at: \(endDate)")
+                        .font(.caption)
+                        .foregroundColor(.white.opacity(0.8))
                 }
-                
+                .onTapGesture {
+                    onTap()
+                }
+
                 Spacer()
-                
-                VStack(
-                    spacing: 12
-                ) {
-                    Button(action: {
-                        deleteAction()
-                    }) {
-                        Image(
-                            systemName: "trash"
-                        )
-                        .foregroundColor(
-                            .red
-                        )
-                        .frame(
-                            width: 44,
-                            height: 44
-                        )
+
+                VStack(spacing: 12) {
+                    Button(action: deleteAction) {
+                        Image(systemName: "trash")
+                            .font(.system(size: 16, weight: .semibold))
+                            .foregroundColor(.white)
+                            .frame(width: 32, height: 32)
+                            .background(Color.red.opacity(0.8))
+                            .cornerRadius(6)
                     }
-                    .buttonStyle(
-                        PlainButtonStyle()
-                    )
-                    
-                    Button(action: {
-                        editAction()
-                    }) {
-                        Image(
-                            systemName: "pencil"
-                        )
-                        .foregroundColor(
-                            .primaryColor
-                        )
-                        .frame(
-                            width: 44,
-                            height: 44
-                        )
+                    .buttonStyle(PlainButtonStyle())
+
+                    Button(action: editAction) {
+                        Image(systemName: "pencil")
+                            .font(.system(size: 16, weight: .semibold))
+                            .foregroundColor(.white)
+                            .frame(width: 32, height: 32)
+                            .background(Color.primaryColor)
+                            .cornerRadius(6)
                     }
-                    .buttonStyle(
-                        PlainButtonStyle()
-                    )
+                    .buttonStyle(PlainButtonStyle())
                 }
             }
             .padding()
         }
-        .padding(
-            .horizontal
-        )
+        .padding(.horizontal)
     }
 }
 
@@ -172,6 +99,9 @@ struct PriceRuleCustomCell: View {
             print(
                 "Edit tapped"
             )
+        },
+        onTap: {
+            
         }
     )
 }

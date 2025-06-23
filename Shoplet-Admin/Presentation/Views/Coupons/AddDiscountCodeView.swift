@@ -9,12 +9,14 @@ import SwiftUI
 
 
 struct AddDiscountCodeView: View {
+    @Environment(\.dismiss) var dismiss
     @State private var discountCode: String = ""
+    @Binding var codeId : Int
+    @Binding var selectedCode:String
     
     let dicountCodesViewModel : DiscountCodeViewModel
     let ruleId : Int
-    @Binding var codeId : Int
-    @Binding var selectedCode:String
+    
     var body: some View {
         VStack(
             spacing: 20
@@ -27,16 +29,16 @@ struct AddDiscountCodeView: View {
             )
             .bold()
             
-            TextField(
-                "Enter discount code",
-                text: $discountCode
-            )
-            .textFieldStyle(
-                RoundedBorderTextFieldStyle()
-            )
-            .padding(
-                .horizontal
-            )
+            TextField("Enter discount code", text: $discountCode)
+                .padding()
+                .background(Color.white)
+                .cornerRadius(8)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.primaryColor, lineWidth: 1.5)
+                )
+                .padding(.horizontal)
+
             
             Button(action: {
                 let dicountCodeRequest = DiscountCodesRequest(
@@ -58,6 +60,7 @@ struct AddDiscountCodeView: View {
                             discountCode: dicountCodeRequest
                         )
                     }
+                    dismiss()
                 }
                 
             }) {
@@ -74,7 +77,7 @@ struct AddDiscountCodeView: View {
                     maxWidth: .infinity
                 )
                 .background(
-                    discountCode.isEmpty ? Color.gray : Color.blue
+                    Color.primaryColor
                 )
                 .cornerRadius(
                     8
@@ -87,12 +90,6 @@ struct AddDiscountCodeView: View {
         }
         .padding()
         .onAppear{
-            print(
-                "selected code \(selectedCode)"
-            )
-            print(
-                "selected code id \(codeId)"
-            )
             discountCode = selectedCode
         }
     }

@@ -7,14 +7,14 @@
 
 import Foundation
 
-enum NetworkError: Error, Equatable{
+enum NetworkError: Error, Equatable, LocalizedError {
     case networkUnreachable
     case invalidResponse
     case decodingError
     case serverError(String)
     case other(String)
     
-    var message: String {
+    var errorDescription: String? {
         switch self {
         case .networkUnreachable:
             return "Oops! Something went wrong with the network. Please check your internet connection and try again."
