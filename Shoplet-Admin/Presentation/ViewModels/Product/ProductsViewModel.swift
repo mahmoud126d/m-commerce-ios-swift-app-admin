@@ -11,6 +11,8 @@ class ProductsViewModel: ObservableObject {
     @Published var productList: [Product]?
     @Published var isLoading = true
     @Published var userError: NetworkError?
+    var selectedProduct: Product? = nil
+    @Published var toastMessage: String? = nil
 
     private let getProductsUseCase: GetProductsUseCaseProtocol
     private let deleteProductUseCase: DeleteProductsUseCaseProtocol
@@ -49,7 +51,6 @@ class ProductsViewModel: ObservableObject {
     }
 
     func deleteProduct(productId: Int) {
-        isLoading = true
         Task {
             do {
                 _ = try await deleteProductUseCase.execute(productId: productId)
@@ -57,6 +58,7 @@ class ProductsViewModel: ObservableObject {
                     self.productList?.removeAll { $0.id == productId }
                     self.isLoading = false
                     self.userError = nil
+                    self.toastMessage = "Product deleted"
                 }
             } catch {
                 await MainActor.run {
@@ -68,7 +70,6 @@ class ProductsViewModel: ObservableObject {
     }
 
     func createProduct(product: ProductRequest) {
-        isLoading = true
         Task {
             do {
                 let created = try await createProductUseCase.execute(product: product)
@@ -76,6 +77,7 @@ class ProductsViewModel: ObservableObject {
                     self.productList?.append(created.product)
                     self.isLoading = false
                     self.userError = nil
+                    self.toastMessage = "Product created"
                 }
             } catch {
                 await MainActor.run {
@@ -87,7 +89,6 @@ class ProductsViewModel: ObservableObject {
     }
 
     func updateProduct(product: ProductRequest) {
-        isLoading = true
         Task {
             do {
                 let updated = try await updateProductUseCase.execute(product: product)
@@ -97,6 +98,7 @@ class ProductsViewModel: ObservableObject {
                     }
                     self.isLoading = false
                     self.userError = nil
+                    self.toastMessage = "Product updated"
                 }
             } catch {
                 await MainActor.run {

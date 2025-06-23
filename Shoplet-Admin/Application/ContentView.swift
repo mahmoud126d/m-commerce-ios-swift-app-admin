@@ -7,17 +7,7 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            VStack(spacing: 0) {
-                HStack {
-                    Image("logo1")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 60)
-                        .padding(.leading, 16)
-                    Spacer()
-                }
-                .padding(.top, 16)
-                
+            VStack(spacing: 0) {                
                 switch selectedTab {
                 case .products:
                     ProductsView(viewModel: container.resolve(ProductsViewModel.self))

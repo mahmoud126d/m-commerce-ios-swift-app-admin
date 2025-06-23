@@ -16,41 +16,83 @@ struct AddDiscountCodeView: View {
     @Binding var codeId : Int
     @Binding var selectedCode:String
     var body: some View {
-        VStack(spacing: 20) {
-            Text("Add Discount Code")
-                .font(.title)
-                .bold()
-
-            TextField("Enter discount code", text: $discountCode)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.horizontal)
-
+        VStack(
+            spacing: 20
+        ) {
+            Text(
+                "Add Discount Code"
+            )
+            .font(
+                .title
+            )
+            .bold()
+            
+            TextField(
+                "Enter discount code",
+                text: $discountCode
+            )
+            .textFieldStyle(
+                RoundedBorderTextFieldStyle()
+            )
+            .padding(
+                .horizontal
+            )
+            
             Button(action: {
-                let dicountCodeRequest = DiscountCodesRequest(discountCode:
-                                                                DiscountCode(id: codeId, code: discountCode))
+                let dicountCodeRequest = DiscountCodesRequest(
+                    discountCode:
+                        DiscountCode(
+                            id: codeId,
+                            code: discountCode
+                        )
+                )
                 Task{
                     if selectedCode.isEmpty{
-                        await dicountCodesViewModel.createDiscountCode(ruleId: ruleId, discountCode: dicountCodeRequest)
+                        await dicountCodesViewModel.createDiscountCode(
+                            ruleId: ruleId,
+                            discountCode: dicountCodeRequest
+                        )
                     }else{
-                        await dicountCodesViewModel.updateDiscountCode(ruleId: ruleId, discountCode: dicountCodeRequest)
+                        await dicountCodesViewModel.updateDiscountCode(
+                            ruleId: ruleId,
+                            discountCode: dicountCodeRequest
+                        )
                     }
                 }
                 
             }) {
-                Text((selectedCode.isEmpty) ? "Add" : "Save")
-                    .foregroundColor(.white)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(discountCode.isEmpty ? Color.gray : Color.blue)
-                    .cornerRadius(8)
+                Text(
+                    (
+                        selectedCode.isEmpty
+                    ) ? "Add" : "Save"
+                )
+                .foregroundColor(
+                    .white
+                )
+                .padding()
+                .frame(
+                    maxWidth: .infinity
+                )
+                .background(
+                    discountCode.isEmpty ? Color.gray : Color.blue
+                )
+                .cornerRadius(
+                    8
+                )
             }
-            .disabled(discountCode.isEmpty)
+            .disabled(
+                discountCode.isEmpty
+            )
             Spacer()
         }
         .padding()
         .onAppear{
-            print("selected code \(selectedCode)")
-            print("selected code id \(codeId)")
+            print(
+                "selected code \(selectedCode)"
+            )
+            print(
+                "selected code id \(codeId)"
+            )
             discountCode = selectedCode
         }
     }

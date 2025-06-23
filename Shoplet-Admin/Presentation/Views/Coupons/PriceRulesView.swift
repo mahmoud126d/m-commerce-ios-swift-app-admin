@@ -14,7 +14,7 @@ struct PriceRulesView: View {
     @State private var selectedPriceRule: PriceRule?
     @State private var selectedRuleId: Int? = nil
     @State private var isShowingDiscountCodesView = false
-
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -44,7 +44,7 @@ struct PriceRulesView: View {
                                 .background(Color.white)
                                 .cornerRadius(12)
                                 .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 2)
-
+                                
                                 Spacer().frame(height: 10)
                             }
                             .onTapGesture {
@@ -57,7 +57,7 @@ struct PriceRulesView: View {
                         }
                     }
                     .listStyle(PlainListStyle())
-
+                    
                     NavigationLink(
                         destination: DiscountCodesView(
                             viewModel: DIContainer.shared.resolve(DiscountCodeViewModel.self),
@@ -67,7 +67,7 @@ struct PriceRulesView: View {
                         label: { EmptyView() }
                     )
                     .hidden()
-
+                    
                     Button(action: {
                         openAddPriceRuleView = true
                     }) {
@@ -89,7 +89,7 @@ struct PriceRulesView: View {
                     Text("No price rules available.")
                         .foregroundColor(.gray)
                     Spacer()
-
+                    
                     Button(action: {
                         openAddPriceRuleView = true
                     }) {
@@ -109,8 +109,8 @@ struct PriceRulesView: View {
                 }
             }
             .navigationTitle("Discount Rules")
-
-
+            
+            
             .sheet(isPresented: $openAddPriceRuleView, onDismiss: {
                 selectedPriceRule = nil
             }) {
@@ -138,6 +138,6 @@ struct PriceRulesView: View {
 #Preview {
     let container = DIContainer.shared
     let viewModel = container.resolve(PriceRulesViewModel.self)
-
+    
     return PriceRulesView(viewModel: viewModel)
 }

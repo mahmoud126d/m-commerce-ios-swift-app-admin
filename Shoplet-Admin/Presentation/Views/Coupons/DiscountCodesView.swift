@@ -23,78 +23,131 @@ struct DiscountCodesView: View {
             VStack {
                 if viewModel.isLoading {
                     Spacer()
-                    ProgressView("Loading discount codes...")
+                    ProgressView(
+                        "Loading discount codes..."
+                    )
                     Spacer()
                 } else if let codes = viewModel.discountCodes, !codes.isEmpty {
-                    List(codes) { code in
+                    List(
+                        codes
+                    ) { code in
                         DiscountCodeCustomCell(
                             code: code.code,
                             deleteAction: {
                                 Task {
-                                    await viewModel.deleteDiscountCode(ruleId: ruleId ?? 0, codeId: code.id ?? 0)
-                                    }
-
+                                    await viewModel.deleteDiscountCode(
+                                        ruleId: ruleId ?? 0,
+                                        codeId: code.id ?? 0
+                                    )
+                                }
+                                
                             },
                             editAction: {
                                 self.code = code.code
                                 codeId = code.id ?? 0
-                                print("code = \(self.code)")
+                                print(
+                                    "code = \(self.code)"
+                                )
                                 showAddSheet = true
                             }
                         )
-                        .listRowSeparator(.hidden)
-                        .padding(.vertical, 4)
+                        .listRowSeparator(
+                            .hidden
+                        )
+                        .padding(
+                            .vertical,
+                            4
+                        )
                     }
-                    .listStyle(PlainListStyle())
+                    .listStyle(
+                        PlainListStyle()
+                    )
                 } else {
                     Spacer()
-                    Text("No discount codes found.")
-                        .foregroundColor(.gray)
+                    Text(
+                        "No discount codes found."
+                    )
+                    .foregroundColor(
+                        .gray
+                    )
                     Spacer()
                 }
             }
-            .navigationTitle("Discount Codes")
+            .navigationTitle(
+                "Discount Codes"
+            )
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(
+                    placement: .navigationBarTrailing
+                ) {
                     Button {
                         showAddSheet = true
                     } label: {
-                        Image(systemName: "plus")
-                            .font(.title2)
+                        Image(
+                            systemName: "plus"
+                        )
+                        .font(
+                            .title2
+                        )
                     }
                 }
             }
             .onAppear {
                 if let id = ruleId {
-                       Task {
-                           await viewModel.getDiscountCodes(ruleId: id)
-                       }
-                   }
+                    Task {
+                        await viewModel.getDiscountCodes(
+                            ruleId: id
+                        )
+                    }
+                }
             }
-            .alert(isPresented: $showErrorAlert) {
+            .alert(
+                isPresented: $showErrorAlert
+            ) {
                 Alert(
-                    title: Text("Error"),
-                    message: Text(viewModel.userError?.localizedDescription ?? "An unknown error occurred."),
-                    dismissButton: .default(Text("OK"))
+                    title: Text(
+                        "Error"
+                    ),
+                    message: Text(
+                        viewModel.userError?.localizedDescription ?? "An unknown error occurred."
+                    ),
+                    dismissButton: .default(
+                        Text(
+                            "OK"
+                        )
+                    )
                 )
             }
-            .onChange(of: viewModel.userError) { error in
+            .onChange(
+                of: viewModel.userError
+            ) { error in
                 if error != nil {
                     showErrorAlert = true
                 }
             }
-            .sheet(isPresented: $showAddSheet) {
-                AddDiscountCodeView( dicountCodesViewModel: viewModel, ruleId:ruleId ?? 0 ,codeId: $codeId , selectedCode: $code)
+            .sheet(
+                isPresented: $showAddSheet
+            ) {
+                AddDiscountCodeView(
+                    dicountCodesViewModel: viewModel,
+                    ruleId:ruleId ?? 0 ,
+                    codeId: $codeId ,
+                    selectedCode: $code
+                )
             }
-
+            
         }
     }
 }
 
 #Preview {
     let container = DIContainer.shared
-    let viewModel = container.resolve(DiscountCodeViewModel.self)
-
-    return DiscountCodesView(viewModel: viewModel)
+    let viewModel = container.resolve(
+        DiscountCodeViewModel.self
+    )
+    
+    return DiscountCodesView(
+        viewModel: viewModel
+    )
 }
 

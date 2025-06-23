@@ -4,16 +4,18 @@
 //
 //  Created by Macos on 03/06/2025.
 //
-
 import SwiftUI
 
 struct ProductsView: View {
     @StateObject private var viewModel: ProductsViewModel
-    @State var selectedTab: Tab = .products
-    @State var openAddProductView: Bool = false
-
+    @State private var openAddProductView: Bool = false
     @State private var showAlert = false
-    @State private var selectedProduct: Product? = nil
+    @State private var showToast = false
+
+    let columns = [
+        GridItem(.flexible(), spacing: 16),
+        GridItem(.flexible(), spacing: 16)
+    ]
 
     init(viewModel: ProductsViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -22,14 +24,9 @@ struct ProductsView: View {
     var body: some View {
         VStack(spacing: 8) {
             VStack(alignment: .leading, spacing: 8) {
-//                Text("Products")
-//                    .font(.largeTitle)
-//                    .bold()
-//                    .foregroundColor(.primaryColor)
-//                    .padding(.horizontal)
-
                 Button(action: {
-                    openAddProductView.toggle()
+                    viewModel.selectedProduct = nil
+                    openAddProductView = true
                 }) {
                     HStack {
                         Image(systemName: "plus")
@@ -41,84 +38,97 @@ struct ProductsView: View {
                     .frame(maxWidth: .infinity)
                     .background(Color.primaryColor)
                     .cornerRadius(12)
-                    .padding(.horizontal)
+                    .padding()
                 }
                 .sheet(isPresented: $openAddProductView, onDismiss: {
-                    selectedProduct = nil
+                    viewModel.selectedProduct = nil
                 }) {
-                    AddProductView(product: selectedProduct, productViewModel: viewModel)
+                    AddProductView(product: viewModel.selectedProduct, productViewModel: viewModel)
                 }
             }
             .padding(.top)
 
-            // Main content
             if viewModel.isLoading {
                 Spacer()
                 ProgressView("Loading products...")
                 Spacer()
             } else if let products = viewModel.productList, !products.isEmpty {
                 ScrollView {
-                    LazyVStack(spacing: 16) {
+                    LazyVGrid(columns: columns, spacing: 16) {
                         ForEach(products, id: \.id) { product in
                             VStack(alignment: .leading, spacing: 8) {
-                                ZStack(alignment: .topTrailing) {
-                                    AsyncImage(url: URL(string: product.image?.src ?? "")) { image in
-                                        image
-                                            .resizable()
-                                            .scaledToFill()
-                                            .frame(height: 180)
-                                            .clipped()
-                                            .cornerRadius(10)
-                                    } placeholder: {
+                                AsyncImage(url: URL(string: product.image?.src ?? "")) { phase in
+                                    switch phase {
+                                    case .empty:
                                         Color.gray.opacity(0.1)
-                                            .frame(height: 180)
-                                            .cornerRadius(10)
+                                    case .success(let image):
+                                        image.resizable().scaledToFit()
+                                    case .failure:
+                                        Image(systemName: "photo")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .foregroundColor(.gray)
+                                    @unknown default:
+                                        EmptyView()
                                     }
-
-                                    HStack(spacing: 16) {
-                                        Button(action: {
-                                            selectedProduct = product
+                                }
+                                .frame(height: 150)
+                                .frame(maxWidth: .infinity)
+                                .background(Color.gray.opacity(0.05))
+                                .cornerRadius(10)
+                                .overlay(alignment: .topTrailing) {
+                                    HStack(spacing: 8) {
+                                        Button {
+                                            viewModel.selectedProduct = product
                                             openAddProductView = true
-                                        }) {
+                                        } label: {
                                             Image(systemName: "pencil")
-                                                .font(.system(size: 18, weight: .semibold))
-                                                .foregroundColor(.blue)
+                                                .font(.system(size: 16, weight: .semibold))
+                                                .foregroundColor(.white)
+                                                .frame(width: 32, height: 32)
+                                                .background(Color.blue.opacity(0.8))
+                                                .cornerRadius(6)
                                         }
 
-                                        Button(action: {
+                                        Button {
                                             viewModel.deleteProduct(productId: product.id ?? 0)
-                                        }) {
+                                        } label: {
                                             Image(systemName: "trash")
-                                                .font(.system(size: 18, weight: .semibold))
-                                                .foregroundColor(.red)
+                                                .font(.system(size: 16, weight: .semibold))
+                                                .foregroundColor(.white)
+                                                .frame(width: 32, height: 32)
+                                                .background(Color.red.opacity(0.8))
+                                                .cornerRadius(6)
                                         }
                                     }
-                                    .padding(12)
+                                    .padding(8)
                                 }
 
-                                Text(product.title ?? "")
-                                    .font(.headline)
-                                    .foregroundColor(.primaryColor)
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(product.title ?? "No Title")
+                                        .font(.headline)
+                                        .foregroundColor(.primary)
+                                        .lineLimit(2)
 
-                                Text("Category: \(product.productType ?? "")")
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
+                                    Text("Category: \(product.productType ?? "Unknown")")
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
 
-                                if let price = product.variants?.first?.price {
-                                    Text("Price: \(price) USD")
-                                        .foregroundColor(.red)
-                                        .fontWeight(.bold)
-                                        .padding(.bottom, 8)
+                                    if let price = product.variants?.first?.price {
+                                        Text("Price: \(price) USD")
+                                            .font(.subheadline)
+                                            .foregroundColor(.red)
+                                            .fontWeight(.semibold)
+                                    }
                                 }
                             }
-                            .padding()
+                            .padding(12)
                             .background(Color.white)
-                            .cornerRadius(10)
-                            .shadow(radius: 4)
-                            .padding(.horizontal)
+                            .cornerRadius(12)
+                            .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
                         }
                     }
-                    .padding(.top, 8)
+                    .padding(.horizontal, 16)
                 }
             } else {
                 Spacer()
@@ -131,30 +141,32 @@ struct ProductsView: View {
         .onAppear {
             viewModel.fetchProducts()
         }
+        .onChange(of: viewModel.toastMessage) { message in
+            if message != nil {
+                withAnimation {
+                    showToast = true
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    viewModel.toastMessage = nil
+                }
+            }
+        }
+        .onChange(of: viewModel.userError) { error in
+            showAlert = error != nil
+        }
         .alert(isPresented: $showAlert) {
             Alert(
                 title: Text("Error"),
                 message: Text(viewModel.userError?.localizedDescription ?? "Unknown error"),
-                dismissButton: .default(Text("OK"))
+                dismissButton: .default(Text("OK")) {
+                    viewModel.userError = nil
+                }
             )
         }
-        .onChange(of: viewModel.userError) { newValue in
-            showAlert = newValue != nil
-        }
+        .toast(isPresented: $showToast, message: viewModel.toastMessage ?? "")
     }
 }
 
-#Preview {
-    ProductsView(
-        viewModel: ProductsViewModel(
-            getProductsUseCase: GetProductsUseCase(repository: ProductRepository()),
-            deleteProductUseCase: DeleteProductsUseCase(repository: ProductRepository()),
-            createProductUseCase: CreateProductsUseCase(repository: ProductRepository()),
-            updateProductUseCase: UpdateProductUseCase(repository: ProductRepository())
-        )
-    )
-}
-
 
 #Preview {
     ProductsView(
@@ -166,3 +178,18 @@ struct ProductsView: View {
         )
     )
 }
+
+struct ToastMessageView: View {
+    var message: String
+
+    var body: some View {
+        Text(message)
+            .font(.headline)
+            .foregroundColor(.white)
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(Color.black.opacity(0.85))
+            .cornerRadius(10)
+    }
+}
+
