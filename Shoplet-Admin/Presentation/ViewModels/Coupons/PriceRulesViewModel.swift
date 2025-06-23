@@ -12,7 +12,8 @@ class PriceRulesViewModel: ObservableObject {
     @Published var priceRuleList: [PriceRule]?
     @Published var isLoading = true
     @Published var userError: NetworkError?
-
+    @Published var toastMessage: String? = nil
+    
     private let getPriceRulesUseCase: GetPriceRulesUseCaseProtocol
     private let createPriceRulesUseCase: CreatePriceRulesUseCaseProtocol
     private let deletePriceRulesUseCase: DeletePriceRulesUseCaseProtocol

@@ -11,6 +11,8 @@ class CollectionsViewModel: ObservableObject {
     @Published var collections: [Collection]?
     @Published var isLoading = true
     @Published var userError: NetworkError?
+    var selectedCollection: Collection? = nil
+    @Published var toastMessage: String? = nil
     
     private let getCollectionsUseCase: GetCollectionsUseCaseProtocol
     private let createCollectionUseCase: CreateCollectionUseCaseProtocol
@@ -40,11 +42,10 @@ class CollectionsViewModel: ObservableObject {
         do {
             let createdCollection = try await createCollectionUseCase.execute(collection: collection)
             userError = nil
-            // collections?.append(createdCollection.collection) 
-            print("Collection created: \(createdCollection.collection)")
+            await getCollections()
+            self.toastMessage = "Brand created"
         } catch {
             userError = error as? NetworkError
-            print("Failed to create collection: \(error.localizedDescription)")
         }
     }
     
@@ -57,7 +58,6 @@ class CollectionsViewModel: ObservableObject {
         } catch {
             userError = error as? NetworkError
             isLoading = false
-            print("Failed to fetch collections: \(error.localizedDescription)")
         }
     }
     
@@ -73,11 +73,10 @@ class CollectionsViewModel: ObservableObject {
         do {
             let updatedCollection = try await updateCollectionUseCase.execute(collection: collection)
             userError = nil
-            await getCollections() // Refresh collections after update
-            print("Collection updated: \(updatedCollection.collection)")
+            await getCollections()
+            self.toastMessage = "Brand updated"
         } catch {
             userError = error as? NetworkError
-            print("Failed to update collection: \(error.localizedDescription)")
         }
     }
     
@@ -85,10 +84,10 @@ class CollectionsViewModel: ObservableObject {
         do {
             _ = try await deleteCollectionUseCase.execute(collectionId: collectionId)
             userError = nil
-            print("Collection deleted successfully!")
+            await getCollections()
+            self.toastMessage = "Brand deleted"
         } catch {
             userError = error as? NetworkError
-            print("Failed to delete collection: \(error.localizedDescription)")
         }
     }
 }

@@ -10,6 +10,7 @@ import SwiftUI
 import SwiftUI
 
 struct AddCollectionView: View {
+    @Environment(\.dismiss) var dismiss
     @State private var collectionTitle: String = ""
     @State private var collectionDescription: String = ""
     @State private var collectionImageUrl: String = ""
@@ -19,6 +20,9 @@ struct AddCollectionView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
+                Text("Brand Details")
+                    .bold()
+                    .font(.title)
                 TextField("Title", text: $collectionTitle)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.horizontal)
@@ -33,27 +37,45 @@ struct AddCollectionView: View {
 
                 
                 if let url = URL(string: collectionImageUrl) {
-                    AsyncImage(url: url) { phase in
-                        switch phase {
-                        case .empty:
-                            ProgressView()
-                        case .success(let image):
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 200, height: 200)
-                                .clipShape(RoundedRectangle(cornerRadius: 20))
-                        case .failure:
-                            Image(systemName: "photo")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 100, height: 100)
-                                .foregroundColor(.gray)
-                        @unknown default:
-                            EmptyView()
+                    ZStack(alignment: .topTrailing) {
+                        AsyncImage(url: url) { phase in
+                            switch phase {
+                            case .empty:
+                                ProgressView()
+                                    .frame(width: 200, height: 200)
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 200, height: 200)
+                                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                            case .failure:
+                                Image(systemName: "photo")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 100, height: 100)
+                                    .foregroundColor(.gray)
+                            @unknown default:
+                                EmptyView()
+                            }
                         }
+
+                        Button(action: {
+                            collectionImageUrl = ""
+                        }) {
+                            Image(systemName: "xmark")
+                                .font(.system(size: 14, weight: .bold))
+                                .foregroundColor(.white)
+                                .padding(8)
+                                .background(Color.black.opacity(0.6))
+                                .clipShape(Circle())
+                        }
+                        .padding(6)
+
+                        .padding(6)
                     }
                 }
+
                 
                 Button(action: {
                     Task{
@@ -69,24 +91,27 @@ struct AddCollectionView: View {
                                 collectionDescription:collectionDescription,
                                 collectionId: collection?.id ?? 0)
                         }
+                        dismiss()
                     }
                 }) {
-                    Text(collection == nil ? "Create Collection" : "Update Collection")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.black)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                    HStack {
+                        Image(systemName: "plus")
+                        Text(collection == nil ? "Create Collection" : "Update Collection")
+                            .fontWeight(.semibold)
+                    }
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.primaryColor)
+                    .cornerRadius(12)
+                    .padding()
                 }
-                .padding(.horizontal)
-                .padding(.top, 10)
-
+            
                 Spacer()
             }
             .onAppear{
                 fillFieldsWithCollectionData()
             }
-            .navigationTitle("Collections View")
         }
     }
     private func fillFieldsWithCollectionData() {
@@ -98,3 +123,7 @@ struct AddCollectionView: View {
 }
 
 
+#Preview {
+    let viewModel = DIContainer.shared.resolve(CollectionsViewModel.self)
+    return AddCollectionView(collectionsViewModel: viewModel)
+}

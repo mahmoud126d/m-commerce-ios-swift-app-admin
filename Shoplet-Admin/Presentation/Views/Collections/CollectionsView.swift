@@ -10,9 +10,9 @@ import SwiftUI
 struct CollectionsView: View {
     @StateObject private var viewModel: CollectionsViewModel
     @State private var searchText = ""
-    @State private var selectedCollection: Collection? = nil
     @State var openAddCollectionView: Bool = false
-
+    @State private var showToast = false
+    
     init(viewModel: CollectionsViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
@@ -20,16 +20,21 @@ struct CollectionsView: View {
     var body: some View {
         NavigationView {
             VStack(alignment: .leading) {
-                Text("Collections View")
-                    .font(.title)
-                    .bold()
-                    .padding(.horizontal)
-
-                TextField("Search", text: $searchText)
-                    .padding(10)
-                    .background(Color(.systemGray6))
-                    .cornerRadius(8)
-                    .padding(.horizontal)
+                Button(action: {
+                    openAddCollectionView = true
+                }) {
+                    HStack {
+                        Image(systemName: "plus")
+                        Text("Add New Brand")
+                            .fontWeight(.semibold)
+                    }
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.primaryColor)
+                    .cornerRadius(12)
+                    .padding()
+                }
 
                 if viewModel.isLoading {
                     ProgressView()
@@ -48,7 +53,7 @@ struct CollectionsView: View {
                                             AsyncImage(url: imageURL) { image in
                                                 image
                                                     .resizable()
-                                                    .aspectRatio(1, contentMode: .fill)
+                                                    .aspectRatio(1, contentMode: .fit)
                                                     .frame(maxWidth: .infinity, minHeight: 120, maxHeight: 120)
                                                     .clipped()
                                             } placeholder: {
@@ -66,27 +71,32 @@ struct CollectionsView: View {
                                     .cornerRadius(12)
                                     .shadow(radius: 1)
 
-                                    HStack(spacing: 8) {
-                                        Button(action: {
-                                            selectedCollection = collection
+                                    HStack(spacing: 4) {
+                                        Button {
+                                            viewModel.selectedCollection = collection
                                             openAddCollectionView = true
-                                        }) {
-                                            Image(systemName: "pencil.circle.fill")
-                                                .foregroundColor(.blue)
-                                                .background(Color.white.clipShape(Circle()))
+                                        } label: {
+                                            Image(systemName: "pencil")
+                                                .font(.system(size: 16, weight: .semibold))
+                                                .foregroundColor(.white)
+                                                .frame(width: 32, height: 32)
+                                                .background(Color.blue.opacity(0.8))
+                                                .cornerRadius(6)
                                         }
 
-                                        Button(action: {
-                                            Task{
+                                        Button {
+                                            Task {
                                                 await viewModel.deleteCollection(collectionId: collection.id ?? 0)
                                             }
-                                        }) {
-                                            Image(systemName: "trash.fill")
-                                                .foregroundColor(.red)
-                                                .background(Color.white.clipShape(Circle()))
+                                        } label: {
+                                            Image(systemName: "trash")
+                                                .font(.system(size: 16, weight: .semibold))
+                                                .foregroundColor(.white)
+                                                .frame(width: 32, height: 32)
+                                                .background(Color.red.opacity(0.8))
+                                                .cornerRadius(6)
                                         }
                                     }
-                                    .padding([.top, .trailing], 10)
                                 }
                             }
                         }
@@ -95,21 +105,31 @@ struct CollectionsView: View {
                 }
             }
             .sheet(isPresented: $openAddCollectionView, onDismiss: {
-                selectedCollection = nil
+                viewModel.selectedCollection = nil
             }) {
-                AddCollectionView(collection: selectedCollection, collectionsViewModel: viewModel)
+                AddCollectionView(collection: viewModel.selectedCollection, collectionsViewModel: viewModel)
             }
-            .navigationBarItems(trailing: Button(action: {
-                selectedCollection = nil
-                openAddCollectionView.toggle()
-            }) {
-                Image(systemName: "plus")
-            })
         }
         .onAppear {
             Task{
                 await viewModel.getCollections()
             }
         }
+        .onChange(of: viewModel.toastMessage) { message in
+            if message != nil {
+                withAnimation {
+                    showToast = true
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    viewModel.toastMessage = nil
+                }
+            }
+        }
+        .toast(isPresented: $showToast, message: viewModel.toastMessage ?? "")
     }
+}
+
+#Preview {
+    let viewModel = DIContainer.shared.resolve(CollectionsViewModel.self)
+    return CollectionsView(viewModel: viewModel)
 }
