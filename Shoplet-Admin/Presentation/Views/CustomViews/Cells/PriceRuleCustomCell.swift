@@ -16,7 +16,7 @@ struct PriceRuleCustomCell: View {
     var deleteAction: () -> Void
     var editAction: () -> Void
     var onTap: () -> Void
-
+    @State private var showDeleteConfirmation = false
     var body: some View {
         let discount = abs(Int(Double(value) ?? 0))
 
@@ -56,7 +56,9 @@ struct PriceRuleCustomCell: View {
                 Spacer()
 
                 VStack(spacing: 12) {
-                    Button(action: deleteAction) {
+                    Button {
+                        showDeleteConfirmation = true
+                    } label: {
                         Image(systemName: "trash")
                             .font(.system(size: 16, weight: .semibold))
                             .foregroundColor(.white)
@@ -65,6 +67,17 @@ struct PriceRuleCustomCell: View {
                             .cornerRadius(6)
                     }
                     .buttonStyle(PlainButtonStyle())
+                    .alert(isPresented: $showDeleteConfirmation) {
+                        Alert(
+                            title: Text("Delete Item"),
+                            message: Text("Are you sure you want to delete this item?"),
+                            primaryButton: .destructive(Text("Delete")) {
+                                deleteAction()
+                            },
+                            secondaryButton: .cancel()
+                        )
+                    }
+
 
                     Button(action: editAction) {
                         Image(systemName: "pencil")

@@ -11,6 +11,7 @@ struct ProductsView: View {
     @State private var openAddProductView: Bool = false
     @State private var showAlert = false
     @State private var showToast = false
+    @State private var productToDelete: Product?
 
     let columns = [
         GridItem(.flexible(), spacing: 16),
@@ -91,7 +92,7 @@ struct ProductsView: View {
                                         }
 
                                         Button {
-                                            viewModel.deleteProduct(productId: product.id ?? 0)
+                                            productToDelete = product
                                         } label: {
                                             Image(systemName: "trash")
                                                 .font(.system(size: 16, weight: .semibold))
@@ -161,6 +162,18 @@ struct ProductsView: View {
                 dismissButton: .default(Text("OK")) {
                     viewModel.userError = nil
                 }
+            )
+        }
+        .alert(item: $productToDelete) { product in
+            Alert(
+                title: Text("Delete Product"),
+                message: Text("Are you sure you want to delete \"\(product.title ?? "this product")\"?"),
+                primaryButton: .destructive(Text("Delete")) {
+                    if let id = product.id {
+                        viewModel.deleteProduct(productId: id)
+                    }
+                },
+                secondaryButton: .cancel()
             )
         }
         .toast(isPresented: $showToast, message: viewModel.toastMessage ?? "")

@@ -49,6 +49,9 @@
 		227F78102DEF1BFD007B0BF9 /* Shoplet_AdminTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F780F2DEF1BFD007B0BF9 /* Shoplet_AdminTests.swift */; };
 		227F781A2DEF1BFD007B0BF9 /* Shoplet_AdminUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F78192DEF1BFD007B0BF9 /* Shoplet_AdminUITests.swift */; };
 		227F781C2DEF1BFD007B0BF9 /* Shoplet_AdminUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F781B2DEF1BFD007B0BF9 /* Shoplet_AdminUITestsLaunchTests.swift */; };
+		2286FF652E0B36960001B65F /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 2286FF642E0B36960001B65F /* Reachability */; };
+		2286FF672E0B37200001B65F /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2286FF662E0B37200001B65F /* NetworkMonitor.swift */; };
+		2286FF692E0B37570001B65F /* AppCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2286FF682E0B37570001B65F /* AppCommon.swift */; };
 		228F2A352E09367200F62AFB /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228F2A342E09367200F62AFB /* Toast.swift */; };
 		22B0D6C92E0A66F900B9B63E /* NetworkManager_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B0D6C82E0A66F900B9B63E /* NetworkManager_Tests.swift */; };
 		22BB9C802E04763F009B4DDE /* Collections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BB9C7F2E04763F009B4DDE /* Collections.swift */; };
@@ -135,6 +138,8 @@
 		227F78152DEF1BFD007B0BF9 /* Shoplet-AdminUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Shoplet-AdminUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		227F78192DEF1BFD007B0BF9 /* Shoplet_AdminUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoplet_AdminUITests.swift; sourceTree = "<group>"; };
 		227F781B2DEF1BFD007B0BF9 /* Shoplet_AdminUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoplet_AdminUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		2286FF662E0B37200001B65F /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		2286FF682E0B37570001B65F /* AppCommon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCommon.swift; sourceTree = "<group>"; };
 		228F2A342E09367200F62AFB /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		22B0D6C82E0A66F900B9B63E /* NetworkManager_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager_Tests.swift; sourceTree = "<group>"; };
 		22BB9C7F2E04763F009B4DDE /* Collections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collections.swift; sourceTree = "<group>"; };
@@ -165,6 +170,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2256D36B2DF4B713004F27EB /* Alamofire in Frameworks */,
+				2286FF652E0B36960001B65F /* Reachability in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,6 +270,8 @@
 			children = (
 				227020002E07224500876D8F /* Color+Theme */,
 				2261FBE32DF5EE3D00CF7C02 /* DateFormatter.swift */,
+				2286FF662E0B37200001B65F /* NetworkMonitor.swift */,
+				2286FF682E0B37570001B65F /* AppCommon.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -555,6 +563,7 @@
 			name = "Shoplet-Admin";
 			packageProductDependencies = (
 				2256D36A2DF4B713004F27EB /* Alamofire */,
+				2286FF642E0B36960001B65F /* Reachability */,
 			);
 			productName = "Shoplet-Admin";
 			productReference = 227F77FB2DEF1BFC007B0BF9 /* Shoplet-Admin.app */;
@@ -630,6 +639,7 @@
 			mainGroup = 227F77F22DEF1BFC007B0BF9;
 			packageReferences = (
 				2256D3692DF4B713004F27EB /* XCRemoteSwiftPackageReference "Alamofire" */,
+				2286FF632E0B36960001B65F /* XCRemoteSwiftPackageReference "Reachability" */,
 			);
 			productRefGroup = 227F77FC2DEF1BFC007B0BF9 /* Products */;
 			projectDirPath = "";
@@ -677,6 +687,7 @@
 				2261FBE42DF5EE3D00CF7C02 /* DateFormatter.swift in Sources */,
 				22BB9C8D2E048523009B4DDE /* AddCollectionView.swift in Sources */,
 				22BB9C952E048662009B4DDE /* DeleteCollectionUseCase.swift in Sources */,
+				2286FF692E0B37570001B65F /* AppCommon.swift in Sources */,
 				22D5C1562DEF7BC200A0831E /* GetProductsUseCase.swift in Sources */,
 				2261FBEF2DF62ED900CF7C02 /* DeleteDiscountCodeUseCase.swift in Sources */,
 				2261FBC92DF5C02600CF7C02 /* GetPriceRulesUseCase.swift in Sources */,
@@ -716,6 +727,7 @@
 				22D5C1532DEF794C00A0831E /* ProductsViewModel.swift in Sources */,
 				2261FBD02DF5C16100CF7C02 /* CreatePriceRulesUseCase.swift in Sources */,
 				2261FBCB2DF5C08A00CF7C02 /* CouponsRepositoryProtocol.swift in Sources */,
+				2286FF672E0B37200001B65F /* NetworkMonitor.swift in Sources */,
 				2261FBCE2DF5C12600CF7C02 /* PriceRulesViewModel.swift in Sources */,
 				2207133C2DFE0EED0074AFA3 /* UpdateProductUseCase.swift in Sources */,
 				2261FBFB2DF6398B00CF7C02 /* AddDiscountCodeView.swift in Sources */,
@@ -1064,6 +1076,14 @@
 				minimumVersion = 5.10.2;
 			};
 		};
+		2286FF632E0B36960001B65F /* XCRemoteSwiftPackageReference "Reachability" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1071,6 +1091,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2256D3692DF4B713004F27EB /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		2286FF642E0B36960001B65F /* Reachability */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2286FF632E0B36960001B65F /* XCRemoteSwiftPackageReference "Reachability" */;
+			productName = Reachability;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

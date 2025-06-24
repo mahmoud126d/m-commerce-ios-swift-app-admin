@@ -12,6 +12,8 @@ struct CollectionsView: View {
     @State private var searchText = ""
     @State var openAddCollectionView: Bool = false
     @State private var showToast = false
+    @State private var showDeleteConfirmation = false
+    @State private var selectedCollectionId: Int?
     
     init(viewModel: CollectionsViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -85,9 +87,8 @@ struct CollectionsView: View {
                                         }
 
                                         Button {
-                                            Task {
-                                                await viewModel.deleteCollection(collectionId: collection.id ?? 0)
-                                            }
+                                            selectedCollectionId = collection.id
+                                            showDeleteConfirmation = true
                                         } label: {
                                             Image(systemName: "trash")
                                                 .font(.system(size: 16, weight: .semibold))
@@ -95,6 +96,20 @@ struct CollectionsView: View {
                                                 .frame(width: 32, height: 32)
                                                 .background(Color.red.opacity(0.8))
                                                 .cornerRadius(6)
+                                        }
+                                        .alert(isPresented: $showDeleteConfirmation) {
+                                            Alert(
+                                                title: Text("Delete Collection"),
+                                                message: Text("Are you sure you want to delete this collection?"),
+                                                primaryButton: .destructive(Text("Delete")) {
+                                                    if let id = selectedCollectionId {
+                                                        Task {
+                                                            await viewModel.deleteCollection(collectionId: id)
+                                                        }
+                                                    }
+                                                },
+                                                secondaryButton: .cancel()
+                                            )
                                         }
                                     }
                                 }

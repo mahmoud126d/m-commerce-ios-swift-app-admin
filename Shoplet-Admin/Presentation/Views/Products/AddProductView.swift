@@ -57,7 +57,7 @@ struct AddProductView: View {
                     }) {
                         HStack {
                             Image(systemName: "plus")
-                            Text(product == nil ? "Create Product" : "Update Product")
+                            Text(product == nil ? "Create" : "Update")
                                 .fontWeight(.semibold)
                         }
                         .foregroundColor(.white)
@@ -352,9 +352,18 @@ enum ProductVendor: String, CaseIterable, Identifiable {
     case nike = "NIKE"
     case palladium = "PALLADIUM"
     case puma = "PUMA"
+    case adidas = "ADIDAS"
+    case asicsTiger = "ASICS TIGER"
+    case converse = "CONVERSE"
+    case flexFit = "FLEX FIT"
+    case herschel = "HERSCHEL"
+    case supra = "SUPRA"
+    case timberland = "TIMBERLAND"
+    case vans = "VANS"
     
     var id: String { self.rawValue }
 }
+
 
 #Preview{
     let viewModel = DIContainer.shared.resolve(ProductsViewModel.self)

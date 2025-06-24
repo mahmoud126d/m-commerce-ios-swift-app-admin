@@ -29,6 +29,9 @@ class NetworkManager {
         method: HTTPMethod = .get,
         parameters: Parameters? = nil
     ) async throws -> T {
+        guard AppCommon.shared.isNetworkReachable() else {
+            throw NetworkError.serverError("No Internet Connection")
+                }
         let response = await session.request(
             endpoint.url,
             method: method,

@@ -13,7 +13,8 @@ struct DiscountCodeCustomCell: View {
     var code: String?
     var deleteAction: () -> Void
     var editAction: () -> Void
-    
+    @State private var showDeleteConfirmation = false
+
     var body: some View {
         ZStack {
             CardShape()
@@ -45,13 +46,27 @@ struct DiscountCodeCustomCell: View {
                 }
                 .buttonStyle(PlainButtonStyle())
                 
-                Button(action: deleteAction) {
+                
+                Button {
+                    showDeleteConfirmation = true
+                } label: {
                     Image(systemName: "trash")
                         .font(.system(size: 16, weight: .semibold))
                         .foregroundColor(.red)
                         .frame(width: 36, height: 36)
                 }
                 .buttonStyle(PlainButtonStyle())
+                .alert(isPresented: $showDeleteConfirmation) {
+                    Alert(
+                        title: Text("Delete Item"),
+                        message: Text("Are you sure you want to delete this item?"),
+                        primaryButton: .destructive(Text("Delete")) {
+                            deleteAction()
+                        },
+                        secondaryButton: .cancel()
+                    )
+                }
+
             }
             .padding(.horizontal)
         }
