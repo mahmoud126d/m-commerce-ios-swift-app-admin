@@ -70,10 +70,9 @@ class NetworkManager {
         }
     }
 
-}
+
 
 // MARK: - Product Management
-extension NetworkManager {
     
     func getProducts() async throws -> ProductsResponse {
         try await request(endpoint: .products)
@@ -93,10 +92,9 @@ extension NetworkManager {
         return try await request(endpoint: .product(id: product.product.id ?? 0), method: .put, parameters: parameters)
     }
     
-}
+
 
 // MARK: - Price Rule Management
-extension NetworkManager {
     
     func getPriceRules() async throws -> PriceRulesResponse {
         try await request(endpoint: .priceRules)
@@ -115,10 +113,9 @@ extension NetworkManager {
         let parameters = try encodeToParameters(priceRuleRequest)
         return try await request(endpoint: .priceRule(id: priceRuleRequest.priceRule.id ?? 0), method: .put, parameters: parameters)
     }
-}
+
 
 // MARK: - Discount Codes Management
-extension NetworkManager {
     
     func getDiscountCodes(priceRuleId: Int) async throws -> DiscountCodesResponse {
         try await request(endpoint: .discountCodes(priceRuleId: priceRuleId))
@@ -137,10 +134,9 @@ extension NetworkManager {
         let parameters = try encodeToParameters(discountCode)
         return try await request(endpoint: .discountCode(priceRuleId: priceRuleId, discountCodeId: discountCode.discountCode.id ?? 0), method: .put, parameters: parameters)
     }
-}
 
 // MARK: - Collections Management
-extension NetworkManager {
+
     
     func getCollections() async throws -> CollectionsResponse {
         try await request(endpoint: .collections)

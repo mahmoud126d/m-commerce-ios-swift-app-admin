@@ -50,6 +50,7 @@
 		227F781A2DEF1BFD007B0BF9 /* Shoplet_AdminUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F78192DEF1BFD007B0BF9 /* Shoplet_AdminUITests.swift */; };
 		227F781C2DEF1BFD007B0BF9 /* Shoplet_AdminUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F781B2DEF1BFD007B0BF9 /* Shoplet_AdminUITestsLaunchTests.swift */; };
 		228F2A352E09367200F62AFB /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228F2A342E09367200F62AFB /* Toast.swift */; };
+		22B0D6C92E0A66F900B9B63E /* NetworkManager_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B0D6C82E0A66F900B9B63E /* NetworkManager_Tests.swift */; };
 		22BB9C802E04763F009B4DDE /* Collections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BB9C7F2E04763F009B4DDE /* Collections.swift */; };
 		22BB9C822E047B0C009B4DDE /* CollectionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BB9C812E047B0C009B4DDE /* CollectionsRepository.swift */; };
 		22BB9C842E047B48009B4DDE /* CollectionsRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BB9C832E047B48009B4DDE /* CollectionsRepositoryProtocol.swift */; };
@@ -135,6 +136,7 @@
 		227F78192DEF1BFD007B0BF9 /* Shoplet_AdminUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoplet_AdminUITests.swift; sourceTree = "<group>"; };
 		227F781B2DEF1BFD007B0BF9 /* Shoplet_AdminUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoplet_AdminUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		228F2A342E09367200F62AFB /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
+		22B0D6C82E0A66F900B9B63E /* NetworkManager_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager_Tests.swift; sourceTree = "<group>"; };
 		22BB9C7F2E04763F009B4DDE /* Collections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collections.swift; sourceTree = "<group>"; };
 		22BB9C812E047B0C009B4DDE /* CollectionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionsRepository.swift; sourceTree = "<group>"; };
 		22BB9C832E047B48009B4DDE /* CollectionsRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionsRepositoryProtocol.swift; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 		227F780E2DEF1BFD007B0BF9 /* Shoplet-AdminTests */ = {
 			isa = PBXGroup;
 			children = (
+				22B0D6C62E0A66D100B9B63E /* Data */,
 				227F780F2DEF1BFD007B0BF9 /* Shoplet_AdminTests.swift */,
 			);
 			path = "Shoplet-AdminTests";
@@ -341,6 +344,22 @@
 				228F2A342E09367200F62AFB /* Toast.swift */,
 			);
 			path = Toast;
+			sourceTree = "<group>";
+		};
+		22B0D6C62E0A66D100B9B63E /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				22B0D6C72E0A66D700B9B63E /* Network */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		22B0D6C72E0A66D700B9B63E /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				22B0D6C82E0A66F900B9B63E /* NetworkManager_Tests.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		22BB9C852E0484BF009B4DDE /* Collections */ = {
@@ -718,6 +737,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22B0D6C92E0A66F900B9B63E /* NetworkManager_Tests.swift in Sources */,
 				227F78102DEF1BFD007B0BF9 /* Shoplet_AdminTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
