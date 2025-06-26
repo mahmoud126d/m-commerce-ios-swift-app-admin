@@ -13,9 +13,12 @@ struct AddPriceRuleView: View {
     @State private var usageLimit: String = ""
     @State private var useCodeOncePerCustomer = false
     @State private var startDate = Date()
-    @State private var endDate = Date()
+    @State private var endDate = Calendar.current.date(byAdding: .day, value: 1, to: Date()) ?? Date()
     @State private var ruleTitle: String = ""
     @State private var ruleDiscountValue: String = ""
+    @State private var showValidationAlert = false
+    @State private var validationErrorMessage = ""
+
     let priceRulesViewModel: PriceRulesViewModel
     var selectedPriceRule: PriceRule?
     
@@ -24,28 +27,31 @@ struct AddPriceRuleView: View {
             VStack(
                 spacing: 20
             ) {
-                Text("Price Rule Details")
+                Text("Price Rule")
                     .bold()
                     .font(.title)
                 VStack(
                     spacing: 12
                 ) {
-                    TextField(
-                        "Title",
-                        text: $ruleTitle
-                    )
-                    .textFieldStyle(
-                        .roundedBorder
-                    )
+                    TextField("Title", text: $ruleTitle)
+                        .padding()
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.gray, lineWidth: 1)
+                        )
                     
-                    TextField(
-                        "Discount",
-                        text: $ruleDiscountValue
-                    )
-                    .textFieldStyle(
-                        .roundedBorder
-                    )
-                    
+                    TextField("Value", text: $ruleDiscountValue)
+                        .padding()
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.gray, lineWidth: 1)
+                        )
+                    TextField("limit", text: $usageLimit)
+                        .padding()
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.gray, lineWidth: 1)
+                        )
                     Picker(
                         "Value Type",
                         selection: $valueType
@@ -77,31 +83,24 @@ struct AddPriceRuleView: View {
                         8
                     )
 
-                    TextField(
-                        "Limit",
-                        text: $usageLimit
-                    )
-                    .textFieldStyle(
-                        .roundedBorder
-                    )
-                    
                     Toggle(
                         "Use code once per Customer",
                         isOn: $useCodeOncePerCustomer
                     )
                     
                     DatePicker(
-                        "Starts At",
-                        selection: $startDate,
-                        in: Date()...,
-                        displayedComponents: .date
-                    )
+                                            "Starts At",
+                                            selection: $startDate,
+                                            in: Date()...,
+                                            displayedComponents: .date
+                                        )
+                    
                     DatePicker(
-                        "Ends At",
-                        selection: $endDate,
-                        in: startDate...,
-                        displayedComponents: .date
-                    )
+                               "Ends At",
+                               selection: $endDate,
+                               in: startDate...,
+                               displayedComponents: .date
+                           )
                 }
                 .padding(
                     .horizontal
@@ -139,7 +138,7 @@ struct AddPriceRuleView: View {
                 .padding(
                     .bottom
                 )
-            }
+            }.padding(.vertical)
             .navigationBarBackButtonHidden(
                 false
             )
@@ -149,6 +148,12 @@ struct AddPriceRuleView: View {
                 fillPriceRuleData()
             }
         }
+        .alert("Validation Error", isPresented: $showValidationAlert) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(validationErrorMessage)
+        }
+
     }
     
     private func fillPriceRuleData() {
@@ -183,34 +188,58 @@ struct AddPriceRuleView: View {
     }
     
     private func savePriceRule() {
-        let start = DateFormatterHelper.shared.convertToIsoFormat(
-            startDate
-        )
-        let end = DateFormatterHelper.shared.convertToIsoFormat(
-            endDate
-        )
+        guard validatePriceRuleInputs() else {
+            showValidationAlert = true
+            return
+        }
+
+        let start = DateFormatterHelper.shared.convertToIsoFormat(startDate)
+        let end = DateFormatterHelper.shared.convertToIsoFormat(endDate)
+
         let priceRuleRequest = PriceRuleRequest(
             priceRule: PriceRule(
                 id: selectedPriceRule?.id,
                 title: ruleTitle,
                 valueType: valueType,
-                value: self.ruleDiscountValue.contains("-") == true ? "\(ruleDiscountValue)" : "-\(ruleDiscountValue)",
+                value: ruleDiscountValue.contains("-") ? ruleDiscountValue : "-\(ruleDiscountValue)",
                 startsAt: start,
                 endsAt: end
             )
         )
-        
+
         if selectedPriceRule == nil {
-            priceRulesViewModel.createPriceRule(
-                priceRule: priceRuleRequest
-            )
+            priceRulesViewModel.createPriceRule(priceRule: priceRuleRequest)
         } else {
-            priceRulesViewModel.updatePriceRule(
-                priceRule: priceRuleRequest
-            )
+            priceRulesViewModel.updatePriceRule(priceRule: priceRuleRequest)
         }
         dismiss()
     }
+
+    private func validatePriceRuleInputs() -> Bool {
+        if ruleTitle.trimmingCharacters(in: .whitespaces).isEmpty {
+            validationErrorMessage = "Title is required."
+            return false
+        }
+
+        if ruleDiscountValue.trimmingCharacters(in: .whitespaces).isEmpty ||
+            Double(ruleDiscountValue) == nil {
+            validationErrorMessage = "Enter a valid numeric discount value."
+            return false
+        }
+
+        if endDate < startDate {
+            validationErrorMessage = "End date cannot be earlier than start date."
+            return false
+        }
+
+        if !usageLimit.isEmpty && Int(usageLimit) == nil {
+            validationErrorMessage = "Usage limit must be a valid number."
+            return false
+        }
+
+        return true
+    }
+
     
 }
 

@@ -22,6 +22,11 @@ struct CollectionsView: View {
     var body: some View {
         NavigationView {
             VStack(alignment: .leading) {
+                TextField("Search brands...", text: $searchText)
+                    .padding(10)
+                    .background(Color(.systemGray6))
+                    .cornerRadius(10)
+                    .padding(.horizontal)
                 Button(action: {
                     openAddCollectionView = true
                 }) {
@@ -45,10 +50,10 @@ struct CollectionsView: View {
                     Text("Error: \(error.localizedDescription)")
                         .foregroundColor(.red)
                         .padding()
-                } else if let collections = viewModel.collections {
+                } else if !filteredCollections.isEmpty {
                     ScrollView {
                         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
-                            ForEach(collections, id: \.id) { collection in
+                            ForEach(filteredCollections, id: \.id) { collection in
                                 ZStack(alignment: .topTrailing) {
                                     VStack {
                                         if let urlString = collection.image?.src, let imageURL = URL(string: urlString) {
@@ -62,12 +67,19 @@ struct CollectionsView: View {
                                                 Color.gray.opacity(0.3)
                                                     .frame(height: 120)
                                             }
+                                        } else {
+                                            Image("defaultImage")
+                                                .resizable()
+                                                .aspectRatio(1, contentMode: .fit)
+                                                .frame(maxWidth: .infinity, minHeight: 120, maxHeight: 120)
+                                                .clipped()
                                         }
 
                                         Text((collection.title ?? "").uppercased())
                                             .font(.subheadline)
                                             .padding(.top, 5)
                                     }
+
                                     .frame(maxWidth: .infinity)
                                     .background(Color.white)
                                     .cornerRadius(12)
@@ -141,6 +153,15 @@ struct CollectionsView: View {
             }
         }
         .toast(isPresented: $showToast, message: viewModel.toastMessage ?? "")
+    }
+    private var filteredCollections: [Collection] {
+        if searchText.isEmpty {
+            return viewModel.collections ?? []
+        } else {
+            return viewModel.collections?.filter {
+                $0.title?.localizedCaseInsensitiveContains(searchText) ?? false
+            } ?? []
+        }
     }
 }
 

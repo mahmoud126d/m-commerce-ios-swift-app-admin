@@ -11,6 +11,7 @@ struct PriceRuleCustomCell: View {
     var title: String
     var code: String
     var value: String
+    var valueType:String
     var startDate: String
     var endDate: String
     var deleteAction: () -> Void
@@ -36,7 +37,7 @@ struct PriceRuleCustomCell: View {
                         .font(.subheadline)
                         .foregroundColor(.white.opacity(0.9))
 
-                    Text("Value: \(discount)%")
+                    Text((valueType == "percentage") ? "Value: \(discount)%" : "Value: \(discount)$")
                         .font(.subheadline)
                         .foregroundColor(.red)
                         .bold()
@@ -100,7 +101,8 @@ struct PriceRuleCustomCell: View {
     PriceRuleCustomCell(
         title: "Summer Sale",
         code: "SUMMER10",
-        value: "-10.0",
+        value: "-10.0", 
+        valueType: "percentage",
         startDate: "2025-06-08",
         endDate: "2025-06-09",
         deleteAction: {

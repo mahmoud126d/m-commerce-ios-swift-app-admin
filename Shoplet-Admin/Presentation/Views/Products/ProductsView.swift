@@ -12,7 +12,8 @@ struct ProductsView: View {
     @State private var showAlert = false
     @State private var showToast = false
     @State private var productToDelete: Product?
-
+    @State private var searchText = ""
+    
     let columns = [
         GridItem(.flexible(), spacing: 16),
         GridItem(.flexible(), spacing: 16)
@@ -25,6 +26,12 @@ struct ProductsView: View {
     var body: some View {
         VStack(spacing: 8) {
             VStack(alignment: .leading, spacing: 8) {
+                TextField("Search products...", text: $searchText)
+                    .padding(10)
+                    .background(Color(.systemGray6))
+                    .cornerRadius(10)
+                    .padding(.horizontal)
+                
                 Button(action: {
                     viewModel.selectedProduct = nil
                     openAddProductView = true
@@ -48,15 +55,15 @@ struct ProductsView: View {
                 }
             }
             .padding(.top)
-
+            
             if viewModel.isLoading {
                 Spacer()
                 ProgressView("Loading products...")
                 Spacer()
-            } else if let products = viewModel.productList, !products.isEmpty {
+            } else if !filteredProducts.isEmpty {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 16) {
-                        ForEach(products, id: \.id) { product in
+                        ForEach(filteredProducts, id: \.id) { product in
                             VStack(alignment: .leading, spacing: 8) {
                                 AsyncImage(url: URL(string: product.image?.src ?? "")) { phase in
                                     switch phase {
@@ -177,6 +184,15 @@ struct ProductsView: View {
             )
         }
         .toast(isPresented: $showToast, message: viewModel.toastMessage ?? "")
+    }
+    private var filteredProducts: [Product] {
+        if searchText.isEmpty {
+            return viewModel.productList ?? []
+        } else {
+            return viewModel.productList?.filter {
+                $0.title?.localizedCaseInsensitiveContains(searchText) ?? false
+            } ?? []
+        }
     }
 }
 

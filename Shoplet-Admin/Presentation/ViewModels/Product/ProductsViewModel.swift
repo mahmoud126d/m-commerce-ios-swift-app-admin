@@ -11,8 +11,9 @@ class ProductsViewModel: ObservableObject {
     @Published var productList: [Product]?
     @Published var isLoading = true
     @Published var userError: NetworkError?
-    var selectedProduct: Product? = nil
     @Published var toastMessage: String? = nil
+    
+    var selectedProduct: Product? = nil
 
     private let getProductsUseCase: GetProductsUseCaseProtocol
     private let deleteProductUseCase: DeleteProductsUseCaseProtocol
@@ -55,7 +56,7 @@ class ProductsViewModel: ObservableObject {
             do {
                 _ = try await deleteProductUseCase.execute(productId: productId)
                 await MainActor.run {
-                    self.productList?.removeAll { $0.id == productId }
+                    self.fetchProducts()
                     self.isLoading = false
                     self.userError = nil
                     self.toastMessage = "Product deleted"
@@ -74,7 +75,7 @@ class ProductsViewModel: ObservableObject {
             do {
                 let created = try await createProductUseCase.execute(product: product)
                 await MainActor.run {
-                    self.productList?.append(created.product)
+                    self.fetchProducts()
                     self.isLoading = false
                     self.userError = nil
                     self.toastMessage = "Product created"
@@ -93,9 +94,7 @@ class ProductsViewModel: ObservableObject {
             do {
                 let updated = try await updateProductUseCase.execute(product: product)
                 await MainActor.run {
-                    if let index = self.productList?.firstIndex(where: { $0.id == updated.product.id }) {
-                        self.productList?[index] = updated.product
-                    }
+                    self.fetchProducts()
                     self.isLoading = false
                     self.userError = nil
                     self.toastMessage = "Product updated"

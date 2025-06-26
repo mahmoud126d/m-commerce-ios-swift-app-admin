@@ -14,27 +14,46 @@ struct AddCollectionView: View {
     @State private var collectionTitle: String = ""
     @State private var collectionDescription: String = ""
     @State private var collectionImageUrl: String = ""
+    @State private var showValidationAlert = false
+    @State private var validationErrorMessage = ""
+
     var collection:Collection?
     let collectionsViewModel:CollectionsViewModel
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 20) {
+            VStack(alignment: .leading) {
                 Text("Brand Details")
                     .bold()
                     .font(.title)
+                    .padding()
+                Text("Title")
+                    .bold()
                 TextField("Title", text: $collectionTitle)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.horizontal)
-
-                TextField("Description", text: $collectionDescription)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.horizontal)
-
+                    .padding()
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.gray, lineWidth: 1)
+                    )
+                    Text("Description")
+                        .bold()
+                    TextEditor(text: $collectionDescription)
+                        .frame(height: 150)
+                        .padding(8)
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(10)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.gray.opacity(0.4), lineWidth: 1)
+                        )
+                Text("Image URL")
+                    .bold()
                 TextField("Image URL", text: $collectionImageUrl)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.horizontal)
-
+                    .padding()
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.gray, lineWidth: 1)
+                    )
                 
                 if let url = URL(string: collectionImageUrl) {
                     ZStack(alignment: .topTrailing) {
@@ -78,18 +97,25 @@ struct AddCollectionView: View {
 
                 
                 Button(action: {
-                    Task{
-                        if collection == nil{
+                    Task {
+                        guard validateCollectionInputs() else {
+                            showValidationAlert = true
+                            return
+                        }
+                        
+                        if collection == nil {
                             await collectionsViewModel.createCollection(
                                 collectionName: collectionTitle,
                                 collectionImageURL: collectionImageUrl,
-                                collectionDescription:collectionDescription)
-                        }else{
+                                collectionDescription: collectionDescription
+                            )
+                        } else {
                             await collectionsViewModel.updateCollection(
                                 collectionName: collectionTitle,
                                 collectionImageURL: collectionImageUrl,
-                                collectionDescription:collectionDescription,
-                                collectionId: collection?.id ?? 0)
+                                collectionDescription: collectionDescription,
+                                collectionId: collection?.id ?? 0
+                            )
                         }
                         dismiss()
                     }
@@ -106,11 +132,17 @@ struct AddCollectionView: View {
                     .cornerRadius(12)
                     .padding()
                 }
+
             
                 Spacer()
-            }
+            }.padding()
             .onAppear{
                 fillFieldsWithCollectionData()
+            }
+            .alert("Validation Error", isPresented: $showValidationAlert) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(validationErrorMessage)
             }
         }
     }
@@ -120,6 +152,32 @@ struct AddCollectionView: View {
             collectionDescription = collection.bodyHTML ?? ""
             collectionImageUrl = collection.image?.src ?? ""
         }
+    private func validateCollectionInputs() -> Bool {
+        if collectionTitle.trimmingCharacters(in: .whitespaces).isEmpty {
+            validationErrorMessage = "Collection title is required."
+            return false
+        }
+
+        if collectionDescription.trimmingCharacters(in: .whitespaces).isEmpty {
+            validationErrorMessage = "Collection description is required."
+            return false
+        }
+
+        if collectionImageUrl.trimmingCharacters(in: .whitespaces).isEmpty {
+            validationErrorMessage = "Collection image URL is required."
+            return false
+        }
+
+        if let url = URL(string: collectionImageUrl), url.scheme == "http" || url.scheme == "https" {
+        } else {
+            validationErrorMessage = "Please enter a valid image URL (http or https)."
+            return false
+        }
+
+        return true
+    }
+
+
 }
 
 

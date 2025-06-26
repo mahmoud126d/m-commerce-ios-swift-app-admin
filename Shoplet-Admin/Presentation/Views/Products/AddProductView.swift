@@ -14,8 +14,6 @@ struct AddProductView: View {
     @State private var selectedItems: [PhotosPickerItem] = []
     @State private var selectedImages: [UIImage] = []
     @State private var producttitleTextFieldValue = ""
-    @State private var productTypeTextFieldValue = ""
-    @State private var productVendorTextFieldValue = ""
     @State private var productDescriptionTextFieldValue = ""
     @State private var productTagsTextFieldValue = ""
     @State private var productPriceTextFieldValue = ""
@@ -24,6 +22,10 @@ struct AddProductView: View {
     @State private var productQuantityTextFieldValue = ""
     @State private var productImageUrlTextFieldValue = ""
     @State private var productImageUrlsTextFieldValue: [String] = []
+    @State private var showValidationAlert = false
+    @State private var validationErrorMessage = ""
+    @State private var productTypeSegment: ProductType = .shoes
+    @State private var selectedVendor: ProductVendor = .nike
     
     private let columns = [
             GridItem(.flexible(), spacing: 10),
@@ -31,93 +33,61 @@ struct AddProductView: View {
             GridItem(.flexible(), spacing: 10)
         ]
     
-    @State private var productTypeSegment: ProductType = .shoes
-    @State private var selectedLanguage: ProductVendor = .nike
+    
     let productViewModel:ProductsViewModel
     
     var body: some View {
         ScrollView {
             VStack {
-                HStack {
-                    Button(action: {
-                        dismiss()
-                    }) {
-                        Text("Cancel")
-                            .foregroundColor(.red)
-                            .padding()
-                            .background(Color.gray.opacity(0.1))
-                            .cornerRadius(8)
-                    }
-
-                    Spacer()
-
-                    Button(action: {
-                        createProduct()
-                        dismiss()
-                    }) {
-                        HStack {
-                            Image(systemName: "plus")
-                            Text(product == nil ? "Create" : "Update")
-                                .fontWeight(.semibold)
-                        }
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(Color.primaryColor)
-                        .cornerRadius(12)
-                    }
-                }
-                .padding(.horizontal)
-
-                Text("Product Details")
+                Text("Product")
                     .bold()
                     .font(.title)
                 HStack{
                     Text("Title")
+                        .bold()
                     TextField("Product Title", text: $producttitleTextFieldValue)
                         .padding()
                         .overlay(
                             RoundedRectangle(cornerRadius: 8)
                                 .stroke(Color.gray, lineWidth: 1)
                         )
-                        .padding(.horizontal)
-
                     
                 }.padding()
                 HStack {
                     Text("Type: ")
+                        .bold()
                     Picker("Choose Segment", selection: $productTypeSegment) {
                         ForEach(ProductType.allCases) { segment in
                             Text(segment.rawValue).tag(segment)
                         }
                     }
                     .pickerStyle(.segmented)
-                    
                     Spacer()
                 }.padding()
                 HStack {
                     Text("Tags")
+                        .bold()
                     TextField("Product Tags", text: $productTagsTextFieldValue)
                         .padding()
                         .overlay(
                             RoundedRectangle(cornerRadius: 8)
                                 .stroke(Color.gray, lineWidth: 1)
                         )
-                        .padding(.horizontal)
-
                     Spacer()
                 }.padding()
                 HStack {
                     Text("Vendor ")
+                        .bold()
                     Menu {
-                        ForEach(ProductVendor.allCases) { language in
+                        ForEach(ProductVendor.allCases) { vendor in
                             Button {
-                                selectedLanguage = language
+                                selectedVendor = vendor
                             } label: {
-                                Label(language.rawValue, systemImage: selectedLanguage == language ? "checkmark" : "")
+                                Label(vendor.rawValue, systemImage: selectedVendor == vendor ? "checkmark" : "")
                             }
                         }
                     } label: {
-                        Label(selectedLanguage.rawValue, systemImage: "chevron.down")
+                        Label(selectedVendor.rawValue, systemImage: "chevron.down")
                             .padding()
                             .background(Color.gray.opacity(0.2))
                             .cornerRadius(10)
@@ -125,7 +95,8 @@ struct AddProductView: View {
                     Spacer()
                 }.padding()
                 VStack (alignment: .leading){
-                    Text("Description ")
+                    Text("Description")
+                        .bold()
                     TextEditor(text: $productDescriptionTextFieldValue)
                         .frame(height: 150)
                         .padding(8)
@@ -139,8 +110,7 @@ struct AddProductView: View {
                 }.padding()
                 VStack(alignment: .leading) {
                     Text("Product Images")
-                        .font(.headline)
-                    
+                        .bold()
                     LazyVGrid(columns: columns, spacing: 10) {
                                 ForEach(productImageUrlsTextFieldValue, id: \.self) { url in
                                     ZStack(alignment: .topTrailing) {
@@ -217,7 +187,8 @@ struct AddProductView: View {
                 }.padding()
                 
                 HStack {
-                    Text("Price ")
+                    Text("Price $")
+                        .bold()
                     TextField("Price", text: $productPriceTextFieldValue)
                         .padding()
                         .overlay(
@@ -229,6 +200,7 @@ struct AddProductView: View {
                 }.padding()
                 HStack {
                     Text("Color")
+                        .bold()
                     TextField("Color", text: $productColorTextFieldValue)
                         .padding()
                         .overlay(
@@ -240,6 +212,7 @@ struct AddProductView: View {
                 }.padding()
                 HStack {
                     Text("Quantity")
+                        .bold()
                     TextField("Quantity", text: $productQuantityTextFieldValue)
                         .padding()
                         .overlay(
@@ -251,6 +224,7 @@ struct AddProductView: View {
                 }.padding()
                 HStack {
                     Text("Size")
+                        .bold()
                     TextField("Size", text: $productSizeTextFieldValue)
                         .padding()
                         .overlay(
@@ -260,8 +234,23 @@ struct AddProductView: View {
                         .padding(.horizontal)
                     Spacer()
                 }.padding()
+                Button(action: {
+                    createProduct()
+                }) {
+                    HStack {
+                        Image(systemName: "plus")
+                        Text(product == nil ? "Create" : "Update")
+                            .fontWeight(.semibold)
+                    }
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.primaryColor)
+                    .cornerRadius(12)
+                }.padding(.horizontal)
                 
-            }.onAppear{
+            }.padding(.vertical)
+            .onAppear{
                 fillFieldsWithProductData()
             }
             .onChange(of: selectedItems) { oldItems, newItems in
@@ -275,13 +264,17 @@ struct AddProductView: View {
                     }
                 }
             }
+            .alert("Validation Error", isPresented: $showValidationAlert) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text(validationErrorMessage)
+            }
+
         }
     }
     private func fillFieldsWithProductData() {
         guard let product = product else { return }
         producttitleTextFieldValue = product.title ?? ""
-        productTypeTextFieldValue = product.productType ?? ""
-        productVendorTextFieldValue = product.vendor ?? ""
         productDescriptionTextFieldValue = product.description ?? ""
         productTagsTextFieldValue = product.tags ?? ""
         productImageUrlsTextFieldValue = product.images?.compactMap { $0.src } ?? []
@@ -291,42 +284,42 @@ struct AddProductView: View {
         productPriceTextFieldValue = product.variants?[0].price ?? ""
     }
     private func createProduct() {
+        guard validateInputs() else {
+            showValidationAlert = true
+            return
+        }
         let productImages = productImageUrlsTextFieldValue.map { ProductImageRequest(src: $0) }
-        
-        let option1 = Option(
-            id: nil,
-            productId: nil,
-            name: "Color",
-            values: [productColorTextFieldValue])
-        let option2 = Option(
-            id: nil,
-            productId: nil,
-            name: "Size",
-            values: [productSizeTextFieldValue])
+
+        let option1 = Option(id: nil, productId: nil, name: "Color", values: [productColorTextFieldValue])
+        let option2 = Option(id: nil, productId: nil, name: "Size", values: [productSizeTextFieldValue])
+
         let product = ProductRequest(product: Product(
-            id:product?.id,
+            id: product?.id,
             title: producttitleTextFieldValue,
             description: productDescriptionTextFieldValue,
-            vendor: productVendorTextFieldValue,
+            vendor: selectedVendor.id,
             productType: productTypeSegment.id,
             tags: productTagsTextFieldValue,
-            variants: [Variant(
-                price:productPriceTextFieldValue,
-                option1: productColorTextFieldValue,
-                option2: productSizeTextFieldValue,
-                inventoryQuantity: Int(productQuantityTextFieldValue)
-                
-            )],
-            options: [option1,option2],
+            variants: [
+                Variant(
+                    price: productPriceTextFieldValue,
+                    option1: productColorTextFieldValue,
+                    option2: productSizeTextFieldValue,
+                    inventoryQuantity: Int(productQuantityTextFieldValue) ?? 0
+                )
+            ],
+            options: [option1, option2],
             images: productImages
         ))
-        
-        if self.product == nil{
+
+        if self.product == nil {
             productViewModel.createProduct(product: product)
-        }else{
+        } else {
             productViewModel.updateProduct(product: product)
         }
+        dismiss()
     }
+
     
     
     private func addUrl() {
@@ -335,7 +328,29 @@ struct AddProductView: View {
         productImageUrlsTextFieldValue.append(trimmedUrl)
         productImageUrlTextFieldValue = ""
     }
-    
+    private func validateInputs() -> Bool {
+        if producttitleTextFieldValue.isEmpty {
+            validationErrorMessage = "Product title is required."
+            return false
+        }
+        if productPriceTextFieldValue.isEmpty || Double(productPriceTextFieldValue) == nil {
+            validationErrorMessage = "Please enter a valid price."
+            return false
+        }
+        if productQuantityTextFieldValue.isEmpty || Int(productQuantityTextFieldValue) == nil {
+            validationErrorMessage = "Please enter a valid quantity."
+            return false
+        }
+        if productColorTextFieldValue.isEmpty {
+            validationErrorMessage = "Color is required."
+            return false
+        }
+        if productSizeTextFieldValue.isEmpty {
+            validationErrorMessage = "Size is required."
+            return false
+        }
+        return true
+    }
 }
 
 

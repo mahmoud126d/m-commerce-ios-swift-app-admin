@@ -14,14 +14,22 @@ struct PriceRulesView: View {
     @State private var selectedRuleId: Int? = nil
     @State private var isShowingDiscountCodesView = false
     @State private var showToast = false
-    
+    @State private var searchText = ""
+
     var body: some View {
         NavigationView {
             VStack {
+                TextField("Search price rules...", text: $searchText)
+                    .padding(10)
+                    .background(Color(.systemGray6))
+                    .cornerRadius(10)
+                    .padding(.horizontal)
+
                 Button(action: {
                     openAddPriceRuleView = true
                     viewModel.selectedPriceRule = nil
                 }) {
+                    
                     HStack {
                         Image(systemName: "plus")
                         Text("Add Price Rule")
@@ -38,14 +46,15 @@ struct PriceRulesView: View {
                     Spacer()
                     ProgressView("Loading price rules...")
                     Spacer()
-                } else if let priceRules = viewModel.priceRuleList, !priceRules.isEmpty {
+                } else if !filteredPriceRules.isEmpty {
                     List {
-                        ForEach(priceRules) { rule in
+                        ForEach(filteredPriceRules) { rule in
                             VStack(spacing: 0) {
                                 PriceRuleCustomCell(
                                     title: rule.title ?? "",
                                     code: rule.title ?? "",
-                                    value: rule.value ?? "",
+                                    value: rule.value ?? "", 
+                                    valueType: rule.valueType ?? "percentage",
                                     startDate: rule.startsAt ?? "",
                                     endDate: rule.endsAt ?? "",
                                     deleteAction: {
@@ -132,6 +141,16 @@ struct PriceRulesView: View {
             }.toast(isPresented: $showToast, message: viewModel.toastMessage ?? "")
         }
     }
+    private var filteredPriceRules: [PriceRule] {
+        if searchText.isEmpty {
+            return viewModel.priceRuleList ?? []
+        } else {
+            return viewModel.priceRuleList?.filter {
+                $0.title?.localizedCaseInsensitiveContains(searchText) ?? false
+            } ?? []
+        }
+    }
+
 }
 
 #Preview {

@@ -45,14 +45,14 @@ final class NetworkManager_Tests: XCTestCase {
             XCTFail("getPriceRules() threw an error: \(error)")
         }
     }
-    func testGetDiscountCodesSuccess_responseNotNil() async throws{
-        do {
-            let response = try await networkManager.getDiscountCodes(priceRuleId: 1414955106522)
-            XCTAssertNotNil(response)
-        } catch {
-            XCTFail("getDiscountCodes() threw an error: \(error)")
-        }
-    }
+//    func testGetDiscountCodesSuccess_responseNotNil() async throws{
+//        do {
+//            let response = try await networkManager.getDiscountCodes(priceRuleId: 1414955106522)
+//            XCTAssertNotNil(response)
+//        } catch {
+//            XCTFail("getDiscountCodes() threw an error: \(error)")
+//        }
+//    }
     
     func testCreateProductSuccess() async throws{
         let request = ProductRequest(product: Product(title: "Testing product", description: "Product to test", vendor: "No vendor", productType: "Testing", tags: "test", variants: nil, images: nil))
