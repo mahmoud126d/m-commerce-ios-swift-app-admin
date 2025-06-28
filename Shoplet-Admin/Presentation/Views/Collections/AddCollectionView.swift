@@ -23,10 +23,14 @@ struct AddCollectionView: View {
     var body: some View {
         NavigationView {
             VStack(alignment: .leading) {
-                Text("Brand Details")
-                    .bold()
-                    .font(.title)
-                    .padding()
+                VStack {
+                    Text("Brand")
+                        .bold()
+                        .font(.title)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .multilineTextAlignment(.center)
+                }
                 Text("Title")
                     .bold()
                 TextField("Title", text: $collectionTitle)

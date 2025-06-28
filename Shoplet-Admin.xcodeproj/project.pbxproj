@@ -46,7 +46,6 @@
 		227F77FF2DEF1BFC007B0BF9 /* Shoplet_AdminApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F77FE2DEF1BFC007B0BF9 /* Shoplet_AdminApp.swift */; };
 		227F78032DEF1BFD007B0BF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 227F78022DEF1BFD007B0BF9 /* Assets.xcassets */; };
 		227F78062DEF1BFD007B0BF9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 227F78052DEF1BFD007B0BF9 /* Preview Assets.xcassets */; };
-		227F78102DEF1BFD007B0BF9 /* Shoplet_AdminTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F780F2DEF1BFD007B0BF9 /* Shoplet_AdminTests.swift */; };
 		227F781A2DEF1BFD007B0BF9 /* Shoplet_AdminUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F78192DEF1BFD007B0BF9 /* Shoplet_AdminUITests.swift */; };
 		227F781C2DEF1BFD007B0BF9 /* Shoplet_AdminUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F781B2DEF1BFD007B0BF9 /* Shoplet_AdminUITestsLaunchTests.swift */; };
 		2286FF652E0B36960001B65F /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 2286FF642E0B36960001B65F /* Reachability */; };
@@ -64,6 +63,8 @@
 		22BB9C952E048662009B4DDE /* DeleteCollectionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BB9C942E048662009B4DDE /* DeleteCollectionUseCase.swift */; };
 		22BB9C972E0487C6009B4DDE /* CreateCollectionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BB9C962E0487C6009B4DDE /* CreateCollectionsUseCase.swift */; };
 		22BB9C9C2E04883A009B4DDE /* UpdateCollectionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BB9C9B2E04883A009B4DDE /* UpdateCollectionUseCase.swift */; };
+		22BC957E2E0FF1B400D73510 /* MockNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BC957D2E0FF1B400D73510 /* MockNetworkManager.swift */; };
+		22BC95822E0FF29B00D73510 /* MockNetworkManager_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BC95812E0FF29B00D73510 /* MockNetworkManager_Tests.swift */; };
 		22D5C1432DEF692000A0831E /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C1422DEF692000A0831E /* Product.swift */; };
 		22D5C1452DEF73EC00A0831E /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C1442DEF73EC00A0831E /* Configuration.swift */; };
 		22D5C1472DEF748F00A0831E /* APIEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C1462DEF748F00A0831E /* APIEndpoints.swift */; };
@@ -134,7 +135,6 @@
 		227F78022DEF1BFD007B0BF9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		227F78052DEF1BFD007B0BF9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		227F780B2DEF1BFD007B0BF9 /* Shoplet-AdminTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Shoplet-AdminTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		227F780F2DEF1BFD007B0BF9 /* Shoplet_AdminTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoplet_AdminTests.swift; sourceTree = "<group>"; };
 		227F78152DEF1BFD007B0BF9 /* Shoplet-AdminUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Shoplet-AdminUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		227F78192DEF1BFD007B0BF9 /* Shoplet_AdminUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoplet_AdminUITests.swift; sourceTree = "<group>"; };
 		227F781B2DEF1BFD007B0BF9 /* Shoplet_AdminUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoplet_AdminUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -152,6 +152,8 @@
 		22BB9C942E048662009B4DDE /* DeleteCollectionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "\U0010DeleteCollectionUseCase.swift"; sourceTree = "<group>"; };
 		22BB9C962E0487C6009B4DDE /* CreateCollectionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCollectionsUseCase.swift; sourceTree = "<group>"; };
 		22BB9C9B2E04883A009B4DDE /* UpdateCollectionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCollectionUseCase.swift; sourceTree = "<group>"; };
+		22BC957D2E0FF1B400D73510 /* MockNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkManager.swift; sourceTree = "<group>"; };
+		22BC95812E0FF29B00D73510 /* MockNetworkManager_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkManager_Tests.swift; sourceTree = "<group>"; };
 		22D5C1422DEF692000A0831E /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		22D5C1442DEF73EC00A0831E /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		22D5C1462DEF748F00A0831E /* APIEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoints.swift; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 			children = (
 				227F77FD2DEF1BFC007B0BF9 /* Shoplet-Admin */,
 				227F780E2DEF1BFD007B0BF9 /* Shoplet-AdminTests */,
+				22B0D6C62E0A66D100B9B63E /* Data */,
 				227F78182DEF1BFD007B0BF9 /* Shoplet-AdminUITests */,
 				227F77FC2DEF1BFC007B0BF9 /* Products */,
 			);
@@ -331,8 +334,8 @@
 		227F780E2DEF1BFD007B0BF9 /* Shoplet-AdminTests */ = {
 			isa = PBXGroup;
 			children = (
-				22B0D6C62E0A66D100B9B63E /* Data */,
-				227F780F2DEF1BFD007B0BF9 /* Shoplet_AdminTests.swift */,
+				22BC957C2E0FF0E300D73510 /* Mocks */,
+				22BC95812E0FF29B00D73510 /* MockNetworkManager_Tests.swift */,
 			);
 			path = "Shoplet-AdminTests";
 			sourceTree = "<group>";
@@ -396,6 +399,14 @@
 				22BB9C9B2E04883A009B4DDE /* UpdateCollectionUseCase.swift */,
 			);
 			path = Collections;
+			sourceTree = "<group>";
+		};
+		22BC957C2E0FF0E300D73510 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				22BC957D2E0FF1B400D73510 /* MockNetworkManager.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		22D5C1362DEF62FC00A0831E /* Domain */ = {
@@ -749,8 +760,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22BC957E2E0FF1B400D73510 /* MockNetworkManager.swift in Sources */,
 				22B0D6C92E0A66F900B9B63E /* NetworkManager_Tests.swift in Sources */,
-				227F78102DEF1BFD007B0BF9 /* Shoplet_AdminTests.swift in Sources */,
+				22BC95822E0FF29B00D73510 /* MockNetworkManager_Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

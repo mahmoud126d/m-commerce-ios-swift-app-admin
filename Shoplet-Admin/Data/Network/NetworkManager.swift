@@ -7,7 +7,34 @@
 
 import Foundation
 import Alamofire
-class NetworkManager {
+protocol NetworkManagerProtocol {
+    
+    // MARK: - Product Management
+    func getProducts() async throws -> ProductsResponse
+    func deleteProduct(id: Int) async throws -> Empty
+    func createProduct(product: ProductRequest) async throws -> ProductRequest
+    func updateProduct(product: ProductRequest) async throws -> ProductRequest
+
+    // MARK: - Price Rule Management
+    func getPriceRules() async throws -> PriceRulesResponse
+    func createPriceRule(rule: PriceRuleRequest) async throws -> PriceRuleRequest
+    func deletePriceRule(id: Int) async throws -> Empty
+    func updatePriceRule(priceRuleRequest: PriceRuleRequest) async throws -> PriceRuleRequest
+
+    // MARK: - Discount Codes Management
+    func getDiscountCodes(priceRuleId: Int) async throws -> DiscountCodesResponse
+    func createDiscountCode(priceRuleId: Int, discountCode: DiscountCodesRequest) async throws -> DiscountCodesRequest
+    func deleteDiscountCode(ruleId: Int, codeId: Int) async throws -> Empty
+    func updateDiscountCode(priceRuleId: Int, discountCode: DiscountCodesRequest) async throws -> DiscountCodesRequest
+
+    // MARK: - Collections Management
+    func getCollections() async throws -> CollectionsResponse
+    func deleteCollection(collectionId: Int) async throws -> Empty
+    func updateCollection(collection: CollectionRequest) async throws -> CollectionRequest
+    func createCollection(collection: CollectionRequest) async throws -> CollectionRequest
+}
+
+class NetworkManager : NetworkManagerProtocol{
     private let session: Session
     
     init() {
