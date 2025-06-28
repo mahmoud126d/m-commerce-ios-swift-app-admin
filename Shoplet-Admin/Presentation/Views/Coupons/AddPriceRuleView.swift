@@ -46,12 +46,7 @@ struct AddPriceRuleView: View {
                             RoundedRectangle(cornerRadius: 8)
                                 .stroke(Color.gray, lineWidth: 1)
                         )
-                    TextField("limit", text: $usageLimit)
-                        .padding()
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.gray, lineWidth: 1)
-                        )
+                    
                     Picker(
                         "Value Type",
                         selection: $valueType
@@ -162,7 +157,7 @@ struct AddPriceRuleView: View {
         }
         
         ruleTitle = rule.title ?? ""
-        ruleDiscountValue = rule.value ?? ""
+        ruleDiscountValue = rule.value?.replacing("-", with: "") ?? ""
         
         if let startsAtString = rule.startsAt,
            let date = ISO8601DateFormatter().date(
@@ -202,6 +197,7 @@ struct AddPriceRuleView: View {
                 title: ruleTitle,
                 valueType: valueType,
                 value: ruleDiscountValue.contains("-") ? ruleDiscountValue : "-\(ruleDiscountValue)",
+                usageLimit:Int(usageLimit),
                 startsAt: start,
                 endsAt: end
             )

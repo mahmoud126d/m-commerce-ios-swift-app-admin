@@ -30,7 +30,7 @@ struct AddCollectionView: View {
                         .padding()
                         .frame(maxWidth: .infinity)
                         .multilineTextAlignment(.center)
-                }
+                }.padding(.top)
                 Text("Title")
                     .bold()
                 TextField("Title", text: $collectionTitle)

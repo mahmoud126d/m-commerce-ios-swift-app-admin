@@ -333,7 +333,7 @@ struct AddProductView: View {
             validationErrorMessage = "Product title is required."
             return false
         }
-        if productPriceTextFieldValue.isEmpty || Double(productPriceTextFieldValue) == nil {
+        if productPriceTextFieldValue.isEmpty || Double(productPriceTextFieldValue) == nil || Double(productPriceTextFieldValue)! <= 0.0{
             validationErrorMessage = "Please enter a valid price."
             return false
         }
