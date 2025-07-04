@@ -39,15 +39,3 @@ This app is part of the **Shoplet** e-commerce platform, built to help store adm
 - **[Postman](https://www.postman.com/)** – API testing and documentation.
 - **[XCTest](https://developer.apple.com/documentation/xctest)** – Unit testing for Swift.
 
----
-
-## 🚀 Getting Started
-
-### ✅ Prerequisites
-
-- macOS with **Xcode** (latest version)
-- **CocoaPods** installed  
-  _Install CocoaPods if not already installed:_
-
-  ```bash
-  sudo gem install cocoapods
